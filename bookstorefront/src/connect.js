@@ -1,16 +1,14 @@
 import { connect } from "react-redux";
-import * as registrationActions from "../actions";
+import * as mainAppActions from "./actions";
 
 const mapStateToProps = (user) => {
   return {
-    data: user.data,
-    error: user.error,
-    loading: user.loading,
+    data: user.loginUser.data,
   };
 };
 
 const mapDispatchToProps = {
-  ...registrationActions,
+  ...mainAppActions,
 };
 
 export default (container) =>

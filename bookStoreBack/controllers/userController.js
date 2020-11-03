@@ -94,9 +94,7 @@ exports.updateUser = async (request, response) => {
 };
 
 exports.loginUser = async (request, response) => {
-  const {
-    body: { email, password },
-  } = request;
+  const { email, password } = request.body;
   const searchedValue = { email };
 
   try {
@@ -113,7 +111,7 @@ exports.loginUser = async (request, response) => {
     }
 
     const createdtoken = utils.createToken(user.id);
-    response.send({ token: createdtoken });
+    response.send({ user: user, token: createdtoken });
   } catch (err) {
     response.status(500).send("Something went wrong");
   }

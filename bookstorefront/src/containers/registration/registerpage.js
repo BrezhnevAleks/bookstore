@@ -1,6 +1,5 @@
 import React from "react";
 import connect from "./connect";
-const axios = require("axios").default;
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -21,23 +20,8 @@ class RegisterPage extends React.Component {
     e.preventDefault();
 
     let { login, email, password } = this.state;
-    console.log(login, email, password);
+    console.log("Request is going: " + login, email, password);
     this.props.createUser(login, email, password);
-    // const data = await axios
-    //   .post("http://localhost:4000/users/create", {
-    //     login,
-    //     email,
-    //     password,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    // console.log(data);
-
-    //this.props.createUser(login, email, password);
     this.setState({ login: "", email: "", password: "" });
   };
 
@@ -81,4 +65,3 @@ class RegisterPage extends React.Component {
   }
 }
 export default connect(RegisterPage);
-//export default RegisterPage;

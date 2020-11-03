@@ -2,24 +2,27 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MainPage from "./components/mainpage.js";
-import RegisterPage from "./components/registerpage.js";
-import LoginPage from "./components/loginpage.js";
+import RegisterPage from "./containers/registration/registerpage.js";
+import LoginPage from "./containers/login/loginpage.js";
+import connect from "./connect";
+import PrivateRoute from "./routs/privateroute";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <a href="/register">Register</a>
-        <a href="/login">Login</a>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={() => <MainPage />} />
-            <Route path="/login" component={() => <LoginPage />} />
-            <Route path="/register" component={() => <RegisterPage />} />
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/login" component={() => <LoginPage />} exact />
+          <Route path="/register" component={() => <RegisterPage />} exact />
+          <PrivateRoute
+            auth={this.props.data}
+            path="/"
+            component={() => <MainPage />}
+            exact
+          />
+        </Switch>
+      </Router>
     );
   }
 }
-export default App;
+export default connect(App);

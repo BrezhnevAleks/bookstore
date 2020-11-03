@@ -1,32 +1,27 @@
 import axios from "axios";
+//import axiosInstance from "../axios";
 
 export const createUser = (login, email, password) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(createStarted());
-
-    axios
-      .post("http://localhost:4000/users/create", {
+    try {
+      const response = await axios.post("http://localhost:4000/users/create", {
         login,
         email,
         password,
         completed: false,
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .then((res) => {
-        console.log(res.body);
-        dispatch(createSuccess(res.body));
-      })
-      .catch((err) => {
-        dispatch(createFailure(err.message));
       });
+      console.log("HELOOOOO" + response.data);
+      dispatch(createSuccess(response.data));
+    } catch (err) {
+      dispatch(createFailure(err.message));
+    }
   };
 };
 
 export const createSuccess = (data) => ({
   type: "USER_CREATE_SUCCESS",
-  data,
+  data: data,
 });
 
 export const createStarted = () => ({
@@ -35,5 +30,37 @@ export const createStarted = () => ({
 
 export const createFailure = (error) => ({
   type: "USER_CREATE_FAILURE",
+  error,
+});
+
+export const loginUser = (email, password) => {
+  return async (dispatch) => {
+    dispatch(loginStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/users/login", {
+        email,
+        password,
+        completed: false,
+      });
+      console.log(response.data.user);
+      dispatch(loginSuccess(response.data.user));
+      localStorage.setItem("authToken", response.data.token);
+    } catch (err) {
+      dispatch(loginFailure(err.message));
+    }
+  };
+};
+
+export const loginSuccess = (data) => ({
+  type: "USER_LOGIN_SUCCESS",
+  data: data,
+});
+
+export const loginStarted = () => ({
+  type: "USER_LOGIN_STARTED",
+});
+
+export const loginFailure = (error) => ({
+  type: "USER_LOGIN_FAILURE",
   error,
 });
