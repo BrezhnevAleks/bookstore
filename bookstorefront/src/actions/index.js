@@ -54,6 +54,7 @@ export const loginUser = (email, password) => {
 export const loginSuccess = (data) => ({
   type: "USER_LOGIN_SUCCESS",
   data: data,
+  isLogged: true,
 });
 
 export const loginStarted = () => ({

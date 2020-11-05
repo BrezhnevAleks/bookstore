@@ -111,7 +111,7 @@ exports.loginUser = async (request, response) => {
     }
 
     const createdtoken = utils.createToken(user.id);
-    response.send({ user: user, token: createdtoken });
+    response.send({ user: user, isLogged: true, token: createdtoken });
   } catch (err) {
     response.status(500).send("Something went wrong");
   }

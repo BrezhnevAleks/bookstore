@@ -1,5 +1,7 @@
 import React from "react";
 import connect from "./connect";
+import { Redirect, Link } from "react-router-dom";
+import "./style.css";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -16,38 +18,48 @@ class LoginPage extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    let { login, email, password } = this.state;
+    let { email, password } = this.state;
     console.log("Request is going: " + email, password);
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
   };
 
   render() {
+    console.log(this.props);
+    if (localStorage.getItem("authToken")) {
+      return <Redirect to="/" />;
+    }
     return (
-      <div>
+      <div className="login">
         <h1>Sign in</h1>
         <p>This is the login page</p>
-        <form onSubmit={(e) => this.handleSubmit(e)} method="get">
+
+        <form
+          onSubmit={(e) => this.handleSubmit(e)}
+          method="get"
+          className="login-main"
+        >
           <label>Email</label>
-          <br></br>
           <input
             onChange={(e) => this.handleChangeEmail(e)}
             type="email"
             name="userEmail"
           />
-          <br></br>
+
           <label>Password</label>
-          <br></br>
           <input
             onChange={(e) => this.handleChangePassword(e)}
             type="text"
             name="userPassword"
           />
-          <br></br>
-          <input type="submit" value="Отправить" />
+          <div className="buttons">
+            <input type="submit" value="Login" />
+            <Link to="/register" />
+          </div>
         </form>
       </div>
     );
   }
 }
+
 export default connect(LoginPage);

@@ -3,6 +3,7 @@ const user = (
     loading: false,
     data: {},
     error: null,
+    isLogged: false,
   },
   action
 ) => {

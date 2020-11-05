@@ -3,7 +3,8 @@ import * as mainAppActions from "./actions";
 
 const mapStateToProps = (user) => {
   return {
-    data: user.loginUser.data,
+    data: user.data,
+    isLogged: user.isLogged,
   };
 };
 

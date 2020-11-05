@@ -1,5 +1,6 @@
 import React from "react";
 import connect from "./connect";
+import { Link } from "react-router-dom";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -58,8 +59,9 @@ class RegisterPage extends React.Component {
             name="userEmail"
           />
           <br></br>
-          <input type="submit" value="Отправить" />
+          <input type="submit" value="Register" />
         </form>
+        <Link to="/login" />
       </div>
     );
   }
