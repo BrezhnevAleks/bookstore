@@ -1,4 +1,5 @@
 import React from "react";
+import BookList from "./booklist";
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -7,13 +8,13 @@ class MainPage extends React.Component {
   handleSignOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("authToken");
-    window.location.reload();
   };
 
   render() {
     return (
       <div className="App">
-        <p>This is the main page</p>
+        <nav>menu</nav>
+        <BookList />
         <button onClick={localStorage.removeItem("authToken")}>Sign Out</button>
       </div>
     );

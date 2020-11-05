@@ -24,12 +24,12 @@ input {
   background: #cfd2d6;
   border-radius: 5px;
   font-size: 16px;
-
   border: 2px solid #6d7074;
 }
 
 input[type="submit"] {
   padding: 10px 30px;
+  margin-left: 40px;
   line-height: 26px;
   text-align: center;
   color: white;
@@ -37,6 +37,7 @@ input[type="submit"] {
   background: #34547a;
   border-radius: 5px;
   font-size: inherit;
+  border: none;
 }
 
 input[type="submit"]:hover {
@@ -50,7 +51,7 @@ a {
   letter-spacing: 0.1em;
   background: #34547a;
   border-radius: 5px;
-  margin-left: 40px;
+  border: none;
 }
 
 h1 {

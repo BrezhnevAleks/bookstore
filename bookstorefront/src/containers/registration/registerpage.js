@@ -1,6 +1,7 @@
 import React from "react";
 import connect from "./connect";
 import { Link } from "react-router-dom";
+import "../login/style.css";
 
 class RegisterPage extends React.Component {
   constructor(props) {
@@ -28,40 +29,43 @@ class RegisterPage extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="login">
         <h1>Sign up</h1>
         <p>This is the register page</p>
-        <form onSubmit={(e) => this.handleSubmit(e)} method="post">
+        <form
+          className="login-main"
+          onSubmit={(e) => this.handleSubmit(e)}
+          method="post"
+        >
           <label>Login</label>
-          <br></br>
           <input
             required
             onChange={(e) => this.handleChangeLogin(e)}
             type="text"
             name="userLogin"
           />
-          <br></br>
+
           <label>Password</label>
-          <br></br>
           <input
             required
             onChange={(e) => this.handleChangePassword(e)}
             type="text"
             name="userPassword"
           />
-          <br></br>
+
           <label>Email</label>
-          <br></br>
           <input
             required
             onChange={(e) => this.handleChangeEmail(e)}
             type="email"
             name="userEmail"
           />
-          <br></br>
-          <input type="submit" value="Register" />
+
+          <div className="buttons">
+            <Link to="/login"> Login</Link>
+            <input type="submit" value="Register" />{" "}
+          </div>
         </form>
-        <Link to="/login" />
       </div>
     );
   }

@@ -25,10 +25,9 @@ class LoginPage extends React.Component {
   };
 
   render() {
-    console.log(this.props);
-    if (localStorage.getItem("authToken")) {
-      return <Redirect to="/" />;
-    }
+    // if (localStorage.getItem("authToken")) {
+    //   return <Redirect to="/" />;
+    // }
     return (
       <div className="login">
         <h1>Sign in</h1>
@@ -53,8 +52,10 @@ class LoginPage extends React.Component {
             name="userPassword"
           />
           <div className="buttons">
+            <Link className="link" to="/register">
+              Register
+            </Link>
             <input type="submit" value="Login" />
-            <Link to="/register" />
           </div>
         </form>
       </div>
