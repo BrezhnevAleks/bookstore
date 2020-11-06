@@ -1,4 +1,4 @@
-const user = (
+const loginUser = (
   state = {
     loading: false,
     data: {},
@@ -33,4 +33,4 @@ const user = (
       return state;
   }
 };
-export default user;
+export default loginUser;

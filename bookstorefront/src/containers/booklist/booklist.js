@@ -1,6 +1,7 @@
 import React from "react";
-import BookItem from "../../components/bookitem";
+import BookItem from "../../components/bookitem/bookitem";
 import connect from "./connect";
+import "./style.css";
 
 class BookList extends React.Component {
   constructor(props) {
@@ -10,11 +11,13 @@ class BookList extends React.Component {
     this.props.getBooks();
   }
   render() {
-    console.log(this.props);
+    const { books } = this.props;
     return (
-      <ul>
-        <BookItem />
-      </ul>
+      <div className="books">
+        {books.map((item) => (
+          <BookItem item={item} />
+        ))}
+      </div>
     );
   }
 }

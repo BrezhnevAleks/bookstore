@@ -13,12 +13,11 @@ import connect from "./connect";
 import PrivateRoute from "../routs/privateroute";
 
 class App extends React.Component {
-  // componentDidMount() {
-  //   // Популярный пример (не забудьте сравнить пропсы):
-  //   if (localStorage.getItem("authToken")) {
-  //     this.forceUpdate();
-  //   }
-  // }
+  constructor(props) {
+    super(props);
+    this.state = { logged: false };
+  }
+
   render() {
     return (
       <Router>
@@ -26,7 +25,7 @@ class App extends React.Component {
           <Route
             path="/login"
             render={() =>
-              localStorage.getItem("authToken") ? (
+              this.props.data.hasOwnProperty("id") ? (
                 <Redirect to="/" />
               ) : (
                 <LoginPage />

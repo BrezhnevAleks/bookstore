@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import * as loginActions from "../../actions";
 
-const mapStateToProps = (user) => {
+const mapStateToProps = ({ loginUser }) => {
   return {
-    data: user.data,
-    isLogged: user.isLogged,
+    data: loginUser.data,
+    isLogged: loginUser.isLogged,
   };
 };
 

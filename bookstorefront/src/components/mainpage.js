@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import BookList from "../containers/booklist/booklist";
 
 class MainPage extends React.Component {
@@ -12,13 +11,13 @@ class MainPage extends React.Component {
   };
 
   render() {
-    // if(localStorage.getItem("authToken")){
-    //   return <Redirect to="/login"/>
-    // }
     return (
-      <div className="App">
-        <nav>menu</nav>
-        <BookList />
+      <div>
+        <header />
+        <div>
+          <p>Filter</p>
+          <BookList />
+        </div>
         <button onClick={localStorage.removeItem("authToken")}>Sign Out</button>
       </div>
     );

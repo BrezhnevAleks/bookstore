@@ -22,10 +22,13 @@ class LoginPage extends React.Component {
     console.log("Request is going: " + email, password);
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
-    <Redirect to="/" />;
+    return <Redirect to="/" />;
   };
 
   render() {
+    // if (this.props.data.id) {
+    //   return <Redirect to="/" />;
+    // }
     return (
       <div className="login">
         <h1>Sign in</h1>
