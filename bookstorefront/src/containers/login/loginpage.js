@@ -6,7 +6,7 @@ import "./style.css";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "" };
+    this.state = { email: "", password: "", logged: false };
   }
   handleChangeEmail = (e) => {
     this.setState({ email: e.target.value });
@@ -22,12 +22,10 @@ class LoginPage extends React.Component {
     console.log("Request is going: " + email, password);
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
+    <Redirect to="/" />;
   };
 
   render() {
-    // if (localStorage.getItem("authToken")) {
-    //   return <Redirect to="/" />;
-    // }
     return (
       <div className="login">
         <h1>Sign in</h1>

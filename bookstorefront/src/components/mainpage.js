@@ -1,5 +1,6 @@
 import React from "react";
-import BookList from "./booklist";
+import { Redirect } from "react-router-dom";
+import BookList from "../containers/booklist/booklist";
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -11,6 +12,9 @@ class MainPage extends React.Component {
   };
 
   render() {
+    // if(localStorage.getItem("authToken")){
+    //   return <Redirect to="/login"/>
+    // }
     return (
       <div className="App">
         <nav>menu</nav>

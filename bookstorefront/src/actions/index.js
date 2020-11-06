@@ -65,3 +65,30 @@ export const loginFailure = (error) => ({
   type: "USER_LOGIN_FAILURE",
   error,
 });
+
+export const getBooks = () => {
+  return async (dispatch) => {
+    dispatch(booksFetchStarted());
+    try {
+      const response = await axios.get("http://localhost:4000/books");
+      console.log(response);
+      dispatch(booksFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(booksFetchFailure(err.message));
+    }
+  };
+};
+
+export const booksFetchSuccess = (books) => ({
+  type: "BOOK_FETCH_SUCCESS",
+  books: books,
+});
+
+export const booksFetchStarted = () => ({
+  type: "BOOK_FETCH_STARTED",
+});
+
+export const booksFetchFailure = (error) => ({
+  type: "BOOK_FETCH_FAILURE",
+  error,
+});

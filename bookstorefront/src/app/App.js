@@ -13,13 +13,12 @@ import connect from "./connect";
 import PrivateRoute from "../routs/privateroute";
 
 class App extends React.Component {
-  componentDidUpdate() {
-    if (this.props.data) {
-      this.forceUpdate();
-      console.log("ASDWSDWA"); //это всё не работает
-    }
-  }
-
+  // componentDidMount() {
+  //   // Популярный пример (не забудьте сравнить пропсы):
+  //   if (localStorage.getItem("authToken")) {
+  //     this.forceUpdate();
+  //   }
+  // }
   render() {
     return (
       <Router>
@@ -27,18 +26,22 @@ class App extends React.Component {
           <Route
             path="/login"
             render={() =>
-              this.props.data ? <Redirect to="/" /> : <LoginPage />
+              localStorage.getItem("authToken") ? (
+                <Redirect to="/" />
+              ) : (
+                <LoginPage />
+              )
             }
             exact
           />
-          <Route path="/register" component={() => <RegisterPage />} exact />
+          <Route path="/register" component={RegisterPage} exact />
 
           <PrivateRoute
             user={this.props.data}
             path="/"
-            component={() => <MainPage />}
+            component={MainPage}
+            exact
           />
-          <Route path="*" component={() => <LoginPage />} exact />
         </Switch>
       </Router>
     );
