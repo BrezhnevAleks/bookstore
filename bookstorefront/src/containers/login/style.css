@@ -43,7 +43,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
   cursor: pointer;
 }
-a {
+.sign-link {
   padding: 10px 30px;
   line-height: 26px;
   text-align: center;
@@ -61,7 +61,7 @@ h1 {
   color: rgba(7, 133, 7, 0.719);
 }
 
-p {
+.sign-text {
   margin: 20px 0;
   font-size: 16px;
 }

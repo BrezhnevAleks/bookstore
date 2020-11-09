@@ -7,13 +7,13 @@ const booklist = (
   action
 ) => {
   switch (action.type) {
-    case "BOOK_FETCH_STARTED":
+    case "BOOKS_FETCH_STARTED":
       return {
         ...state,
         loading: true,
         isLogged: false,
       };
-    case "BOOK_FETCH_SUCCESS":
+    case "BOOKS_FETCH_SUCCESS":
       return {
         ...state,
         loading: false,
@@ -21,7 +21,27 @@ const booklist = (
         books: action.books,
         isLogged: true,
       };
-    case "BOOK_FETCH_FAILURE":
+    case "BOOKS_FETCH_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case "BOOKS_SORT_FETCH_STARTED":
+      return {
+        ...state,
+        loading: true,
+        isLogged: false,
+      };
+    case "BOOKS_SORT_FETCH_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        books: action.books,
+        isLogged: true,
+      };
+    case "BOOKS_SORT_FETCH_FAILURE":
       return {
         ...state,
         loading: false,

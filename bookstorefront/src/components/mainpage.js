@@ -13,12 +13,11 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <header />
+        <header></header>
         <div>
-          <p>Filter</p>
           <BookList />
         </div>
-        <button onClick={localStorage.removeItem("authToken")}>Sign Out</button>
+        <button onClick={(e) => this.handleSignOut(e)}>Sign Out</button>
       </div>
     );
   }

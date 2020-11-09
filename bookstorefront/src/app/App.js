@@ -11,6 +11,7 @@ import RegisterPage from "../containers/registration/registerpage.js";
 import LoginPage from "../containers/login/loginpage.js";
 import connect from "./connect";
 import PrivateRoute from "../routs/privateroute";
+import BookPage from "../components/bookpage/bookpage.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -34,7 +35,12 @@ class App extends React.Component {
             exact
           />
           <Route path="/register" component={RegisterPage} exact />
-
+          <PrivateRoute
+            user={this.props.data}
+            path="/books/:id"
+            component={<BookPage getOneBook={this.props.getOneBook} />}
+            exact
+          />
           <PrivateRoute
             user={this.props.data}
             path="/"

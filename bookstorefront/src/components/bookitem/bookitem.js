@@ -10,10 +10,10 @@ class BookItem extends React.Component {
     const { item } = this.props;
     return (
       <div className="item">
-        <p>{item.picture}</p>
-        <h3>{item.name}</h3>
-        <p>{item.author}</p>
-        <p>{item.price}</p>
+        <img src="http://localhost:4000/default.png" className="item-image" />
+        <h3 className="item-name">{item.name}</h3>
+        <p className="item-author">{item.author}</p>
+        <p className="item-price">{item.price}</p>
         <button>Добавить</button>
       </div>
     );

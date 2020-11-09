@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
     return (
       <div className="login">
         <h1>Sign in</h1>
-        <p>This is the login page</p>
+        <p className="sign-text">This is the login page</p>
 
         <form
           onSubmit={(e) => this.handleSubmit(e)}
@@ -53,7 +53,7 @@ class LoginPage extends React.Component {
             name="userPassword"
           />
           <div className="buttons">
-            <Link className="link" to="/register">
+            <Link className="sign-link" to="/register">
               Register
             </Link>
             <input type="submit" value="Login" />

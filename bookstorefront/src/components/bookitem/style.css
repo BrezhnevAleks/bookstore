@@ -1,6 +1,31 @@
 .item {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid black;
-  height: 200px;
+  height: 300px;
   width: 200px;
+}
+
+.item-name {
+  line-height: 0.875rem;
+  display: block;
+}
+
+.item-author {
+  font-size: 0.75rem;
+  font-weight: 450;
+  line-height: 0.875rem;
+}
+
+.item-price {
+  font-size: 24px;
+  color: darkcyan;
+}
+
+.item-image {
+  width: 140px;
+  height: 150px;
+  margin: 15px 5px 20px 5px;
 }

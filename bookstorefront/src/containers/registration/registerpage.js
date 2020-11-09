@@ -31,7 +31,7 @@ class RegisterPage extends React.Component {
     return (
       <div className="login">
         <h1>Sign up</h1>
-        <p>This is the register page</p>
+        <p className="sign-text">This is the register page</p>
         <form
           className="login-main"
           onSubmit={(e) => this.handleSubmit(e)}
@@ -62,7 +62,9 @@ class RegisterPage extends React.Component {
           />
 
           <div className="buttons">
-            <Link to="/login"> Login</Link>
+            <Link className="sign-link" to="/login">
+              Login
+            </Link>
             <input type="submit" value="Register" />{" "}
           </div>
         </form>

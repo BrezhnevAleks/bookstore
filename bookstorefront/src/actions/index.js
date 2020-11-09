@@ -80,15 +80,74 @@ export const getBooks = () => {
 };
 
 export const booksFetchSuccess = (books) => ({
-  type: "BOOK_FETCH_SUCCESS",
+  type: "BOOKS_FETCH_SUCCESS",
   books: books,
 });
 
 export const booksFetchStarted = () => ({
-  type: "BOOK_FETCH_STARTED",
+  type: "BOOKS_FETCH_STARTED",
 });
 
 export const booksFetchFailure = (error) => ({
+  type: "BOOKS_FETCH_FAILURE",
+  error,
+});
+
+export const getSortBooks = (filter) => {
+  return async (dispatch) => {
+    dispatch(sortBooksFetchStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/books/filter", {
+        filter,
+      });
+      console.log(response);
+
+      dispatch(sortBooksFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(sortBooksFetchFailure(err.message));
+    }
+  };
+};
+
+export const sortBooksFetchSuccess = (books) => ({
+  type: "BOOKS_SORT_FETCH_SUCCESS",
+  books: books,
+});
+
+export const sortBooksFetchStarted = () => ({
+  type: "BOOKS_SORT_FETCH_STARTED",
+});
+
+export const sortBooksFetchFailure = (error) => ({
+  type: "BOOKS_SORT_FETCH_FAILURE",
+  error,
+});
+
+export const getOneBook = (id) => {
+  return async (dispatch) => {
+    dispatch(bookFetchStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/books/one", {
+        id,
+      });
+      console.log(response);
+
+      dispatch(bookFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(bookFetchFailure(err.message));
+    }
+  };
+};
+export const bookFetchSuccess = (book) => ({
+  type: "BOOK_FETCH_SUCCESS",
+  book: book,
+});
+
+export const bookFetchStarted = () => ({
+  type: "BOOK_FETCH_STARTED",
+});
+
+export const bookFetchFailure = (error) => ({
   type: "BOOK_FETCH_FAILURE",
   error,
 });
