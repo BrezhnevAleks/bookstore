@@ -1,5 +1,6 @@
 import React from "react";
 import BookList from "../containers/booklist/booklist";
+import { Link } from "react-router-dom";
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <header></header>
+        <header>
+          <Link to="/newbook"> Создать новую книгу</Link>
+        </header>
         <div>
           <BookList />
         </div>

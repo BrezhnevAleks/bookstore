@@ -27,7 +27,7 @@ class BooksFilter extends React.Component {
             colors: {
               ...theme.colors,
               primary25: "#5dc8e9",
-              primary: "#5dc8e9",
+              primary: "#5c99e9",
             },
           })}
         />

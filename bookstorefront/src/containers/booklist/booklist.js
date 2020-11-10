@@ -36,6 +36,7 @@ class BookList extends React.Component {
         <div className="books">
           {books.map((item) => (
             <Link
+              key={item.id}
               to={{
                 pathname: `/books/${item.id}`,
                 state: { fromDashboard: true },

@@ -22,13 +22,10 @@ class LoginPage extends React.Component {
     console.log("Request is going: " + email, password);
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
-    return <Redirect to="/" />;
+    //return <Redirect to="/" />;
   };
 
   render() {
-    // if (this.props.data.id) {
-    //   return <Redirect to="/" />;
-    // }
     return (
       <div className="login">
         <h1>Sign in</h1>
@@ -41,6 +38,7 @@ class LoginPage extends React.Component {
         >
           <label>Email</label>
           <input
+            className="sign-input"
             onChange={(e) => this.handleChangeEmail(e)}
             type="email"
             name="userEmail"
@@ -48,6 +46,7 @@ class LoginPage extends React.Component {
 
           <label>Password</label>
           <input
+            className="sign-input"
             onChange={(e) => this.handleChangePassword(e)}
             type="text"
             name="userPassword"
@@ -56,7 +55,7 @@ class LoginPage extends React.Component {
             <Link className="sign-link" to="/register">
               Register
             </Link>
-            <input type="submit" value="Login" />
+            <input className="sign-submit" type="submit" value="Login" />
           </div>
         </form>
       </div>

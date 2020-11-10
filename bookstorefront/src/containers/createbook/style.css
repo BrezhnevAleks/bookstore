@@ -1,0 +1,48 @@
+.new-book {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.new-book-submit {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 30px;
+  line-height: 26px;
+  text-align: center;
+  color: white;
+  letter-spacing: 0.1em;
+  background: #5c6be9;
+  border-radius: 5px;
+  font-size: inherit;
+  border: none;
+}
+
+.new-book-input {
+  line-height: 1.2;
+  padding: 4px 4px 4px 4px;
+  margin: 10px auto;
+  padding: 10px 30px;
+  color: black;
+  letter-spacing: 0.1em;
+  background: #eceff1;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 2px solid #5c99e9;
+}
+
+.new-book-image {
+  display: block;
+  margin: 10px auto;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 30px;
+  color: black;
+  letter-spacing: 0.1em;
+  background: #eceff1;
+  border-radius: 5px;
+  border: 2px solid #5c99e9;
+}
+input[type="file"] {
+  display: none;
+}

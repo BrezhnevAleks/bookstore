@@ -21,7 +21,8 @@ exports.createUser = async (request, response) => {
         password: utils.cipher(password),
       });
 
-      response.status(201).send(user);
+      const createdtoken = utils.createToken(user.id);
+      response.send({ user: user, isLogged: true, token: createdtoken });
     } catch (err) {
       response.status(500).send("Something went wrong");
     }

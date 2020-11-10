@@ -11,7 +11,8 @@ import RegisterPage from "../containers/registration/registerpage.js";
 import LoginPage from "../containers/login/loginpage.js";
 import connect from "./connect";
 import PrivateRoute from "../routs/privateroute";
-import BookPage from "../components/bookpage/bookpage.js";
+import BookPage from "../containers/bookpage/bookpage.js";
+import NewBook from "../containers/createbook/newbook.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.data);
     return (
       <Router>
         <Switch>
@@ -34,17 +36,33 @@ class App extends React.Component {
             }
             exact
           />
-          <Route path="/register" component={RegisterPage} exact />
+          <Route
+            path="/register"
+            render={() =>
+              this.props.data.hasOwnProperty("id") ? (
+                <Redirect to="/" />
+              ) : (
+                <RegisterPage />
+              )
+            }
+            exact
+          />
           <PrivateRoute
             user={this.props.data}
             path="/books/:id"
-            component={<BookPage getOneBook={this.props.getOneBook} />}
+            component={BookPage}
             exact
           />
           <PrivateRoute
             user={this.props.data}
             path="/"
             component={MainPage}
+            exact
+          />
+          <PrivateRoute
+            user={this.props.data}
+            path="/newbook"
+            component={NewBook}
             exact
           />
         </Switch>

@@ -4,7 +4,6 @@ import * as loginActions from "../../actions";
 const mapStateToProps = ({ loginUser }) => {
   return {
     data: loginUser.data,
-    isLogged: loginUser.isLogged,
   };
 };
 

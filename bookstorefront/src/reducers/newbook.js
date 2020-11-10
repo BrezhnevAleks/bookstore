@@ -1,25 +1,25 @@
-const singlebook = (
+const createbook = (
   state = {
     loading: false,
-    book: {},
+    created: {},
     error: null,
   },
   action
 ) => {
   switch (action.type) {
-    case "BOOK_FETCH_STARTED":
+    case "BOOK_CREATE_STARTED":
       return {
         ...state,
         loading: true,
       };
-    case "BOOK_FETCH_SUCCESS":
+    case "BOOK_CREATE_SUCCESS":
       return {
         ...state,
         loading: false,
         error: null,
-        book: action.book,
+        created: action.data,
       };
-    case "BOOK_FETCH_FAILURE":
+    case "BOOK_CREATE_FAILURE":
       return {
         ...state,
         loading: false,
@@ -29,4 +29,4 @@ const singlebook = (
       return state;
   }
 };
-export default singlebook;
+export default createbook;

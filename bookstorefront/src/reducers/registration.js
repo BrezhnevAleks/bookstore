@@ -1,4 +1,4 @@
-const user = (
+const registerUser = (
   state = {
     loading: false,
     data: {},
@@ -30,4 +30,4 @@ const user = (
       return state;
   }
 };
-export default user;
+export default registerUser;

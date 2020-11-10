@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import * as registrationActions from "../../actions";
 
-const mapStateToProps = ({ registerUser }) => {
+const mapStateToProps = ({ createbook }) => {
   return {
-    data: registerUser.data,
+    created: createbook.created,
   };
 };
 

@@ -54,3 +54,14 @@ exports.getOneBook = async (request, response) => {
     response.status(400).send("Something went terribly wrong");
   }
 };
+
+exports.createBook = async (request, response) => {
+  try {
+    let filedata = request.file;
+    console.log(filedata);
+    if (!filedata) response.send("Ошибка при загрузке файла");
+    else response.send("Файл загружен");
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};

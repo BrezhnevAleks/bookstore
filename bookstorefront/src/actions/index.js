@@ -11,8 +11,7 @@ export const createUser = (login, email, password) => {
         password,
         completed: false,
       });
-      console.log("HELOOOOO" + response.data);
-      dispatch(createSuccess(response.data));
+      dispatch(createSuccess(response.data.user));
     } catch (err) {
       dispatch(createFailure(err.message));
     }
@@ -22,6 +21,7 @@ export const createUser = (login, email, password) => {
 export const createSuccess = (data) => ({
   type: "USER_CREATE_SUCCESS",
   data: data,
+  isLogged: true,
 });
 
 export const createStarted = () => ({
@@ -151,3 +151,63 @@ export const bookFetchFailure = (error) => ({
   type: "BOOK_FETCH_FAILURE",
   error,
 });
+
+export const createBook = (file) => {
+  return async (dispatch) => {
+    dispatch(createBookStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/books/upload", {
+        file,
+      });
+      dispatch(createBookSuccess(response.data));
+    } catch (err) {
+      dispatch(createBookFailure(err.message));
+    }
+  };
+};
+
+export const createBookSuccess = (data) => ({
+  type: "BOOK_CREATE_SUCCESS",
+  data: data,
+});
+
+export const createBookStarted = () => ({
+  type: "BOOK_CREATE_STARTED",
+});
+
+export const createBookFailure = (error) => ({
+  type: "BOOK_CREATE_FAILURE",
+  error,
+});
+
+// export const createBook = (name, author, price, file) => {
+//   return async (dispatch) => {
+//     dispatch(createBookStarted());
+//     try {
+//       const response = await axios.post("http://localhost:4000/books/create", {
+//         name,
+//         author,
+//         price,
+//         file,
+//       });
+//       console.log("HELOOOOO" + response.data);
+//       dispatch(createBookSuccess(response.data));
+//     } catch (err) {
+//       dispatch(createBookFailure(err.message));
+//     }
+//   };
+// };
+
+// export const createBookSuccess = (data) => ({
+//   type: "BOOK_CREATE_SUCCESS",
+//   data: data,
+// });
+
+// export const createBookStarted = () => ({
+//   type: "BOOK_CREATE_STARTED",
+// });
+
+// export const createBookFailure = (error) => ({
+//   type: "BOOK_CREATE_FAILURE",
+//   error,
+// });

@@ -28,6 +28,7 @@ class RegisterPage extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="login">
         <h1>Sign up</h1>
@@ -40,6 +41,7 @@ class RegisterPage extends React.Component {
           <label>Login</label>
           <input
             required
+            className="sign-input"
             onChange={(e) => this.handleChangeLogin(e)}
             type="text"
             name="userLogin"
@@ -48,6 +50,7 @@ class RegisterPage extends React.Component {
           <label>Password</label>
           <input
             required
+            className="sign-input"
             onChange={(e) => this.handleChangePassword(e)}
             type="text"
             name="userPassword"
@@ -56,6 +59,7 @@ class RegisterPage extends React.Component {
           <label>Email</label>
           <input
             required
+            className="sign-input"
             onChange={(e) => this.handleChangeEmail(e)}
             type="email"
             name="userEmail"
@@ -65,7 +69,7 @@ class RegisterPage extends React.Component {
             <Link className="sign-link" to="/login">
               Login
             </Link>
-            <input type="submit" value="Register" />{" "}
+            <input className="sign-submit" type="submit" value="Register" />
           </div>
         </form>
       </div>
