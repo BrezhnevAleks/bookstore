@@ -6,7 +6,6 @@ const mapStateToProps = ({ registerUser, loginUser }) => {
     data: registerUser.data.hasOwnProperty("id")
       ? registerUser.data
       : loginUser.data,
-    // isLogged: createUser.isLogged,
   };
 };
 

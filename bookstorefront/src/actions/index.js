@@ -152,13 +152,21 @@ export const bookFetchFailure = (error) => ({
   error,
 });
 
-export const createBook = (file) => {
+export const createBook = (data) => {
   return async (dispatch) => {
     dispatch(createBookStarted());
     try {
-      const response = await axios.post("http://localhost:4000/books/upload", {
-        file,
+      for (let value of data.values()) {
+        console.log("in action", value);
+      }
+
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:4000/books/newbook",
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
       });
+
       dispatch(createBookSuccess(response.data));
     } catch (err) {
       dispatch(createBookFailure(err.message));
@@ -177,6 +185,42 @@ export const createBookStarted = () => ({
 
 export const createBookFailure = (error) => ({
   type: "BOOK_CREATE_FAILURE",
+  error,
+});
+
+export const changeBook = (data) => {
+  return async (dispatch) => {
+    dispatch(changeBookStarted());
+    try {
+      for (let value of data.values()) {
+        console.log("in action", value);
+      }
+
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:4000/books/changebook",
+        data: data,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      dispatch(changeBookSuccess(response.data));
+    } catch (err) {
+      dispatch(changeBookFailure(err.message));
+    }
+  };
+};
+
+export const changeBookSuccess = (data) => ({
+  type: "BOOK_CHANGE_SUCCESS",
+  data: data,
+});
+
+export const changeBookStarted = () => ({
+  type: "BOOK_CHANGE_STARTED",
+});
+
+export const changeBookFailure = (error) => ({
+  type: "BOOK_CHANGE_FAILURE",
   error,
 });
 

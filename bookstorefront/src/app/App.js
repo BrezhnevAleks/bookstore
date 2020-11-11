@@ -13,6 +13,7 @@ import connect from "./connect";
 import PrivateRoute from "../routs/privateroute";
 import BookPage from "../containers/bookpage/bookpage.js";
 import NewBook from "../containers/createbook/newbook.js";
+import ChangeBook from "../containers/changebook/changebook.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -63,6 +64,12 @@ class App extends React.Component {
             user={this.props.data}
             path="/newbook"
             component={NewBook}
+            exact
+          />
+          <PrivateRoute
+            user={this.props.data}
+            path="/books/change/:id"
+            component={ChangeBook}
             exact
           />
         </Switch>

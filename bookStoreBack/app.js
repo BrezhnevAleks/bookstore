@@ -21,6 +21,6 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
-app.use(multer({ dest: "uploads" }).single("filedata"));
+// app.use(multer({ dest: "uploads" }).single("bookcover"));
 app.use("/users", userRouter);
 app.use("/books", bookRouter);

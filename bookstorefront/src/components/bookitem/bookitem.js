@@ -10,7 +10,14 @@ class BookItem extends React.Component {
     const { item } = this.props;
     return (
       <div className="item">
-        <img src="http://localhost:4000/default.png" className="item-image" />
+        <img
+          src={
+            item.picture === "picture"
+              ? "http://localhost:4000/default.png"
+              : item.picture
+          }
+          className="item-image"
+        />
         <h3 className="item-name">{item.name}</h3>
         <p className="item-author">{item.author}</p>
         <p className="item-price">{item.price}</p>

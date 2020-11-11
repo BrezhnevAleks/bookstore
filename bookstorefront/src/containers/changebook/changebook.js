@@ -3,15 +3,15 @@ import connect from "./connect";
 import { withRouter } from "react-router";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
-import "./style.css";
 
-class NewBook extends React.Component {
+class ChangeBook extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       bookcover: "",
-      name: "",
-      authorprice: "",
+      name: this.props.name,
+      author: this.props.author,
+      price: this.props.price,
     };
   }
   handleChangeImage = (e) => {
@@ -33,20 +33,33 @@ class NewBook extends React.Component {
     formData.append("name", this.state.name);
     formData.append("author", this.state.author);
     formData.append("price", this.state.price);
+    formData.append("id", this.props.match.params.id);
     for (let value of formData.values()) {
       console.log(value);
     }
-    this.props.createBook(formData);
+    this.props.changeBook(formData);
     // let { name, author, price, file } = this.state;
     // console.log("Request is going: " + name, author, price, file);
     // this.props.createBook(name, author, price, file);
     // this.setState({ name: "", author: "", price: "", file: {} });
   };
 
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    console.log(id);
+    this.props.getOneBook(id);
+    this.setState({
+      name: this.props.book.name,
+      author: this.props.book.author,
+      price: this.props.book.price,
+    });
+  }
+
   render() {
+    const { name, author, price } = this.state;
     return (
       <div>
-        <h1>Добавить книгу</h1>
+        <h1>Изменить книгу</h1>
         <form
           className="new-book"
           encType="multipart/form-data"
@@ -64,6 +77,7 @@ class NewBook extends React.Component {
             onChange={(e) => this.handleChangeImage(e)}
           />
           <input
+            value={name}
             type="text"
             name="bookName"
             className="new-book-input"
@@ -71,6 +85,7 @@ class NewBook extends React.Component {
             onChange={(e) => this.handleChangeName(e)}
           />
           <input
+            value={author}
             type="text"
             name="author"
             className="new-book-input"
@@ -78,6 +93,7 @@ class NewBook extends React.Component {
             onChange={(e) => this.handleChangeAuthor(e)}
           />
           <input
+            value={price}
             placeholder="Цена"
             type="number"
             min="0"
@@ -88,7 +104,7 @@ class NewBook extends React.Component {
           <input
             className="new-book-submit"
             type="submit"
-            value="Добавить книгу"
+            value="Изменить книгу"
           />
         </form>
         <Link to="/"> На главную</Link>
@@ -96,4 +112,4 @@ class NewBook extends React.Component {
     );
   }
 }
-export default compose(withRouter, connect)(NewBook);
+export default compose(withRouter, connect)(ChangeBook);

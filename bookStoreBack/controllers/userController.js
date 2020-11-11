@@ -97,7 +97,7 @@ exports.updateUser = async (request, response) => {
 exports.loginUser = async (request, response) => {
   const { email, password } = request.body;
   const searchedValue = { email };
-
+  console.log(request.get("host"));
   try {
     const user = await db.User.findOne({ where: searchedValue });
 

@@ -3,6 +3,7 @@ import connect from "./connect";
 import { withRouter } from "react-router";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 class BookPage extends React.Component {
   constructor(props) {
@@ -16,12 +17,22 @@ class BookPage extends React.Component {
   render() {
     const { book } = this.props;
     return (
-      <div>
-        <img src="http://localhost:4000/default.png" />
-        <h3>{book.name}</h3>
-        <p>{book.author}</p>
-        <p>{book.price}</p>
-        <Link to="/"> На главную</Link>
+      <div className="book">
+        <img
+          src={
+            book.picture === "picture"
+              ? "http://localhost:4000/default.png"
+              : book.picture
+          }
+          className="book-image"
+        />
+        <h3 className="book-name">{book.name}</h3>
+        <p className="book-author">{book.author}</p>
+        <p className="book-price">{book.price}</p>
+        <Link to={{ pathname: `/books/change/${book.id}` }} id={book}>
+          Изменить
+        </Link>
+        <Link to="/">На главную</Link>
       </div>
     );
   }

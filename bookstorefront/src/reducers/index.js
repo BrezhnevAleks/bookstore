@@ -4,6 +4,7 @@ import loginUser from "./login";
 import booklist from "./books";
 import singlebook from "./onebook";
 import createbook from "./onebook";
+import changebook from "./changebook";
 
 export default combineReducers({
   registerUser,
@@ -11,4 +12,5 @@ export default combineReducers({
   booklist,
   singlebook,
   createbook,
+  changebook,
 });

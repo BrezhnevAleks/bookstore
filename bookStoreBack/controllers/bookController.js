@@ -57,10 +57,47 @@ exports.getOneBook = async (request, response) => {
 
 exports.createBook = async (request, response) => {
   try {
-    let filedata = request.file;
-    console.log(filedata);
-    if (!filedata) response.send("Ошибка при загрузке файла");
-    else response.send("Файл загружен");
+    const url = request.protocol + "://" + request.get("host");
+    const book = await db.Book.create({
+      name: request.body.name,
+      author: request.body.author,
+      price: request.body.price,
+      picture: url + "/" + request.file.filename,
+    });
+    if (!book) response.send("Ошибка при загрузке файла");
+    else response.send(book);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.changeBook = async (request, response) => {
+  try {
+    const url = request.protocol + "://" + request.get("host");
+    const { id, name, author, price } = request.body;
+    console.log(id, name, author, price);
+    const searchedValue = { id };
+    console.log(searchedValue);
+    const book = await db.Book.findOne({ where: searchedValue });
+
+    if (!book) {
+      response.status(404).send(`Book not found`);
+      return;
+    }
+    console.log(id, name, author, price, request.file.filename);
+    await db.Book.update(
+      {
+        name: name,
+        author: author,
+        price: price,
+        picture: url + "/" + request.file.filename,
+      },
+      {
+        where: { id: id },
+      }
+    );
+
+    response.send(book);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }
