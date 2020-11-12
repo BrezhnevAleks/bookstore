@@ -12,6 +12,10 @@ userRouter.delete(
 );
 userRouter.post("/login", userController.loginUser);
 userRouter.post("/update", middleware.tokenChecking, userController.updateUser);
-userRouter.get("/", middleware.tokenChecking, userController.getUsers);
+userRouter.post("/addtofavorites", userController.toFavorites);
+userRouter.post("/addtoshoplist", userController.toShoplist);
+userRouter.post("/shoplist", userController.getShoplist);
+userRouter.post("/favorites", userController.getFavorites);
+userRouter.post("/", middleware.tokenChecking, userController.getUsers);
 
 module.exports = userRouter;

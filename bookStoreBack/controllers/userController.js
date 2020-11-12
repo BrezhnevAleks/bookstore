@@ -46,6 +46,100 @@ exports.getUsers = async (request, response) => {
   }
 };
 
+exports.toFavorites = async (request, response) => {
+  try {
+    const { userID, bookID } = request.body;
+    const user = await db.User.findOne({
+      where: {
+        id: userID,
+      },
+    });
+
+    if (user.favorites.includes(bookID)) {
+      response.send(`Book id ${bookID} already in favorites`);
+      return;
+    }
+
+    await user.update(
+      {
+        favorites: [...user.favorites, bookID],
+      },
+      {
+        where: {
+          id: userID,
+        },
+      }
+    );
+
+    response.status(200).send(`Book id ${bookID} added to favorites`);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.toShoplist = async (request, response) => {
+  try {
+    const { userID, bookID } = request.body;
+    const user = await db.User.findOne({
+      where: {
+        id: userID,
+      },
+    });
+
+    if (user.shoplist.includes(bookID)) {
+      response.send(`Book id ${bookID} already in favorites`);
+      return;
+    }
+
+    await user.update(
+      {
+        shoplist: [...user.shoplist, bookID],
+      },
+      {
+        where: {
+          id: userID,
+        },
+      }
+    );
+
+    response.status(200).send(`Book id ${bookID} added to shoplist`);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.getShoplist = async (request, response) => {
+  try {
+    const { userID } = request.body;
+    const user = await db.User.findOne({ where: { id: userID } });
+    const data = await db.Book.findAll({
+      where: {
+        id: user.shoplist,
+      },
+    });
+    console.log(data);
+    response.status(200).send(data);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.getFavorites = async (request, response) => {
+  try {
+    const { userID } = request.body;
+    const user = await db.User.findOne({ where: { id: userID } });
+    const data = await db.Book.findAll({
+      where: {
+        id: user.favorites,
+      },
+    });
+    console.log(data);
+    response.status(200).send(data);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
 exports.deleteUser = async (request, response) => {
   const {
     body: { id },
@@ -74,12 +168,10 @@ exports.updateUser = async (request, response) => {
   const searchedValue = { email };
   try {
     const user = await db.User.findOne({ where: searchedValue });
-
     if (!user) {
       response.status(404).send(`User not found`);
       return;
     }
-
     await user.update(
       { name: newname },
       {
