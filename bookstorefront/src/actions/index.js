@@ -1,6 +1,11 @@
 import axios from "axios";
 //import axiosInstance from "../axios";
 
+export const addUser = (data) => ({
+  type: "ADD_USER",
+  data: data,
+});
+
 export const createUser = (login, email, password) => {
   return async (dispatch) => {
     dispatch(createStarted());
@@ -12,6 +17,7 @@ export const createUser = (login, email, password) => {
         completed: false,
       });
       dispatch(createSuccess(response.data.user));
+      dispatch(addUser(response.data.user));
     } catch (err) {
       dispatch(createFailure(err.message));
     }
@@ -44,6 +50,7 @@ export const loginUser = (email, password) => {
       });
       console.log(response.data.user);
       dispatch(loginSuccess(response.data.user));
+      dispatch(addUser(response.data.user));
       localStorage.setItem("authToken", response.data.token);
     } catch (err) {
       dispatch(loginFailure(err.message));
@@ -138,6 +145,7 @@ export const getOneBook = (id) => {
     }
   };
 };
+
 export const bookFetchSuccess = (book) => ({
   type: "BOOK_FETCH_SUCCESS",
   book: book,
@@ -221,6 +229,132 @@ export const changeBookStarted = () => ({
 
 export const changeBookFailure = (error) => ({
   type: "BOOK_CHANGE_FAILURE",
+  error,
+});
+
+export const toFavorites = (userID, bookID) => {
+  return async (dispatch) => {
+    dispatch(toFavoritesStarted());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/users/addtofavorites",
+        {
+          userID,
+          bookID,
+        }
+      );
+
+      dispatch(toFavoritesSuccess(response.data));
+    } catch (err) {
+      dispatch(toFavoritesFailure(err.message));
+    }
+  };
+};
+
+export const toFavoritesSuccess = (data) => ({
+  type: "ADD_FAVORITES_SUCCESS",
+  data: data,
+});
+
+export const toFavoritesStarted = () => ({
+  type: "ADD_FAVORITES_STARTED",
+});
+
+export const toFavoritesFailure = (error) => ({
+  type: "ADD_FAVORITES_FAILURE",
+  error,
+});
+
+export const toShopList = (userID, bookID) => {
+  return async (dispatch) => {
+    dispatch(toShopListStarted());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/users/addtoshoplist",
+        {
+          userID,
+          bookID,
+        }
+      );
+
+      dispatch(toShopListSuccess(response.data));
+    } catch (err) {
+      dispatch(toShopListFailure(err.message));
+    }
+  };
+};
+
+export const toShopListSuccess = (data) => ({
+  type: "ADD_SHOPLIST_SUCCESS",
+  data: data,
+});
+
+export const toShopListStarted = () => ({
+  type: "ADD_SHOPLIST_STARTED",
+});
+
+export const toShopListFailure = (error) => ({
+  type: "ADD_SHOPLIST_FAILURE",
+  error,
+});
+
+export const getShoplist = (userID) => {
+  return async (dispatch) => {
+    dispatch(shoplistFetchStarted());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/users/shoplist",
+        { userID }
+      );
+      console.log(response);
+      dispatch(shoplistFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(shoplistFetchFailure(err.message));
+    }
+  };
+};
+
+export const shoplistFetchSuccess = (data) => ({
+  type: "SHOPLIST_FETCH_SUCCESS",
+  data: data,
+});
+
+export const shoplistFetchStarted = () => ({
+  type: "SHOPLIST_FETCH_STARTED",
+});
+
+export const shoplistFetchFailure = (error) => ({
+  type: "SHOPLIST_FETCH_FAILURE",
+  error,
+});
+
+export const getFavoritesList = (userID) => {
+  return async (dispatch) => {
+    dispatch(favoritesListFetchStarted());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/users/favorites",
+        { userID }
+      );
+      console.log(response);
+      dispatch(favoritesListFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(favoritesListFetchFailure(err.message));
+    }
+  };
+};
+
+export const favoritesListFetchSuccess = (data) => ({
+  type: "FAVORITES_FETCH_SUCCESS",
+  data: data,
+});
+
+export const favoritesListFetchStarted = () => ({
+  type: "FAVORITES_FETCH_STARTED",
+});
+
+export const favoritesListFetchFailure = (error) => ({
+  type: "FAVORITES_FETCH_FAILURE",
   error,
 });
 

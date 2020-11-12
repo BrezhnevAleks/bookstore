@@ -1,11 +1,9 @@
 import { connect } from "react-redux";
 import * as mainAppActions from "../actions";
 
-const mapStateToProps = ({ registerUser, loginUser }) => {
+const mapStateToProps = ({ addUser }) => {
   return {
-    data: registerUser.data.hasOwnProperty("id")
-      ? registerUser.data
-      : loginUser.data,
+    data: addUser.data,
   };
 };
 

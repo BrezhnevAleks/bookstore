@@ -14,6 +14,12 @@ class BookPage extends React.Component {
     console.log(id);
     this.props.getOneBook(id);
   }
+  handleOnClickFavorites = (e) => {
+    this.props.toFavorites(this.props.user.id, this.props.book.id);
+  };
+  handleOnClickBasket = (e) => {
+    this.props.toShopList(this.props.user.id, this.props.book.id);
+  };
   render() {
     const { book } = this.props;
     return (
@@ -29,6 +35,12 @@ class BookPage extends React.Component {
         <h3 className="book-name">{book.name}</h3>
         <p className="book-author">{book.author}</p>
         <p className="book-price">{book.price}</p>
+        <button onClick={(e) => this.handleOnClickFavorites(e)}>
+          Добавить в избранное
+        </button>
+        <button onClick={(e) => this.handleOnClickBasket(e)}>
+          Добавить в корзину
+        </button>
         <Link to={{ pathname: `/books/change/${book.id}` }} id={book}>
           Изменить
         </Link>

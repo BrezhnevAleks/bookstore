@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import * as bookActions from "../../actions";
 
-const mapStateToProps = ({ singlebook, addUser }) => {
+const mapStateToProps = ({ shoplist, addUser }) => {
   return {
-    book: singlebook.book,
+    shoplist: shoplist.data,
     user: addUser.data,
   };
 };

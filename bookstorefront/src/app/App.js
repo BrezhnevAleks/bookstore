@@ -14,11 +14,12 @@ import PrivateRoute from "../routs/privateroute";
 import BookPage from "../containers/bookpage/bookpage.js";
 import NewBook from "../containers/createbook/newbook.js";
 import ChangeBook from "../containers/changebook/changebook.js";
+import FavoritesList from "../containers/favorites/favorites.js";
+import ShopList from "../containers/shoplist/shoplist.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { logged: false };
   }
 
   render() {
@@ -70,6 +71,18 @@ class App extends React.Component {
             user={this.props.data}
             path="/books/change/:id"
             component={ChangeBook}
+            exact
+          />
+          <PrivateRoute
+            user={this.props.data}
+            path="/shoplist"
+            component={ShopList}
+            exact
+          />
+          <PrivateRoute
+            user={this.props.data}
+            path="/favorites"
+            component={FavoritesList}
             exact
           />
         </Switch>

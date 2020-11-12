@@ -5,6 +5,9 @@ import booklist from "./books";
 import singlebook from "./onebook";
 import createbook from "./onebook";
 import changebook from "./changebook";
+import addUser from "./adduser";
+import shoplist from "./shoplist";
+import favorites from "./favorites";
 
 export default combineReducers({
   registerUser,
@@ -13,4 +16,7 @@ export default combineReducers({
   singlebook,
   createbook,
   changebook,
+  addUser,
+  shoplist,
+  favorites,
 });

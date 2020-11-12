@@ -16,6 +16,8 @@ class MainPage extends React.Component {
       <div>
         <header>
           <Link to="/newbook"> Создать новую книгу</Link>
+          <Link to="/favorites"> Избранное</Link>
+          <Link to="/shoplist"> Корзина</Link>
         </header>
         <div>
           <BookList />

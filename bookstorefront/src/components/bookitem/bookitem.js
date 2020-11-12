@@ -21,7 +21,6 @@ class BookItem extends React.Component {
         <h3 className="item-name">{item.name}</h3>
         <p className="item-author">{item.author}</p>
         <p className="item-price">{item.price}</p>
-        <button>Добавить</button>
       </div>
     );
   }
