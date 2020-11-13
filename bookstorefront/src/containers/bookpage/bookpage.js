@@ -8,6 +8,7 @@ import "./style.css";
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { text: "" };
   }
   componentDidMount() {
     const { id } = this.props.match.params;
@@ -20,6 +21,13 @@ class BookPage extends React.Component {
   handleOnClickBasket = (e) => {
     this.props.toShopList(this.props.user.id, this.props.book.id);
   };
+  handleReviewOnChange(e) {
+    this.setState({ text: e.target.value });
+  }
+  handleReviewOnSubmit(e) {
+    e.preventDefault();
+    this.setState({ text: "" });
+  }
   render() {
     const { book } = this.props;
     return (
@@ -45,6 +53,16 @@ class BookPage extends React.Component {
           Изменить
         </Link>
         <Link to="/">На главную</Link>
+        <form onSubmit={(e) => this.handleReviewOnSubmit(e)}>
+          <textarea
+            value={this.state.text}
+            onChange={(e) => this.handleReviewOnChange(e)}
+            placeholder="Пожалуйста, оставьте отзыв об этой книге"
+            style={{ border: "1px solid black" }}
+          ></textarea>
+          <input type="submit" value="Оставить отзыв" />
+          {/* Компонент котрый будет мапать отзывы */}
+        </form>
       </div>
     );
   }

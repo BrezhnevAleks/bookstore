@@ -22,10 +22,10 @@ class LoginPage extends React.Component {
     console.log("Request is going: " + email, password);
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
-    //return <Redirect to="/" />;
   };
 
   render() {
+    const { email, password } = this.state;
     return (
       <div className="login">
         <h1>Sign in</h1>
@@ -38,6 +38,7 @@ class LoginPage extends React.Component {
         >
           <label>Email</label>
           <input
+            value={email}
             className="sign-input"
             onChange={(e) => this.handleChangeEmail(e)}
             type="email"
@@ -46,6 +47,7 @@ class LoginPage extends React.Component {
 
           <label>Password</label>
           <input
+            value={password}
             className="sign-input"
             onChange={(e) => this.handleChangePassword(e)}
             type="text"

@@ -28,7 +28,7 @@ class RegisterPage extends React.Component {
   };
 
   render() {
-    console.log(this.props);
+    const { login, email, password } = this.state;
     return (
       <div className="login">
         <h1>Sign up</h1>
@@ -40,6 +40,7 @@ class RegisterPage extends React.Component {
         >
           <label>Login</label>
           <input
+            value={login}
             required
             className="sign-input"
             onChange={(e) => this.handleChangeLogin(e)}
@@ -49,6 +50,7 @@ class RegisterPage extends React.Component {
 
           <label>Password</label>
           <input
+            value={password}
             required
             className="sign-input"
             onChange={(e) => this.handleChangePassword(e)}
@@ -58,6 +60,7 @@ class RegisterPage extends React.Component {
 
           <label>Email</label>
           <input
+            value={email}
             required
             className="sign-input"
             onChange={(e) => this.handleChangeEmail(e)}

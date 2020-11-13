@@ -4,6 +4,7 @@ import BooksFilter from "../../components/booksfilter/booksfilter";
 import connect from "./connect";
 import "./style.css";
 import { Link } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 
 class BookList extends React.Component {
   constructor(props) {
@@ -22,30 +23,40 @@ class BookList extends React.Component {
     const { books } = this.props;
 
     return (
-      <div className="booklist">
-        <div className="booklist-header">
-          <span className="booklist-count">
-            {"Книг доступно: " + this.props.books.length}
-          </span>
-          <BooksFilter
-            books={this.props.books}
-            getSortBooks={this.props.getSortBooks}
-            handleOnChangeFilter={this.handleOnChangeFilter}
-          />
-        </div>
-        <div className="books">
+      <div>
+        <Grid
+          container
+          spacing="3"
+          lg="12"
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <div className="booklist-header">
+            <span className="booklist-count">
+              {"Книг доступно: " + this.props.books.length}
+            </span>
+            <BooksFilter
+              books={this.props.books}
+              getSortBooks={this.props.getSortBooks}
+              handleOnChangeFilter={this.handleOnChangeFilter}
+            />
+          </div>
+
           {books.map((item) => (
-            <Link
-              key={item.id}
-              to={{
-                pathname: `/books/${item.id}`,
-                state: { fromDashboard: true },
-              }}
-            >
-              <BookItem item={item} key={item.id} />{" "}
-            </Link>
+            <Grid item xs={4}>
+              <Link
+                key={item.id}
+                to={{
+                  pathname: `/books/${item.id}`,
+                  state: { fromDashboard: true },
+                }}
+              >
+                <BookItem item={item} key={item.id} />
+              </Link>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </div>
     );
   }
