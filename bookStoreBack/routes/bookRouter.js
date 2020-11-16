@@ -8,5 +8,6 @@ bookRouter.post("/one", bookController.getOneBook);
 bookRouter.get("/", bookController.getBooks);
 bookRouter.post("/newbook", upload.upload, bookController.createBook);
 bookRouter.post("/changebook", upload.upload, bookController.changeBook);
+bookRouter.post("/reviews", bookController.getReviews);
 
 module.exports = bookRouter;

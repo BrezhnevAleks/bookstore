@@ -124,6 +124,16 @@ exports.getShoplist = async (request, response) => {
   }
 };
 
+exports.addReview = async (request, response) => {
+  const { userId, bookId, text } = request.body;
+  try {
+    await db.Review.create({ text: text, bookId: bookId, userId: userId });
+    response.status(200).send("Success");
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
 exports.getFavorites = async (request, response) => {
   try {
     const { userID } = request.body;

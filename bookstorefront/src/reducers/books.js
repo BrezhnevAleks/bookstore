@@ -11,7 +11,6 @@ const booklist = (
       return {
         ...state,
         loading: true,
-        isLogged: false,
       };
     case "BOOKS_FETCH_SUCCESS":
       return {
@@ -19,7 +18,6 @@ const booklist = (
         loading: false,
         error: null,
         books: action.books,
-        isLogged: true,
       };
     case "BOOKS_FETCH_FAILURE":
       return {
@@ -47,6 +45,7 @@ const booklist = (
         loading: false,
         error: action.error,
       };
+
     default:
       return state;
   }

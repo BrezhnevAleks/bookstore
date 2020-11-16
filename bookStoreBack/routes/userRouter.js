@@ -16,6 +16,7 @@ userRouter.post("/addtofavorites", userController.toFavorites);
 userRouter.post("/addtoshoplist", userController.toShoplist);
 userRouter.post("/shoplist", userController.getShoplist);
 userRouter.post("/favorites", userController.getFavorites);
+userRouter.post("/addreview", userController.addReview);
 userRouter.post("/", middleware.tokenChecking, userController.getUsers);
 
 module.exports = userRouter;

@@ -1,3 +1,45 @@
+.categories {
+  font-size: 22px;
+  margin-bottom: 1.5em;
+  font-weight: 500;
+}
+.genres {
+  display: "flex";
+  flex-direction: "column";
+  font-size: 20px;
+  line-height: 2em;
+}
+
+.genre-filter {
+  color: black;
+  padding: 0 0.5em;
+  transition: top 1s ease-out 0.5s;
+  position: relative;
+}
+
+.genre-filter:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 200%;
+  height: 100%;
+
+  background: linear-gradient(
+    to right,
+    rgb(235, 235, 235) 0%,
+    rgb(235, 235, 235) 50%,
+    white 50%,
+    white 100%
+  );
+  border-radius: 10px;
+  transition: left 0.3s ease-out;
+  z-index: -1;
+}
+.genre-filter:hover:before {
+  left: 0;
+}
+
 .books {
   display: flex;
   justify-content: space-evenly;
@@ -13,7 +55,7 @@
 .booklist-header {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -24,4 +66,10 @@
 .react-select-container {
   width: 400px;
   border: none;
+}
+@media (min-width: 320px) and (max-width: 767px) {
+  .booklist-header {
+    flex-direction: column;
+    justify-content: center;
+  }
 }

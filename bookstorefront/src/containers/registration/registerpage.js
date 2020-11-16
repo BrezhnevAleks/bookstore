@@ -8,14 +8,16 @@ class RegisterPage extends React.Component {
     super(props);
     this.state = { login: "", email: "", password: "" };
   }
-  handleChangeLogin = (e) => {
-    this.setState({ login: e.target.value });
-  };
-  handleChangeEmail = (e) => {
-    this.setState({ email: e.target.value });
-  };
-  handleChangePassword = (e) => {
-    this.setState({ password: e.target.value });
+
+  handleChange = (e) => {
+    switch (e.target.name) {
+      case "login":
+        return this.setState({ login: e.target.value });
+      case "email":
+        return this.setState({ email: e.target.value });
+      case "password":
+        return this.setState({ password: e.target.value });
+    }
   };
 
   handleSubmit = async (e) => {
@@ -43,9 +45,9 @@ class RegisterPage extends React.Component {
             value={login}
             required
             className="sign-input"
-            onChange={(e) => this.handleChangeLogin(e)}
+            onChange={this.handleChange}
             type="text"
-            name="userLogin"
+            name="login"
           />
 
           <label>Password</label>
@@ -53,9 +55,9 @@ class RegisterPage extends React.Component {
             value={password}
             required
             className="sign-input"
-            onChange={(e) => this.handleChangePassword(e)}
+            onChange={this.handleChange}
             type="text"
-            name="userPassword"
+            name="password"
           />
 
           <label>Email</label>
@@ -63,9 +65,9 @@ class RegisterPage extends React.Component {
             value={email}
             required
             className="sign-input"
-            onChange={(e) => this.handleChangeEmail(e)}
+            onChange={this.handleChange}
             type="email"
-            name="userEmail"
+            name="email"
           />
 
           <div className="buttons">

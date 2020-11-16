@@ -26,36 +26,114 @@ class BookList extends React.Component {
       <div>
         <Grid
           container
-          spacing="3"
+          spacing="4"
           lg="12"
           direction="row"
-          justify="center"
-          alignItems="center"
+          justify="space-between"
+          alignItems="flex-start"
+          style={{ padding: "0 5%" }}
         >
-          <div className="booklist-header">
-            <span className="booklist-count">
-              {"Книг доступно: " + this.props.books.length}
-            </span>
-            <BooksFilter
-              books={this.props.books}
-              getSortBooks={this.props.getSortBooks}
-              handleOnChangeFilter={this.handleOnChangeFilter}
-            />
-          </div>
+          <Grid
+            container
+            justify="flex"
+            className="genres"
+            direction="column"
+            alignItems="flex-start"
+            xs={3}
+          >
+            <h3 className="categories">Категории</h3>
+            <Link
+              value="genre"
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Фантастика
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Детектив
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Классика
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Путешестия
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Учебники
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Детские книги
+            </Link>
+            <Link
+              to={{
+                pathname: `/books/genre/id`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+            >
+              Поэзия
+            </Link>
+          </Grid>
 
-          {books.map((item) => (
-            <Grid item xs={4}>
-              <Link
-                key={item.id}
-                to={{
-                  pathname: `/books/${item.id}`,
-                  state: { fromDashboard: true },
-                }}
-              >
-                <BookItem item={item} key={item.id} />
-              </Link>
+          <Grid container xs={9} spacing="3">
+            <Grid item xs={12} className="booklist-header">
+              <span className="booklist-count">
+                {"Книг доступно: " + books.length}
+              </span>
+              <BooksFilter
+                books={books}
+                getSortBooks={this.props.getSortBooks}
+                handleOnChangeFilter={this.handleOnChangeFilter}
+              />
             </Grid>
-          ))}
+
+            {books.map((item) => (
+              <Grid item lg={3} sm={4}>
+                <Link
+                  key={item.id}
+                  to={{
+                    pathname: `/books/${item.id}`,
+                    state: { fromDashboard: true },
+                  }}
+                >
+                  <BookItem item={item} key={item.id} />
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       </div>
     );

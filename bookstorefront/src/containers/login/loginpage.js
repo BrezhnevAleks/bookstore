@@ -6,13 +6,15 @@ import "./style.css";
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "", logged: false };
+    this.state = { email: "", password: "" };
   }
-  handleChangeEmail = (e) => {
-    this.setState({ email: e.target.value });
-  };
-  handleChangePassword = (e) => {
-    this.setState({ password: e.target.value });
+  handleChange = (e) => {
+    switch (e.target.name) {
+      case "userEmail":
+        return this.setState({ email: e.target.value });
+      case "userPassword":
+        return this.setState({ password: e.target.value });
+    }
   };
 
   handleSubmit = async (e) => {
@@ -40,7 +42,7 @@ class LoginPage extends React.Component {
           <input
             value={email}
             className="sign-input"
-            onChange={(e) => this.handleChangeEmail(e)}
+            onChange={(e) => this.handleChange(e)}
             type="email"
             name="userEmail"
           />
@@ -49,7 +51,7 @@ class LoginPage extends React.Component {
           <input
             value={password}
             className="sign-input"
-            onChange={(e) => this.handleChangePassword(e)}
+            onChange={(e) => this.handleChange(e)}
             type="text"
             name="userPassword"
           />

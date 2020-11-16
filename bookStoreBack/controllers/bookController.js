@@ -71,6 +71,49 @@ exports.createBook = async (request, response) => {
   }
 };
 
+exports.getReviews = async (request, response) => {
+  try {
+    const { bookId } = request.body;
+    const reviews = await db.Review.findAll({
+      where: { bookId },
+      include: {
+        model: db.User,
+        as: "user",
+        attributes: ["login"],
+      },
+    });
+    console.log(reviews.user);
+    console.log(reviews);
+    if (!reviews) {
+      response.status(404).send(`No reviews yet`);
+      return;
+    }
+
+    response.send(reviews);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.getSortBooks = async (request, response) => {
+  try {
+    let books = await db.Book.findAll({ raw: true });
+    const { filter } = await request.body;
+    console.log(filter);
+    if (!books) {
+      response
+        .status(404)
+        .send("No data in the database. Books should be added first");
+      return;
+    }
+    utils.sortingType(books, filter);
+
+    response.status(200).send(books);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
 exports.changeBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");

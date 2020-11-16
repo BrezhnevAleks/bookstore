@@ -1,0 +1,51 @@
+.menu {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0px;
+  background-color: #5dc8e9;
+  margin-bottom: 50px;
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+}
+.menu-icons {
+  justify-self: end;
+  display: flex;
+  font-size: 24px;
+}
+.menu-create {
+  color: black;
+  transition-duration: 0.8s;
+  transition-property: transform;
+}
+
+.menu-create:hover .menu-create-icon {
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+}
+.menu-create-icon {
+  transition-duration: 0.8s;
+  transition-property: transform;
+}
+
+.menu-favorites {
+  color: red;
+}
+.menu-favorites:hover {
+  color: #5c99e9;
+}
+
+.menu-shoplist {
+  color: #5fb37c;
+  margin: 0 25px;
+}
+.menu-shoplist:hover {
+  color: #5c99e9;
+}
+.menu-sign-out {
+  color: #ffb160;
+  margin-left: 25px;
+}
+.menu-sign-out:hover {
+  color: #5c99e9;
+}

@@ -358,6 +358,64 @@ export const favoritesListFetchFailure = (error) => ({
   error,
 });
 
+export const addReview = (userId, bookId, text) => {
+  return async (dispatch) => {
+    dispatch(addReviewStarted());
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/users/addreview",
+        { userId, bookId, text }
+      );
+      dispatch(addReviewSuccess(response.data));
+    } catch (err) {
+      dispatch(addReviewFailure(err.message));
+    }
+  };
+};
+
+export const addReviewSuccess = (data) => ({
+  type: "ADD_REVIEW_SUCCESS",
+  data: data,
+});
+
+export const addReviewStarted = () => ({
+  type: "ADD_REVIEW_STARTED",
+});
+
+export const addReviewFailure = (error) => ({
+  type: "ADD_REVIEW_FAILURE",
+  error,
+});
+
+export const getReviews = (bookId) => {
+  return async (dispatch) => {
+    dispatch(getReviewsStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/books/reviews", {
+        bookId,
+      });
+      console.log(response);
+      dispatch(getReviewsSuccess(response.data));
+    } catch (err) {
+      dispatch(getReviewsFailure(err.message));
+    }
+  };
+};
+
+export const getReviewsSuccess = (data) => ({
+  type: "GET_REVIEWS_SUCCESS",
+  data: data,
+});
+
+export const getReviewsStarted = () => ({
+  type: "GET_REVIEWS_STARTED",
+});
+
+export const getReviewsFailure = (error) => ({
+  type: "GET_REVIEWS_FAILURE",
+  error,
+});
+
 // export const createBook = (name, author, price, file) => {
 //   return async (dispatch) => {
 //     dispatch(createBookStarted());

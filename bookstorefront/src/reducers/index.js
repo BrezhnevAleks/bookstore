@@ -8,6 +8,8 @@ import changebook from "./changebook";
 import addUser from "./adduser";
 import shoplist from "./shoplist";
 import favorites from "./favorites";
+import addReview from "./addReview";
+import getReviews from "./getReviews";
 
 export default combineReducers({
   registerUser,
@@ -19,4 +21,6 @@ export default combineReducers({
   addUser,
   shoplist,
   favorites,
+  addReview,
+  getReviews,
 });
