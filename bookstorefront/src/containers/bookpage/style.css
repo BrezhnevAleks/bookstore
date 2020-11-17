@@ -1,27 +1,93 @@
+.book-page {
+  display: flex;
+  justify-content: center;
+}
+
 .book {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-right: 25px;
 }
 
 .book-name {
-  line-height: 0.875rem;
   display: block;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.5em;
 }
 
 .book-author {
-  font-size: 0.75rem;
-  font-weight: 450;
-  line-height: 0.875rem;
+  font-size: 17px;
+  line-height: 1;
+  color: #a0a0a0;
 }
 
 .book-price {
-  font-size: 24px;
-  color: darkcyan;
+  font-size: 32px;
+  color: #5c99e9;
 }
 
 .book-image {
-  max-width: 300px;
-  max-height: 500px;
+  width: 400px;
+  height: 500px;
+}
+
+.book-buttons {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 25px;
+  align-self: center;
+}
+
+.book-buttons-basket {
+  padding: 20px 40px;
+  margin: 16px 0;
+  background-color: #5c99e9;
+  color: white;
+  font-size: 17px;
+  border: 3px solid #5c99e9;
+  transition: all 0.2s linear;
+}
+.book-buttons-basket:hover {
+  background-color: #5dc8e9;
+  color: #203046;
+}
+
+.book-buttons-favorites {
+  padding: 10px 15px;
+  margin-bottom: 16px;
+  background-color: #4fe9c2;
+  color: rgb(54, 53, 53);
+  font-size: 17px;
+  transition: all 0.2s linear;
+}
+
+.book-buttons-favorites-icon {
+  margin-right: 5px;
+  font-size: 22px;
+  color: #ff5f56;
+  vertical-align: middle;
+}
+
+.book-buttons-favorites:hover {
+  background-color: #5dc8e9;
+  color: white;
+}
+
+.book-buttons-edit {
+  padding: 10px 15px;
+  margin-bottom: 16px;
+
+  color: rgb(54, 53, 53);
+  font-size: 17px;
+  transition: all 0.2s linear;
+}
+
+.book-buttons-edit-icon {
+  margin-right: 5px;
+  font-size: 17px;
 }

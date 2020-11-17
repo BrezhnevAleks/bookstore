@@ -27,7 +27,7 @@ class BookList extends React.Component {
         <Grid
           container
           spacing="4"
-          lg="12"
+          xs={12}
           direction="row"
           justify="space-between"
           alignItems="flex-start"
