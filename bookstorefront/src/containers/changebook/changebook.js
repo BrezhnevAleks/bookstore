@@ -34,14 +34,7 @@ class ChangeBook extends React.Component {
     formData.append("author", this.state.author);
     formData.append("price", this.state.price);
     formData.append("id", this.props.match.params.id);
-    for (let value of formData.values()) {
-      console.log(value);
-    }
     this.props.changeBook(formData);
-    // let { name, author, price, file } = this.state;
-    // console.log("Request is going: " + name, author, price, file);
-    // this.props.createBook(name, author, price, file);
-    // this.setState({ name: "", author: "", price: "", file: {} });
   };
 
   componentDidMount() {

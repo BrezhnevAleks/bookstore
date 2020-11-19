@@ -24,6 +24,7 @@
   -webkit-transform: rotate(360deg);
 }
 .menu-create-icon {
+  margin-right: 5px;
   transition-duration: 0.8s;
   transition-property: transform;
 }

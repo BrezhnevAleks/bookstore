@@ -11,11 +11,13 @@ class BookList extends React.Component {
     super(props);
     this.state = { filter: "default" };
   }
+
   handleOnChangeFilter = (e) => {
     this.props.getSortBooks(e.value);
   };
+
   componentDidMount() {
-    this.props.getBooks();
+    this.props.getSortBooks(this.state.filter);
     this.setState({ books: this.props.books });
   }
 
@@ -45,7 +47,7 @@ class BookList extends React.Component {
             <Link
               value="genre"
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/fantasy`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -54,7 +56,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/detective`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -63,7 +65,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/classic`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -72,7 +74,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/journey`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -81,7 +83,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/textbooks`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -90,7 +92,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/kids`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"
@@ -99,7 +101,7 @@ class BookList extends React.Component {
             </Link>
             <Link
               to={{
-                pathname: `/books/genre/id`,
+                pathname: `/books/genre/poetry`,
                 state: { fromDashboard: true },
               }}
               className="genre-filter"

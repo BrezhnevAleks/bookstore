@@ -6,7 +6,6 @@
   margin: 0 auto;
   border: 1px solid black;
   height: 300px;
-  /* max-width: 200px; */
   padding-bottom: 10px;
 }
 
@@ -22,12 +21,12 @@
 }
 
 .item-price {
-  font-size: 24px;
-  color: darkcyan;
+  font-size: 28px;
+  color: #5c99e9;
 }
 
 .item-image {
   width: 140px;
-  height: 150px;
-  margin: 15px 5px 20px 5px;
+  height: 180px;
+  margin: 15px 5px 15px 5px;
 }

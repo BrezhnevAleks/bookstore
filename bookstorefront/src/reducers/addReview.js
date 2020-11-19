@@ -3,7 +3,6 @@ const addReview = (
     loading: false,
     data: {},
     error: null,
-    isLogged: false,
   },
   action
 ) => {

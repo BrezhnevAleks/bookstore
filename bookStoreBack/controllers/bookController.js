@@ -64,8 +64,31 @@ exports.createBook = async (request, response) => {
       price: request.body.price,
       picture: url + "/" + request.file.filename,
     });
-    if (!book) response.send("Ошибка при загрузке файла");
-    else response.send(book);
+
+    if (!book) {
+      response.send("Ошибка при загрузке файла");
+      return;
+    }
+    const { genre } = request.body;
+    const newgenre = await db.Genre.findOne({ where: { name: genre } });
+    if (newgenre) {
+      await newgenre.update(
+        {
+          booksId: [...newgenre.booksId, book.id],
+        },
+        {
+          where: {
+            name: genre,
+          },
+        }
+      );
+    } else {
+      const creategenre = await db.Genre.create({
+        name: genre,
+        booksId: [book.id],
+      });
+    }
+    response.send(book);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

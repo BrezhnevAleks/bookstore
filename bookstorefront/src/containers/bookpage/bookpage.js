@@ -13,25 +13,30 @@ import "./style.css";
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: "" };
+    this.state = { text: "", favorites: this.props.user.favorites };
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log(id);
     this.props.getReviews(id);
     this.props.getOneBook(id);
   }
   handleOnClickFavorites = (e) => {
-    this.props.toFavorites(this.props.user.id, this.props.book.id);
+    const { id } = this.props.book;
+    let { favorites } = this.state;
+    console.log(favorites.includes(Number(id)));
+    this.props.toFavorites(this.props.user.id, id);
+    console.log(this.props.toFavorites(this.props.user.id, id));
+    favorites.push(Number(id));
+    this.setState({ favorites });
   };
   handleOnClickBasket = (e) => {
     this.props.toShopList(this.props.user.id, this.props.book.id);
   };
-  handleReviewOnChange(e) {
+  handleReviewOnChange = (e) => {
     this.setState({ text: e.target.value });
-  }
-  handleReviewOnSubmit(e) {
+  };
+  handleReviewOnSubmit = (e) => {
     e.preventDefault();
     this.props.addReview(
       this.props.user.id,
@@ -39,10 +44,16 @@ class BookPage extends React.Component {
       this.state.text
     );
     this.setState({ text: "" });
-  }
+    this.props.getReviews(this.props.match.params.id);
+    this.forceUpdate();
+  };
   render() {
+    let { id } = this.props.match.params;
+    id = Number(id);
     const { book, reviews } = this.props;
-
+    const { favorites } = this.state;
+    console.log(Array.isArray(favorites));
+    console.log(id);
     return (
       <div>
         <Header />
@@ -59,20 +70,35 @@ class BookPage extends React.Component {
               className="book-image"
             />
 
-            <form onSubmit={this.handleReviewOnSubmit}>
+            <form className="review-form" onSubmit={this.handleReviewOnSubmit}>
               <textarea
+                rows="10"
+                cols="50"
+                className="review-textarea"
                 value={this.state.text}
                 onChange={(e) => this.handleReviewOnChange(e)}
                 placeholder="Пожалуйста, оставьте отзыв об этой книге"
                 style={{ border: "1px solid black" }}
               />
 
-              <input type="submit" value="Оставить отзыв" />
+              <input
+                className="review-submit"
+                type="submit"
+                value="Оставить отзыв"
+              />
             </form>
+
             {!reviews.length ? (
-              <p>Будьте первым, кто добавит отзыв к этой книге!</p>
+              <p className="review-plug">
+                Будьте первым, кто добавит отзыв к этой книге!
+              </p>
             ) : (
-              reviews.map((item) => <ReviewItem item={item} key={item.id} />)
+              <div className="review-list">
+                <h4 className="reviews-title">Отзывы</h4>
+                {reviews.map((item) => (
+                  <ReviewItem item={item} key={item.id} />
+                ))}
+              </div>
             )}
           </div>
           <div className="book-buttons">
@@ -84,16 +110,29 @@ class BookPage extends React.Component {
             >
               Добавить в корзину
             </button>
-            <button
-              className="book-buttons-favorites"
-              onClick={(e) => this.handleOnClickFavorites(e)}
-            >
-              <FontAwesomeIcon
-                className="book-buttons-favorites-icon"
-                icon={faHeart}
-              />
-              Добавить в избранное
-            </button>
+            {!favorites.includes(id) ? (
+              <button
+                className="book-buttons-favorites"
+                onClick={(e) => this.handleOnClickFavorites(e)}
+              >
+                <FontAwesomeIcon
+                  className="book-buttons-favorites-icon"
+                  icon={faHeart}
+                />
+                Добавить в избранное
+              </button>
+            ) : (
+              <Link
+                className="book-buttons-favorites-active"
+                to={{ pathname: `/favorites` }}
+              >
+                <FontAwesomeIcon
+                  className="book-buttons-favorites-icon"
+                  icon={faHeart}
+                />
+                Перейти в избранное
+              </Link>
+            )}
             <Link
               className="book-buttons-edit"
               to={{ pathname: `/books/change/${book.id}` }}

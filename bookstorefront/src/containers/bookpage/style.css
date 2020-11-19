@@ -60,7 +60,18 @@
 .book-buttons-favorites {
   padding: 10px 15px;
   margin-bottom: 16px;
+  border: 3px solid #4fe9c2;
   background-color: #4fe9c2;
+  color: rgb(54, 53, 53);
+  font-size: 17px;
+  transition: all 0.2s linear;
+}
+
+.book-buttons-favorites-active {
+  padding: 10px 15px;
+  margin-bottom: 16px;
+  border: 3px solid #4fe9c2;
+  background-color: white;
   color: rgb(54, 53, 53);
   font-size: 17px;
   transition: all 0.2s linear;
@@ -75,6 +86,7 @@
 
 .book-buttons-favorites:hover {
   background-color: #5dc8e9;
+  border: 3px solid #5dc8e9;
   color: white;
 }
 
@@ -90,4 +102,50 @@
 .book-buttons-edit-icon {
   margin-right: 5px;
   font-size: 17px;
+}
+.review-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+.review-textarea {
+  outline: none !important;
+  resize: none;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 2px #719ece !important;
+  font-size: 14px;
+}
+
+.review-submit {
+  padding: 15px 35px;
+  margin: 16px 0;
+  background-color: #719ece;
+  color: white;
+  font-size: 17px;
+  border: 3px solid #719ece;
+  border-radius: 5px;
+  transition: all 0.2s linear;
+}
+.review-submit:hover {
+  opacity: 0.8;
+}
+
+.review-plug {
+  text-align: center;
+  font-size: 18px;
+  font-style: italic;
+  margin: 30px auto;
+}
+.reviews-title {
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+.review-list {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 100%;
 }
