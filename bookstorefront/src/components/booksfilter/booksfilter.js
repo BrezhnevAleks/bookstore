@@ -2,9 +2,6 @@ import React from "react";
 import Select from "react-select";
 
 class BooksFilter extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     const options = [
       { value: "default", label: "По умолчанию", selected: true },

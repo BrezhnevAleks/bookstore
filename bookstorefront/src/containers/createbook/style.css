@@ -1,11 +1,16 @@
+.create-book-title {
+  margin-bottom: 35px;
+}
+
 .new-book {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
+
 .new-book-submit {
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 10px 30px;
   line-height: 26px;
   text-align: center;
@@ -19,7 +24,6 @@
 
 .new-book-input {
   line-height: 1.2;
-  padding: 4px 4px 4px 4px;
   margin: 10px auto;
   padding: 10px 30px;
   color: black;

@@ -1,3 +1,10 @@
+.home-page {
+  font-size: 24px;
+  color: rgb(241, 231, 78);
+}
+.home-page:hover {
+  color: #5c99e9;
+}
 .menu {
   display: flex;
   justify-content: space-around;
@@ -37,7 +44,7 @@
 }
 
 .menu-shoplist {
-  color: #5fb37c;
+  color: #6ac088;
   margin: 0 25px;
 }
 .menu-shoplist:hover {

@@ -6,6 +6,11 @@ export const addUser = (data) => ({
   data: data,
 });
 
+export const addBooks = (data) => ({
+  type: "ADD_BOOKS",
+  data: data,
+});
+
 export const createUser = (login, email, password) => {
   return async (dispatch) => {
     dispatch(createStarted());
@@ -80,6 +85,7 @@ export const getBooks = () => {
       const response = await axios.get("http://localhost:4000/books");
       console.log(response);
       dispatch(booksFetchSuccess(response.data));
+      dispatch(addBooks(response.data));
     } catch (err) {
       dispatch(booksFetchFailure(err.message));
     }
@@ -110,6 +116,7 @@ export const getSortBooks = (filter) => {
       console.log(response);
 
       dispatch(sortBooksFetchSuccess(response.data));
+      dispatch(addBooks(response.data));
     } catch (err) {
       dispatch(sortBooksFetchFailure(err.message));
     }
@@ -157,6 +164,36 @@ export const bookFetchStarted = () => ({
 
 export const bookFetchFailure = (error) => ({
   type: "BOOK_FETCH_FAILURE",
+  error,
+});
+
+export const getBooksByGenre = (genre) => {
+  return async (dispatch) => {
+    dispatch(booksFetchByGenreStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/books/genre", {
+        genre,
+      });
+
+      dispatch(booksFetchByGenreSuccess(response.data));
+      dispatch(addBooks(response.data));
+    } catch (err) {
+      dispatch(booksFetchByGenreFailure(err.message));
+    }
+  };
+};
+
+export const booksFetchByGenreSuccess = (books) => ({
+  type: "BOOKS_FETCH_BY_GENRE_SUCCESS",
+  books: books,
+});
+
+export const booksFetchByGenreStarted = () => ({
+  type: "BOOKS_FETCH_BY_GENRE_STARTED",
+});
+
+export const booksFetchByGenreFailure = (error) => ({
+  type: "BOOKS_FETCH_BY_GENRE_FAILURE",
   error,
 });
 
@@ -413,6 +450,33 @@ export const getReviewsStarted = () => ({
 
 export const getReviewsFailure = (error) => ({
   type: "GET_REVIEWS_FAILURE",
+  error,
+});
+
+export const getGenres = () => {
+  return async (dispatch) => {
+    dispatch(genresFetchStarted());
+    try {
+      const response = await axios.get("http://localhost:4000/books/getgenres");
+
+      dispatch(genresFetchSuccess(response.data));
+    } catch (err) {
+      dispatch(genresFetchFailure(err.message));
+    }
+  };
+};
+
+export const genresFetchSuccess = (genres) => ({
+  type: "GENRES_FETCH_SUCCESS",
+  genres: genres,
+});
+
+export const genresFetchStarted = () => ({
+  type: "GENRES_FETCH_STARTED",
+});
+
+export const genresFetchFailure = (error) => ({
+  type: "GENRES_FETCH_FAILURE",
   error,
 });
 

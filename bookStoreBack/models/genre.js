@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Genre.init(
     {
-      name: DataTypes.STRING,
+      value: DataTypes.STRING,
+      label: DataTypes.STRING,
       booksId: { type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: [] },
     },
     {

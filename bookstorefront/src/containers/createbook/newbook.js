@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
+import Header from "../header/header";
 import "./style.css";
 
 class NewBook extends React.Component {
@@ -51,44 +52,46 @@ class NewBook extends React.Component {
   };
 
   render() {
+    const { genres } = this.props;
     const options = [
-      { value: "fantasy", label: "Фантастика", selected: true },
-      { value: "detective", label: "Детектив" },
-      { value: "classic", label: "Классика" },
-      { value: "journey", label: "Путешестия" },
-      { value: "textbooks", label: "Учебники" },
-      { value: "kids", label: "Детские книги" },
-      { value: "poetry", label: "Поэзия" },
+      {
+        value: "default",
+        label: "Жанр",
+        isdisabled: true,
+      },
+      ...genres,
     ];
 
     const customStyles = {
       control: (base, state) => ({
         ...base,
-        width: 280,
+        width: 265,
         fontSize: 16,
-        paddingLeft: "4px",
+        padding: "2px 22px",
+
         background: "#eceff1",
         borderRadius: "5px",
         border: "2px solid #5c99e9",
-        margin: "0 auto",
+        margin: "10px auto",
       }),
       menu: (base) => ({
         ...base,
-        width: 280,
+        width: 265,
         borderRadius: 0,
         marginTop: 0,
-        margin: 0,
+        margin: "0px 45%",
       }),
       menuList: (base) => ({
         ...base,
         padding: 0,
-        margin: 0,
+        margin: "0px auto",
       }),
     };
 
     return (
       <div>
-        <h1>Добавить книгу</h1>
+        <Header />
+        <h1 className="create-book-title">Добавить книгу</h1>
         <form
           className="new-book"
           encType="multipart/form-data"
@@ -123,6 +126,7 @@ class NewBook extends React.Component {
             styles={customStyles}
             defaultValue={options[0]}
             options={options}
+            isOptionDisabled={(option) => option.isdisabled}
             onChange={(e) => this.handleChangeSelect(e)}
             closeMenuOnSelect={true}
             theme={(theme) => ({
@@ -137,13 +141,7 @@ class NewBook extends React.Component {
               },
             })}
           />
-          <input
-            type="text"
-            name="genre"
-            className="new-book-input"
-            placeholder="Жанр"
-            onChange={(e) => this.handleChange(e)}
-          />
+
           <input
             placeholder="Цена"
             type="number"

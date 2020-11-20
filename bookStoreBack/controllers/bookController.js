@@ -70,7 +70,7 @@ exports.createBook = async (request, response) => {
       return;
     }
     const { genre } = request.body;
-    const newgenre = await db.Genre.findOne({ where: { name: genre } });
+    const newgenre = await db.Genre.findOne({ where: { value: genre } });
     if (newgenre) {
       await newgenre.update(
         {
@@ -78,7 +78,7 @@ exports.createBook = async (request, response) => {
         },
         {
           where: {
-            name: genre,
+            value: genre,
           },
         }
       );
@@ -137,6 +137,24 @@ exports.getSortBooks = async (request, response) => {
   }
 };
 
+exports.getBooksByGenre = async (request, response) => {
+  try {
+    const { genre } = await request.body;
+    console.log(genre);
+    let genres = await db.Genre.findOne({ where: { value: genre } });
+    console.log(genres);
+
+    let books = await db.Book.findAll({ where: { id: genres.booksId } });
+    if (!books) {
+      response.status(404).send("No books with this genre");
+      return;
+    }
+
+    response.status(200).send(books);
+  } catch (err) {
+    response.status(400).send("Something went very very terribly wrong");
+  }
+};
 exports.changeBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");
@@ -164,6 +182,22 @@ exports.changeBook = async (request, response) => {
     );
 
     response.send(book);
+  } catch (err) {
+    response.status(400).send("Something went terribly wrong");
+  }
+};
+
+exports.getGenres = async (request, response) => {
+  try {
+    let genres = await db.Genre.findAll({ raw: true });
+    if (!genres) {
+      response
+        .status(404)
+        .send("No data in the database. Genres should be added first");
+      return;
+    }
+
+    response.status(200).send(genres);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

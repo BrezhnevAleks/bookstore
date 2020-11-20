@@ -16,6 +16,7 @@ import NewBook from "../containers/createbook/newbook.js";
 import ChangeBook from "../containers/changebook/changebook.js";
 import FavoritesList from "../containers/favorites/favorites.js";
 import ShopList from "../containers/shoplist/shoplist.js";
+import BookList from "../containers/booklist/booklist";
 
 class App extends React.Component {
   render() {
@@ -43,7 +44,13 @@ class App extends React.Component {
             component={BookPage}
             exact
           />
-          <PrivateRoute user={data} path="/" component={MainPage} exact />
+          <PrivateRoute
+            user={data}
+            path="/genre/:value"
+            component={BookList}
+            exact
+          />
+          <PrivateRoute user={data} path="/" component={BookList} exact />
           <PrivateRoute user={data} path="/newbook" component={NewBook} exact />
           <PrivateRoute
             user={data}

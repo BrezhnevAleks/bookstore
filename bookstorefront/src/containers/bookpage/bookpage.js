@@ -8,12 +8,18 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import ReviewItem from "../../components/reviewitem/reviewitem";
 import Header from "../header/header";
+import Rating from "@material-ui/lab/Rating";
 import "./style.css";
 
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: "", favorites: this.props.user.favorites };
+    this.state = {
+      text: "",
+      favorites: this.props.user.favorites,
+      shoplist: this.props.user.shoplist,
+      value: 2,
+    };
   }
 
   componentDidMount() {
@@ -24,14 +30,16 @@ class BookPage extends React.Component {
   handleOnClickFavorites = (e) => {
     const { id } = this.props.book;
     let { favorites } = this.state;
-    console.log(favorites.includes(Number(id)));
     this.props.toFavorites(this.props.user.id, id);
-    console.log(this.props.toFavorites(this.props.user.id, id));
     favorites.push(Number(id));
     this.setState({ favorites });
   };
   handleOnClickBasket = (e) => {
+    const { id } = this.props.book;
+    let { shoplist } = this.state;
     this.props.toShopList(this.props.user.id, this.props.book.id);
+    shoplist.push(Number(id));
+    this.setState({ shoplist });
   };
   handleReviewOnChange = (e) => {
     this.setState({ text: e.target.value });
@@ -51,9 +59,8 @@ class BookPage extends React.Component {
     let { id } = this.props.match.params;
     id = Number(id);
     const { book, reviews } = this.props;
-    const { favorites } = this.state;
-    console.log(Array.isArray(favorites));
-    console.log(id);
+    const { favorites, shoplist } = this.state;
+
     return (
       <div>
         <Header />
@@ -103,13 +110,29 @@ class BookPage extends React.Component {
           </div>
           <div className="book-buttons">
             <p className="book-price">{book.price} &#8381;</p>
-
-            <button
-              className="book-buttons-basket"
-              onClick={(e) => this.handleOnClickBasket(e)}
-            >
-              Добавить в корзину
-            </button>
+            <Rating
+              size="large"
+              name="simple-controlled"
+              value={this.state.value}
+              onChange={(event, newValue) => {
+                this.setState({ value: newValue });
+              }}
+            />
+            {!shoplist.includes(id) ? (
+              <button
+                className="book-buttons-basket"
+                onClick={(e) => this.handleOnClickBasket(e)}
+              >
+                Добавить в корзину
+              </button>
+            ) : (
+              <Link
+                className="book-buttons-basket-active"
+                to={{ pathname: `/shoplist` }}
+              >
+                Перейти в корзину
+              </Link>
+            )}
             {!favorites.includes(id) ? (
               <button
                 className="book-buttons-favorites"
@@ -144,7 +167,6 @@ class BookPage extends React.Component {
               />
               Изменить
             </Link>
-            <Link to="/">На главную</Link>
           </div>
         </div>
       </div>

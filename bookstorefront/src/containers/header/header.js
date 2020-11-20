@@ -5,6 +5,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 
 class Header extends React.Component {
@@ -15,6 +16,9 @@ class Header extends React.Component {
   render() {
     return (
       <header className="menu">
+        <Link to="/">
+          <FontAwesomeIcon icon={faHome} className="home-page" />
+        </Link>
         <Link to="/newbook" className="menu-create">
           <FontAwesomeIcon className="menu-create-icon" icon={faPlus} />
           Добавить новую книгу
