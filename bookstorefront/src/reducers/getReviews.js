@@ -2,6 +2,7 @@ const getReviews = (
   state = {
     loading: false,
     reviews: [],
+    rate: 0,
     error: null,
     isLogged: false,
   },
@@ -13,6 +14,7 @@ const getReviews = (
         ...state,
         loading: false,
         reviews: action.data,
+        rate: action.rate,
       };
     case "GET_REVIEWS_STARTED":
       return {

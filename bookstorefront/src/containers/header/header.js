@@ -6,17 +6,14 @@ import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import connect from "./connect";
 import "./style.css";
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <header className="menu">
-        <Link to="/">
+        <Link to="/" onClick={(e) => this.props.getBooks()}>
           <FontAwesomeIcon icon={faHome} className="home-page" />
         </Link>
         <Link to="/newbook" className="menu-create">
@@ -43,4 +40,4 @@ class Header extends React.Component {
     );
   }
 }
-export default Header;
+export default connect(Header);

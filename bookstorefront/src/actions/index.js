@@ -78,11 +78,14 @@ export const loginFailure = (error) => ({
   error,
 });
 
-export const getBooks = () => {
+export const getBooks = (filter = "default", genre = "all") => {
   return async (dispatch) => {
     dispatch(booksFetchStarted());
     try {
-      const response = await axios.get("http://localhost:4000/books");
+      const response = await axios.post("http://localhost:4000/books", {
+        filter,
+        genre,
+      });
       console.log(response);
       dispatch(booksFetchSuccess(response.data));
       dispatch(addBooks(response.data));
@@ -395,13 +398,13 @@ export const favoritesListFetchFailure = (error) => ({
   error,
 });
 
-export const addReview = (userId, bookId, text) => {
+export const addReview = (userId, bookId, text, rating) => {
   return async (dispatch) => {
     dispatch(addReviewStarted());
     try {
       const response = await axios.post(
         "http://localhost:4000/users/addreview",
-        { userId, bookId, text }
+        { userId, bookId, text, rating }
       );
       dispatch(addReviewSuccess(response.data));
     } catch (err) {
@@ -441,7 +444,8 @@ export const getReviews = (bookId) => {
 
 export const getReviewsSuccess = (data) => ({
   type: "GET_REVIEWS_SUCCESS",
-  data: data,
+  data: data.reviews,
+  rate: data.rate,
 });
 
 export const getReviewsStarted = () => ({

@@ -10,47 +10,44 @@ import { Grid } from "@material-ui/core";
 class BookList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { books: [], filter: "default" };
+    this.state = { books: [], filter: "default", genre: "all" };
   }
 
   handleOnChangeFilter = (e) => {
-    // this.props.getSortBooks(e.value);
-    let { books } = this.state;
-    switch (e.value) {
-      case "default":
-        this.setState({
-          books: books.sort((a, b) => (a.id > b.id ? 1 : -1)),
-        });
-        return;
-      case "expensive":
-        this.setState({
-          books: books.sort((a, b) =>
-            Number(a.price) < Number(b.price) ? 1 : -1
-          ),
-        });
-        return;
-      case "name":
-        this.setState({
-          books: books.sort((a, b) => (a.name > b.name ? 1 : -1)),
-        });
-        return;
-    }
+    const { value } = this.props.match.params;
+    const { filter } = this.state;
+    this.props.getBooks(e.value, value);
+
+    this.setState({
+      filter: e.value,
+    });
   };
 
   componentDidMount() {
+    const { value } = this.props.match.params;
+    const { filter } = this.state;
     this.props.getGenres();
-    this.props.getBooks();
-    this.setState({ books: this.props.books });
+    this.props.getBooks(filter, value);
   }
 
+  // componentWillUpdate() {
+  //   const { value } = this.props.match.params;
+  //   const { filter } = this.state;
+
+  //   this.props.getBooks(filter, value);
+  // }
+
   handleOnClick = (e, value) => {
-    this.props.getBooksByGenre(value);
-    this.setState({ books: this.props.books });
+    //this.props.getBooksByGenre(value);
+    console.log(value);
+    const { filter } = this.state;
+    this.props.getBooks(filter, value);
+    // this.setState({ books: this.props.books });
   };
 
   render() {
     const { genres } = this.props;
-    const { books } = this.state;
+    const { books } = this.props;
     return (
       <div>
         <Header />
@@ -94,7 +91,6 @@ class BookList extends React.Component {
               </span>
               <BooksFilter
                 books={books}
-                getSortBooks={this.props.getSortBooks}
                 handleOnChangeFilter={this.handleOnChangeFilter}
               />
             </Grid>

@@ -1,28 +1,35 @@
 const db = require("../models/index");
 const utils = require("../utils.js");
 
+// exports.getBooks = async (request, response) => {
+//   try {
+
+//     const books = await db.Book.findAll({ raw: true });
+
+//     if (!books) {
+//       response
+//         .status(404)
+//         .send("No data in the database. Books should be added first");
+//       return;
+//     }
+
+//     response.status(200).send(books);
+//   } catch (err) {
+//     response.status(400).send("Something went terribly wrong");
+//   }
+// };
+
 exports.getBooks = async (request, response) => {
   try {
-    const books = await db.Book.findAll({ raw: true });
-
-    if (!books) {
-      response
-        .status(404)
-        .send("No data in the database. Books should be added first");
-      return;
+    let books;
+    const { filter, genre } = await request.body;
+    console.log(genre);
+    if (genre === "all") {
+      books = await db.Book.findAll({ raw: true });
+    } else {
+      let genres = await db.Genre.findOne({ where: { value: genre } });
+      books = await db.Book.findAll({ where: { id: genres.booksId } });
     }
-
-    response.status(200).send(books);
-  } catch (err) {
-    response.status(400).send("Something went terribly wrong");
-  }
-};
-
-exports.getSortBooks = async (request, response) => {
-  try {
-    let books = await db.Book.findAll({ raw: true });
-    const { filter } = await request.body;
-    console.log(filter);
     if (!books) {
       response
         .status(404)
@@ -105,14 +112,16 @@ exports.getReviews = async (request, response) => {
         attributes: ["login"],
       },
     });
-    console.log(reviews.user);
-    console.log(reviews);
+    let rated = reviews.filter((item) => item.rating != null);
+
+    let rate = rated.reduce((acc, item) => acc + item.rating, 0) / rated.length;
+
     if (!reviews) {
       response.status(404).send(`No reviews yet`);
       return;
     }
 
-    response.send(reviews);
+    response.send({ reviews, rate });
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

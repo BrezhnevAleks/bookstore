@@ -18,14 +18,18 @@ class BookPage extends React.Component {
       text: "",
       favorites: this.props.user.favorites,
       shoplist: this.props.user.shoplist,
-      value: 2,
+      rating: null,
+      reviews: this.props.reviews,
+      rate: this.props.rate,
     };
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.getReviews(id);
+
     this.props.getOneBook(id);
+    this.props.getReviews(id);
+    this.setState({ reviews: this.props.reviews });
   }
   handleOnClickFavorites = (e) => {
     const { id } = this.props.book;
@@ -41,134 +45,143 @@ class BookPage extends React.Component {
     shoplist.push(Number(id));
     this.setState({ shoplist });
   };
+
   handleReviewOnChange = (e) => {
     this.setState({ text: e.target.value });
   };
-  handleReviewOnSubmit = (e) => {
+
+  handleReviewOnSubmit = async (e) => {
     e.preventDefault();
-    this.props.addReview(
-      this.props.user.id,
-      this.props.book.id,
-      this.state.text
-    );
+    const { user } = this.props;
+    const { text, rating } = this.state;
+    const { id } = this.props.match.params;
+    await this.props.addReview(user.id, id, text, rating);
     this.setState({ text: "" });
-    this.props.getReviews(this.props.match.params.id);
-    this.forceUpdate();
+
+    await this.props.getReviews(id);
   };
   render() {
     let { id } = this.props.match.params;
     id = Number(id);
-    const { book, reviews } = this.props;
-    const { favorites, shoplist } = this.state;
+    const { book } = this.props;
+    const { reviews, rate } = this.props;
+    const { favorites, shoplist, text } = this.state;
 
     return (
       <div>
         <Header />
         <div className="book-page">
           <div className="book">
-            <p className="book-author">{book.author}</p>
-            <h3 className="book-name">{book.name}</h3>
-            <img
-              src={
-                book.picture === "picture"
-                  ? "http://localhost:4000/default.png"
-                  : book.picture
-              }
-              className="book-image"
-            />
-
-            <form className="review-form" onSubmit={this.handleReviewOnSubmit}>
-              <textarea
-                rows="10"
-                cols="50"
-                className="review-textarea"
-                value={this.state.text}
-                onChange={(e) => this.handleReviewOnChange(e)}
-                placeholder="Пожалуйста, оставьте отзыв об этой книге"
-                style={{ border: "1px solid black" }}
+            <div className="book-content">
+              <p className="book-author">{book.author}</p>
+              <h3 className="book-name">{book.name}</h3>
+              <img
+                src={
+                  book.picture === "picture"
+                    ? "http://localhost:4000/default.png"
+                    : book.picture
+                }
+                className="book-image"
               />
 
-              <input
-                className="review-submit"
-                type="submit"
-                value="Оставить отзыв"
-              />
-            </form>
+              <form
+                className="review-form"
+                onSubmit={(e) => this.handleReviewOnSubmit(e)}
+              >
+                <textarea
+                  rows="10"
+                  cols="50"
+                  className="review-textarea"
+                  value={text}
+                  onChange={(e) => this.handleReviewOnChange(e)}
+                  placeholder="Пожалуйста, оставьте отзыв об этой книге"
+                  style={{ border: "1px solid black" }}
+                />
 
-            {!reviews.length ? (
-              <p className="review-plug">
-                Будьте первым, кто добавит отзыв к этой книге!
-              </p>
-            ) : (
-              <div className="review-list">
-                <h4 className="reviews-title">Отзывы</h4>
-                {reviews.map((item) => (
-                  <ReviewItem item={item} key={item.id} />
-                ))}
+                <input
+                  className="review-submit"
+                  type="submit"
+                  value="Оставить отзыв"
+                />
+              </form>
+            </div>
+            <div className="book-buttons">
+              <p className="book-price">{book.price} &#8381;</p>
+              <div className="book-rating">
+                <Rating
+                  size="large"
+                  name="simple-controlled"
+                  value={this.state.rating}
+                  onChange={(event, newValue) => {
+                    this.setState({ rating: newValue });
+                  }}
+                />
+                <span>/{rate}</span>
               </div>
-            )}
-          </div>
-          <div className="book-buttons">
-            <p className="book-price">{book.price} &#8381;</p>
-            <Rating
-              size="large"
-              name="simple-controlled"
-              value={this.state.value}
-              onChange={(event, newValue) => {
-                this.setState({ value: newValue });
-              }}
-            />
-            {!shoplist.includes(id) ? (
-              <button
-                className="book-buttons-basket"
-                onClick={(e) => this.handleOnClickBasket(e)}
-              >
-                Добавить в корзину
-              </button>
-            ) : (
+              {!shoplist.includes(id) ? (
+                <button
+                  className="book-buttons-basket"
+                  onClick={(e) => this.handleOnClickBasket(e)}
+                >
+                  Добавить в корзину
+                </button>
+              ) : (
+                <Link
+                  className="book-buttons-basket-active"
+                  to={{ pathname: `/shoplist` }}
+                >
+                  Перейти в корзину
+                </Link>
+              )}
+              {!favorites.includes(id) ? (
+                <button
+                  className="book-buttons-favorites"
+                  onClick={(e) => this.handleOnClickFavorites(e)}
+                >
+                  <FontAwesomeIcon
+                    className="book-buttons-favorites-icon"
+                    icon={faHeart}
+                  />
+                  Добавить в избранное
+                </button>
+              ) : (
+                <Link
+                  className="book-buttons-favorites-active"
+                  to={{ pathname: `/favorites` }}
+                >
+                  <FontAwesomeIcon
+                    className="book-buttons-favorites-icon"
+                    icon={faHeart}
+                  />
+                  Перейти в избранное
+                </Link>
+              )}
               <Link
-                className="book-buttons-basket-active"
-                to={{ pathname: `/shoplist` }}
-              >
-                Перейти в корзину
-              </Link>
-            )}
-            {!favorites.includes(id) ? (
-              <button
-                className="book-buttons-favorites"
-                onClick={(e) => this.handleOnClickFavorites(e)}
+                className="book-buttons-edit"
+                to={{ pathname: `/books/change/${book.id}` }}
+                id={book}
               >
                 <FontAwesomeIcon
-                  className="book-buttons-favorites-icon"
-                  icon={faHeart}
+                  className="book-buttons-edit-icon"
+                  icon={faPen}
                 />
-                Добавить в избранное
-              </button>
-            ) : (
-              <Link
-                className="book-buttons-favorites-active"
-                to={{ pathname: `/favorites` }}
-              >
-                <FontAwesomeIcon
-                  className="book-buttons-favorites-icon"
-                  icon={faHeart}
-                />
-                Перейти в избранное
+                Изменить
               </Link>
-            )}
-            <Link
-              className="book-buttons-edit"
-              to={{ pathname: `/books/change/${book.id}` }}
-              id={book}
-            >
-              <FontAwesomeIcon
-                className="book-buttons-edit-icon"
-                icon={faPen}
-              />
-              Изменить
-            </Link>
+            </div>
           </div>
         </div>
+        {!reviews.length ? (
+          <p className="review-plug">
+            Будьте первым, кто добавит отзыв к этой книге!
+          </p>
+        ) : (
+          <div className="review-list">
+            <h4 className="reviews-title">Отзывы</h4>
+            {reviews.map((item) => (
+              <ReviewItem item={item} key={item.id} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
