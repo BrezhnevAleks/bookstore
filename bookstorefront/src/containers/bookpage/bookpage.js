@@ -20,7 +20,7 @@ class BookPage extends React.Component {
       shoplist: this.props.user.shoplist,
       rating: null,
       reviews: this.props.reviews,
-      rate: this.props.rate,
+      rate: Number(this.props.book.rating),
     };
   }
 
@@ -116,7 +116,7 @@ class BookPage extends React.Component {
                     this.setState({ rating: newValue });
                   }}
                 />
-                <span>/{rate}</span>
+                <span>{rate ? `/${rate}` : "Эту книгу ещё не оценили"}</span>
               </div>
               {!shoplist.includes(id) ? (
                 <button

@@ -1,7 +1,7 @@
 const addFavorite = (
   state = {
     loading: false,
-    data: {},
+    favorites: {},
     error: null,
     isLogged: false,
   },
@@ -13,7 +13,7 @@ const addFavorite = (
         ...state,
         loading: false,
         error: null,
-        data: action.data,
+        favorites: action.data,
       };
 
     default:

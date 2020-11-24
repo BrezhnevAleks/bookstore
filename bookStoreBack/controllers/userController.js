@@ -133,6 +133,28 @@ exports.addReview = async (request, response) => {
       userId: userId,
       rating: rating,
     });
+    const reviews = await db.Review.findAll({
+      where: { bookId },
+      include: {
+        model: db.User,
+        as: "user",
+        attributes: ["login"],
+      },
+    });
+    let rated = await reviews.filter((item) => item.rating != null);
+
+    let rate = (
+      rated.reduce((acc, item) => acc + item.rating, 0) / rated.length
+    ).toFixed(2);
+
+    console.log(rate);
+    const book = await db.Book.findOne({ where: { id: bookId } });
+    console.log(book);
+    if (!book) {
+      response.status(404).send(`Book id ${bookId} not found`);
+      return;
+    }
+    await db.Book.update({ rating: rate }, { where: { id: bookId } });
     response.status(200).send("Success");
   } catch (err) {
     response.status(400).send("Something went terribly wrong");

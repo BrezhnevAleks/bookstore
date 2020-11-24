@@ -17,7 +17,7 @@ const changebook = (
         ...state,
         loading: false,
         error: null,
-        created: action.data,
+        changed: action.data,
       };
     case "BOOK_CHANGE_FAILURE":
       return {

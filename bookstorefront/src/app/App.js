@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
-import MainPage from "../components/mainpage/mainpage.js";
+
 import RegisterPage from "../containers/registration/registerpage.js";
 import LoginPage from "../containers/login/loginpage.js";
 import connect from "./connect";
@@ -19,6 +19,13 @@ import ShopList from "../containers/shoplist/shoplist.js";
 import BookList from "../containers/booklist/booklist";
 
 class App extends React.Component {
+  login(data) {
+    return data.hasOwnProperty("id") ? <Redirect to="/" /> : <LoginPage />;
+  }
+  registration(data) {
+    return data.hasOwnProperty("id") ? <Redirect to="/" /> : <RegisterPage />;
+  }
+
   render() {
     const { data } = this.props;
     return (
@@ -26,16 +33,12 @@ class App extends React.Component {
         <Switch>
           <Route
             path="/login"
-            render={() =>
-              data.hasOwnProperty("id") ? <Redirect to="/" /> : <LoginPage />
-            }
+            render={() => this.login(data, this.path)}
             exact
           />
           <Route
             path="/register"
-            render={() =>
-              data.hasOwnProperty("id") ? <Redirect to="/" /> : <RegisterPage />
-            }
+            render={() => this.registration(data)}
             exact
           />
           <PrivateRoute

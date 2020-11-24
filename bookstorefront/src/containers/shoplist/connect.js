@@ -1,15 +1,16 @@
 import { connect } from "react-redux";
-import * as bookActions from "../../actions";
-
-const mapStateToProps = ({ shoplist, addUser }) => {
+import * as bookActions from "../../actions/bookActions";
+import * as userActions from "../../actions/userActions";
+const mapStateToProps = ({ user }) => {
   return {
-    shoplist: shoplist.data,
-    user: addUser.data,
+    shoplist: user.shoplist,
+    user: user.data,
   };
 };
 
 const mapDispatchToProps = {
   ...bookActions,
+  ...userActions,
 };
 
 export default (container) =>

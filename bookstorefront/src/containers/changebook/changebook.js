@@ -3,6 +3,7 @@ import connect from "./connect";
 import { withRouter } from "react-router";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
+import Header from "../header/header";
 
 class ChangeBook extends React.Component {
   constructor(props) {
@@ -52,6 +53,7 @@ class ChangeBook extends React.Component {
     const { name, author, price } = this.state;
     return (
       <div>
+        <Header />
         <h1>Изменить книгу</h1>
         <form
           className="new-book"

@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       author: DataTypes.STRING,
       picture: DataTypes.STRING,
       price: DataTypes.INTEGER,
+      rating: { type: DataTypes.FLOAT, allowNull: true },
     },
     {
       sequelize,

@@ -53,5 +53,10 @@ module.exports.sortingType = (books, filter) => {
         return 0;
       });
       break;
+    case "rating":
+      books.sort((a, b) => {
+        return Number(b.rating) - Number(a.rating);
+      });
+      break;
   }
 };

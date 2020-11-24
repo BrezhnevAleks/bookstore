@@ -7,6 +7,7 @@ class BooksFilter extends React.Component {
       { value: "default", label: "По умолчанию", selected: true },
       { value: "expensive", label: "Сначала дороже" },
       { value: "name", label: "По названию" },
+      { value: "rating", label: "По рейтингу" },
     ];
     return (
       <div style={{ minWidth: "300px" }}>

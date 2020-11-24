@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import Rating from "@material-ui/lab/Rating";
 
 class BookItem extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class BookItem extends React.Component {
           }
           className="item-image"
         />
+        <Rating name="read-only" value={Number(item.rating)} readOnly />
         <h3 className="item-name">{item.name}</h3>
         <p className="item-author">{item.author}</p>
         <p className="item-price">{item.price} &#8381;</p>

@@ -23,7 +23,7 @@ exports.getBooks = async (request, response) => {
   try {
     let books;
     const { filter, genre } = await request.body;
-    console.log(genre);
+
     if (genre === "all") {
       books = await db.Book.findAll({ raw: true });
     } else {
@@ -104,7 +104,7 @@ exports.createBook = async (request, response) => {
 exports.getReviews = async (request, response) => {
   try {
     const { bookId } = request.body;
-    const reviews = await db.Review.findAll({
+    let allReviews = await db.Review.findAll({
       where: { bookId },
       include: {
         model: db.User,
@@ -112,14 +112,16 @@ exports.getReviews = async (request, response) => {
         attributes: ["login"],
       },
     });
-    let rated = reviews.filter((item) => item.rating != null);
-
-    let rate = rated.reduce((acc, item) => acc + item.rating, 0) / rated.length;
-
-    if (!reviews) {
-      response.status(404).send(`No reviews yet`);
-      return;
+    let rated = allReviews.filter((item) => item.rating != null);
+    let rate = null;
+    console.log(rated.length);
+    if (rated.length) {
+      rate = (
+        rated.reduce((acc, item) => Number(acc) + item.rating, 0) / rated.length
+      ).toFixed(2);
     }
+    console.log(rate);
+    const reviews = allReviews.filter((item) => item.text);
 
     response.send({ reviews, rate });
   } catch (err) {
@@ -131,7 +133,7 @@ exports.getSortBooks = async (request, response) => {
   try {
     let books = await db.Book.findAll({ raw: true });
     const { filter } = await request.body;
-    console.log(filter);
+
     if (!books) {
       response
         .status(404)
@@ -149,9 +151,8 @@ exports.getSortBooks = async (request, response) => {
 exports.getBooksByGenre = async (request, response) => {
   try {
     const { genre } = await request.body;
-    console.log(genre);
+
     let genres = await db.Genre.findOne({ where: { value: genre } });
-    console.log(genres);
 
     let books = await db.Book.findAll({ where: { id: genres.booksId } });
     if (!books) {
@@ -168,16 +169,16 @@ exports.changeBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");
     const { id, name, author, price } = request.body;
-    console.log(id, name, author, price);
+
     const searchedValue = { id };
-    console.log(searchedValue);
+
     const book = await db.Book.findOne({ where: searchedValue });
 
     if (!book) {
       response.status(404).send(`Book not found`);
       return;
     }
-    console.log(id, name, author, price, request.file.filename);
+
     await db.Book.update(
       {
         name: name,

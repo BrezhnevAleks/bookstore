@@ -1,13 +1,15 @@
 import { connect } from "react-redux";
-import * as bookActions from "../../actions";
+import * as userActions from "../../actions/userActions";
+import * as bookActions from "../../actions/bookActions";
 
-const mapStateToProps = ({ addUser }) => {
+const mapStateToProps = ({ user }) => {
   return {
-    user: addUser.data,
+    user: user.data,
   };
 };
 
 const mapDispatchToProps = {
+  ...userActions,
   ...bookActions,
 };
 

@@ -1,7 +1,7 @@
 const addReview = (
   state = {
     loading: false,
-    data: {},
+    review: {},
     error: null,
   },
   action
@@ -12,7 +12,7 @@ const addReview = (
         ...state,
         loading: false,
         error: null,
-        data: action.data,
+        review: action.data,
       };
     case "ADD_REVIEW_STARTED":
       return {
