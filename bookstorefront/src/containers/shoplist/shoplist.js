@@ -1,14 +1,12 @@
 import React from "react";
 import connect from "./connect";
 import { Link } from "react-router-dom";
-import BookItem from "../../components/bookitem/bookitem";
+import BookItem from "../bookitem/bookitem";
 import Header from "../header/header";
+import { Grid } from "@material-ui/core";
+import "./style.css";
 
 class ShopList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.getShoplist(this.props.user.id);
   }
@@ -19,26 +17,29 @@ class ShopList extends React.Component {
     return (
       <div>
         <Header />
-        <div className="booklist">
-          <div className="booklist-header">
-            <span className="booklist-count">
-              {"Книг в корзине: " + this.props.user.shoplist.length}
-            </span>
-          </div>
-          <div className="books">
-            {shoplist.map((item) => (
-              <Link
-                key={item.id}
-                to={{
-                  pathname: `/books/${item.id}`,
-                  state: { fromDashboard: true },
-                }}
-              >
-                <BookItem item={item} key={item.id} />
-              </Link>
+        <div className="shoplist">
+          <Grid container item xs={9} spacing={6} cellHeight="auto">
+            <Grid item xs={12} className="booklist-header">
+              <span className="booklist-count">
+                {"Книг доступно: " + shoplist.length}
+              </span>
+            </Grid>
+            {shoplist.map((shopItem) => (
+              <Grid item cellHeight="auto" xs={3}>
+                <Link
+                  key={shopItem.id}
+                  to={{
+                    pathname: `/books/${shopItem.id}`,
+                    state: { fromDashboard: true },
+                  }}
+                >
+                  <BookItem item={shopItem} key={shopItem.id} />
+                </Link>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         </div>
+        <button className="shoplist-buy">Оформить заказ</button>
       </div>
     );
   }

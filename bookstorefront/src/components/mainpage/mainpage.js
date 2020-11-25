@@ -5,9 +5,6 @@ import Header from "../../containers/header/header";
 import "./style.css";
 
 class MainPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   handleSignOut = (e) => {
     e.preventDefault();
     localStorage.removeItem("authToken");

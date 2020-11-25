@@ -56,7 +56,20 @@ exports.toFavorites = async (request, response) => {
     });
 
     if (user.favorites.includes(bookID)) {
-      response.send(`Book id ${bookID} already in favorites`);
+      let { favorites } = user;
+
+      console.log(favorites);
+      await user.update(
+        {
+          favorites: favorites.splice(favorites.indexOf(bookID), 1),
+        },
+        {
+          where: {
+            id: userID,
+          },
+        }
+      );
+      response.send(user.favorites);
       return;
     }
 
@@ -71,7 +84,7 @@ exports.toFavorites = async (request, response) => {
       }
     );
 
-    response.status(200).send(`Book id ${bookID} added to favorites`);
+    response.status(200).send(user.favorites);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

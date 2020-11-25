@@ -1,5 +1,5 @@
 import React from "react";
-import BookItem from "../../components/bookitem/bookitem";
+import BookItem from "../bookitem/bookitem";
 import BooksFilter from "../../components/booksfilter/booksfilter";
 import Header from "../header/header.js";
 import connect from "./connect";
@@ -15,7 +15,7 @@ class BookList extends React.Component {
 
   handleOnChangeFilter = (e) => {
     const { value } = this.props.match.params;
-    const { filter } = this.state;
+
     this.props.getBooks(e.value, value);
 
     this.setState({
@@ -30,19 +30,10 @@ class BookList extends React.Component {
     this.props.getBooks(filter, value);
   }
 
-  // componentWillUpdate() {
-  //   const { value } = this.props.match.params;
-  //   const { filter } = this.state;
-
-  //   this.props.getBooks(filter, value);
-  // }
-
   handleOnClick = (e, value) => {
-    //this.props.getBooksByGenre(value);
     console.log(value);
     const { filter } = this.state;
     this.props.getBooks(filter, value);
-    // this.setState({ books: this.props.books });
   };
 
   render() {
@@ -53,7 +44,8 @@ class BookList extends React.Component {
         <Header />
         <Grid
           container
-          spacing="4"
+          item
+          spacing={4}
           xs={12}
           direction="row"
           justify="space-between"
@@ -62,7 +54,8 @@ class BookList extends React.Component {
         >
           <Grid
             container
-            justify="flex"
+            item
+            justify="flex-start"
             className="genres"
             direction="column"
             alignItems="flex-start"
@@ -71,6 +64,7 @@ class BookList extends React.Component {
             <h3 className="categories">Категории</h3>
             {genres.map((item) => (
               <Link
+                key={item.id}
                 onClick={(e) => this.handleOnClick(e, item.value)}
                 value={item.value}
                 to={{
@@ -84,7 +78,7 @@ class BookList extends React.Component {
             ))}
           </Grid>
 
-          <Grid container xs={9} spacing="3">
+          <Grid container item xs={9} cellHeight="auto" spacing={3}>
             <Grid item xs={12} className="booklist-header">
               <span className="booklist-count">
                 {"Книг доступно: " + books.length}
@@ -96,16 +90,8 @@ class BookList extends React.Component {
             </Grid>
 
             {books.map((item) => (
-              <Grid item lg={3} sm={4}>
-                <Link
-                  key={item.id}
-                  to={{
-                    pathname: `/books/${item.id}`,
-                    state: { fromDashboard: true },
-                  }}
-                >
-                  <BookItem item={item} key={item.id} />
-                </Link>
+              <Grid cellHeight="auto" key={item.id} item lg={3} sm={4}>
+                <BookItem item={item} key={item.id} />
               </Grid>
             ))}
           </Grid>

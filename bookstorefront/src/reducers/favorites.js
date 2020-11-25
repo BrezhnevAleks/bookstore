@@ -1,7 +1,7 @@
 const favorites = (
   state = {
     loading: false,
-    data: [],
+    shoplist: [],
     error: null,
   },
   action
@@ -17,7 +17,7 @@ const favorites = (
         ...state,
         loading: false,
         error: null,
-        data: action.data,
+        shoplist: action.data,
       };
     case "FAVORITES_FETCH_FAILURE":
       return {

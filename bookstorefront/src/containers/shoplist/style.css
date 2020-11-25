@@ -1,9 +1,9 @@
-.favorites {
+.shoplist {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-.favorites-button {
+.shoplist-buy {
   display: block;
   margin: 50px auto;
   font-size: 24px;
@@ -11,6 +11,6 @@
   padding: 15px 25px;
   border-radius: 8px;
 }
-.favorites-button:hover {
+.shoplist-buy:hover {
   opacity: 0.8;
 }

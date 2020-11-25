@@ -17,6 +17,8 @@ class RegisterPage extends React.Component {
         return this.setState({ email: e.target.value });
       case "password":
         return this.setState({ password: e.target.value });
+      default:
+        return;
     }
   };
 

@@ -2,10 +2,6 @@ import React from "react";
 import "./style.css";
 
 class ReviewItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { item } = this.props;
     return (

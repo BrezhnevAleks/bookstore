@@ -92,6 +92,24 @@ const user = (
         loading: false,
         error: action.error,
       };
+    case "ADD_FAVORITE":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+
+        favorites: action.data,
+      };
+    case "ADD_FAVORITE_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: {
+          ...state.data,
+          favorites: action.data,
+        },
+      };
 
     default:
       return state;
