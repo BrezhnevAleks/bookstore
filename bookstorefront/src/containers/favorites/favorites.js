@@ -10,7 +10,8 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 class FavoritesList extends React.Component {
   componentDidMount() {
-    this.props.getFavoritesList(this.props.user.id);
+    const { user } = this.props;
+    this.props.getFavoritesList(user.id);
   }
 
   render() {
@@ -19,25 +20,30 @@ class FavoritesList extends React.Component {
     return (
       <div>
         <Header />
-        <div className="favorites">
-          <Grid container item xs={9} spacing={6} cellHeight="auto">
-            <Grid item xs={12} className="booklist-header">
-              <span className="booklist-count">
-                {"Книг доступно: " + favorites.length}
-              </span>
-            </Grid>
-            {favorites.map((shopItem) => (
-              <Grid item cellHeight="auto" xs={3}>
-                <BookItem
-                  item={shopItem}
-                  key={shopItem.id}
-                  favorites={user.favorites}
-                ></BookItem>
+        {favorites.length ? (
+          <div className="favorites">
+            <Grid container item xs={9} spacing={6} cellHeight="auto">
+              <Grid item xs={12} className="booklist-header">
+                <span className="booklist-count">
+                  {"Книг в избранном: " + favorites.length}
+                </span>
               </Grid>
-            ))}
-          </Grid>
-        </div>
-        <button className="favorites-button">Оформить заказ</button>
+              {favorites.map((shopItem) => (
+                <Grid item cellHeight="auto" xs={3}>
+                  <BookItem
+                    item={shopItem}
+                    key={shopItem.id}
+                    favorites={user.favorites}
+                  ></BookItem>
+                </Grid>
+              ))}
+            </Grid>
+          </div>
+        ) : (
+          <div className="favorites-plug">
+            <p>Список избранного пуст</p>
+          </div>
+        )}
       </div>
     );
   }

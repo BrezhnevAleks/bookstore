@@ -1,6 +1,6 @@
 import React from "react";
 import connect from "./connect";
-import { Link } from "react-router-dom";
+
 import BookItem from "../bookitem/bookitem";
 import Header from "../header/header";
 import { Grid } from "@material-ui/core";
@@ -17,29 +17,27 @@ class ShopList extends React.Component {
     return (
       <div>
         <Header />
-        <div className="shoplist">
-          <Grid container item xs={9} spacing={6} cellHeight="auto">
-            <Grid item xs={12} className="booklist-header">
-              <span className="booklist-count">
-                {"Книг доступно: " + shoplist.length}
-              </span>
-            </Grid>
-            {shoplist.map((shopItem) => (
-              <Grid item cellHeight="auto" xs={3}>
-                <Link
-                  key={shopItem.id}
-                  to={{
-                    pathname: `/books/${shopItem.id}`,
-                    state: { fromDashboard: true },
-                  }}
-                >
-                  <BookItem item={shopItem} key={shopItem.id} />
-                </Link>
+        {shoplist.length ? (
+          <div className="shoplist">
+            <Grid container item xs={9} spacing={6} cellHeight="auto">
+              <Grid item xs={12} className="booklist-header">
+                <span className="booklist-count">
+                  {"Книг в корзине: " + shoplist.length}
+                </span>
               </Grid>
-            ))}
-          </Grid>
-        </div>
-        <button className="shoplist-buy">Оформить заказ</button>
+              {shoplist.map((shopItem) => (
+                <Grid item cellHeight="auto" xs={3}>
+                  <BookItem item={shopItem} key={shopItem.id} />
+                </Grid>
+              ))}
+            </Grid>
+            <button className="shoplist-buy">Оформить заказ</button>
+          </div>
+        ) : (
+          <div className="shoplist-plug">
+            <p>Корзина пуста</p>
+          </div>
+        )}
       </div>
     );
   }

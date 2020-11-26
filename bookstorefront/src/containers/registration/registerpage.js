@@ -26,7 +26,7 @@ class RegisterPage extends React.Component {
     e.preventDefault();
 
     let { login, email, password } = this.state;
-    console.log("Request is going: " + login, email, password);
+
     this.props.createUser(login, email, password);
     this.setState({ login: "", email: "", password: "" });
   };

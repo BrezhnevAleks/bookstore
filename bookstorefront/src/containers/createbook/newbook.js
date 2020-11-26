@@ -16,6 +16,7 @@ class NewBook extends React.Component {
       author: "",
       genre: "",
       price: "",
+      description: "",
     };
   }
   handleChange = (e) => {
@@ -30,6 +31,8 @@ class NewBook extends React.Component {
         return this.setState({ genre: e.target.value });
       case "price":
         return this.setState({ price: e.target.value });
+      case "description":
+        return this.setState({ description: e.target.value });
     }
   };
   handleChangeSelect = (e) => {
@@ -37,18 +40,15 @@ class NewBook extends React.Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
+    const { bookcover, name, author, genre, price, description } = this.state;
     let formData = new FormData();
-    formData.append("bookcover", this.state.bookcover);
-    formData.append("name", this.state.name);
-    formData.append("author", this.state.author);
-    formData.append("genre", this.state.genre);
-    formData.append("price", this.state.price);
-
+    formData.append("bookcover", bookcover);
+    formData.append("name", name);
+    formData.append("author", author);
+    formData.append("genre", genre);
+    formData.append("price", price);
+    formData.append("description", description);
     this.props.createBook(formData);
-    // let { name, author, price, file } = this.state;
-    // console.log("Request is going: " + name, author, price, file);
-    // this.props.createBook(name, author, price, file);
-    // this.setState({ name: "", author: "", price: "", file: {} });
   };
 
   render() {
@@ -87,10 +87,9 @@ class NewBook extends React.Component {
         margin: "0px auto",
       }),
     };
-
+    const { bookcover } = this.state;
     return (
-      <div>
-        <Header />
+      <div className="new-book-container">
         <h1 className="create-book-title">Добавить книгу</h1>
         <form
           className="new-book"
@@ -98,9 +97,7 @@ class NewBook extends React.Component {
           onSubmit={(e) => this.handleSubmit(e)}
         >
           <label htmlFor="image" className="new-book-image">
-            {this.state.bookcover
-              ? this.state.bookcover.name
-              : "Загрузить обложку для книги"}
+            {bookcover ? bookcover.name : "Загрузить обложку для книги"}
           </label>
           <input
             type="file"
@@ -141,7 +138,6 @@ class NewBook extends React.Component {
               },
             })}
           />
-
           <input
             placeholder="Цена"
             type="number"
@@ -150,13 +146,20 @@ class NewBook extends React.Component {
             className="new-book-input"
             onChange={(e) => this.handleChange(e)}
           />
+          <textarea
+            name="description"
+            rows="10"
+            cols="50"
+            className="new-book-description"
+            onChange={(e) => this.handleChange(e)}
+            placeholder="Добавьте описание для книги"
+          />
           <input
             className="new-book-submit"
             type="submit"
             value="Добавить книгу"
           />
         </form>
-        <Link to="/"> На главную</Link>
       </div>
     );
   }

@@ -14,22 +14,24 @@ import "./style.css";
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
+    const { user, book, reviews } = this.props;
     this.state = {
       text: "",
-      favorites: this.props.user.favorites,
-      shoplist: this.props.user.shoplist,
+      favorites: user.favorites,
+      shoplist: user.shoplist,
       rating: null,
-      reviews: this.props.reviews,
-      rate: Number(this.props.book.rating),
+      reviews: reviews,
+      rate: Number(book.rating),
     };
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    const { reviews } = this.props;
 
     this.props.getOneBook(id);
     this.props.getReviews(id);
-    this.setState({ reviews: this.props.reviews });
+    this.setState({ reviews });
   }
   handleOnClickFavorites = (e) => {
     const { id } = this.props.book;
@@ -39,10 +41,10 @@ class BookPage extends React.Component {
     this.setState({ favorites });
   };
   handleOnClickBasket = (e) => {
-    const { id } = this.props.book;
+    const { book, user } = this.props;
     let { shoplist } = this.state;
-    this.props.toShopList(this.props.user.id, this.props.book.id);
-    shoplist.push(Number(id));
+    this.props.toShopList(user.id, book.id);
+    shoplist.push(Number(book.id));
     this.setState({ shoplist });
   };
 
@@ -63,8 +65,7 @@ class BookPage extends React.Component {
   render() {
     let { id } = this.props.match.params;
     id = Number(id);
-    const { book } = this.props;
-    const { reviews, rate } = this.props;
+    const { book, reviews, rate } = this.props;
     const { favorites, shoplist, text } = this.state;
 
     return (

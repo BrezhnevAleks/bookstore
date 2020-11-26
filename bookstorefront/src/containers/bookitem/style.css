@@ -48,10 +48,24 @@
 .like-button {
   display: block;
   position: absolute;
-  top: 15%;
+  top: 18%;
   right: 5%;
-  font-size: 18px;
+  font-size: 25px;
+  color: red;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
+.toShop-button {
+  display: block;
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  font-size: 22px;
+  color: rgb(83, 212, 8);
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+}
+
 .item-author {
   margin: 10px 0;
   font-size: 14px;

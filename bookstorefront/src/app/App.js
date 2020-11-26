@@ -6,7 +6,6 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
-
 import RegisterPage from "../containers/registration/registerpage.js";
 import LoginPage from "../containers/login/loginpage.js";
 import connect from "./connect";
@@ -17,6 +16,7 @@ import ChangeBook from "../containers/changebook/changebook.js";
 import FavoritesList from "../containers/favorites/favorites.js";
 import ShopList from "../containers/shoplist/shoplist.js";
 import BookList from "../containers/booklist/booklist";
+import Profile from "../containers/profile/profile.js";
 
 class App extends React.Component {
   login(data) {
@@ -28,7 +28,7 @@ class App extends React.Component {
 
   render() {
     const { data } = this.props;
-    console.log(this.props);
+
     return (
       <Router>
         <Switch>
@@ -68,6 +68,7 @@ class App extends React.Component {
             component={ShopList}
             exact
           />
+          <PrivateRoute user={data} path="/profile" component={Profile} exact />
           <PrivateRoute
             user={data}
             path="/favorites"

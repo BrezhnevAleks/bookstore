@@ -70,6 +70,7 @@ exports.createBook = async (request, response) => {
       author: request.body.author,
       price: request.body.price,
       picture: url + "/" + request.file.filename,
+      description: request.body.description,
     });
 
     if (!book) {

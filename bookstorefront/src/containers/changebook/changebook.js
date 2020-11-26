@@ -8,11 +8,12 @@ import Header from "../header/header";
 class ChangeBook extends React.Component {
   constructor(props) {
     super(props);
+    const { name, author, price } = this.props;
     this.state = {
       bookcover: "",
-      name: this.props.name,
-      author: this.props.author,
-      price: this.props.price,
+      name: name,
+      author: author,
+      price: price,
     };
   }
   handleChangeImage = (e) => {
@@ -29,12 +30,14 @@ class ChangeBook extends React.Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
+    const { bookcover, name, author, price } = this.state;
+    const { id } = this.props.match.params;
     let formData = new FormData();
-    formData.append("bookcover", this.state.bookcover);
-    formData.append("name", this.state.name);
-    formData.append("author", this.state.author);
-    formData.append("price", this.state.price);
-    formData.append("id", this.props.match.params.id);
+    formData.append("bookcover", bookcover);
+    formData.append("name", name);
+    formData.append("author", author);
+    formData.append("price", price);
+    formData.append("id", id);
     this.props.changeBook(formData);
   };
 
@@ -42,10 +45,11 @@ class ChangeBook extends React.Component {
     const { id } = this.props.match.params;
     console.log(id);
     this.props.getOneBook(id);
+    const { name, author, price } = this.props.book;
     this.setState({
-      name: this.props.book.name,
-      author: this.props.book.author,
-      price: this.props.book.price,
+      name,
+      author,
+      price,
     });
   }
 

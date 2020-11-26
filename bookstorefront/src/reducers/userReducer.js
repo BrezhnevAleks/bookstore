@@ -35,6 +35,24 @@ const user = (
         loading: false,
         error: action.error,
       };
+    case "USER_UPDATE_STARTED":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "USER_UPDATE_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: action.data,
+      };
+    case "USER_UPDATE_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
     case "USER_LOGIN_STARTED":
       return {
         ...state,
@@ -92,25 +110,44 @@ const user = (
         loading: false,
         error: action.error,
       };
-    case "ADD_FAVORITE":
+    case "ADD_FAVORITES_STARTED":
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case "ADD_FAVORITES_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case "ADD_FAVORITES_SUCCESS":
       return {
         ...state,
         loading: false,
         error: null,
-
-        favorites: action.data,
+        data: action.data,
       };
-    case "ADD_FAVORITE_SUCCESS":
+    case "ADD_SHOPLIST_STARTED":
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case "ADD_SHOPLIST_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case "ADD_SHOPLIST_SUCCESS":
       return {
         ...state,
         loading: false,
         error: null,
-        data: {
-          ...state.data,
-          favorites: action.data,
-        },
+        data: { ...state.data, shoplist: action.data },
       };
-
     default:
       return state;
   }

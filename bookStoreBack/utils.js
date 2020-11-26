@@ -3,6 +3,16 @@ const config = require("./config/config.json");
 const jwt = require("jsonwebtoken");
 const db = require("./models");
 
+module.exports.checkAndUpdate = async (id, val) => {
+  if (val === "") return;
+  await db.User.update(
+    { val },
+    {
+      where: id,
+    }
+  );
+};
+
 module.exports.cipher = (pass) => {
   return crypto
     .createHmac("sha256", "secretword")

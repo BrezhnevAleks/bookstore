@@ -39,6 +39,38 @@ export const createFailure = (error) => ({
   error,
 });
 
+export const updateUser = (id, login, email, password) => {
+  return async (dispatch) => {
+    dispatch(updateStarted());
+    try {
+      const response = await axios.post("http://localhost:4000/users/update", {
+        id,
+        login,
+        email,
+        password,
+      });
+      dispatch(updateSuccess(response.data.user));
+      dispatch(addUser(response.data.user));
+    } catch (err) {
+      dispatch(updateFailure(err.message));
+    }
+  };
+};
+
+export const updateSuccess = (data) => ({
+  type: "USER_UPDATE_SUCCESS",
+  data: data,
+});
+
+export const updateStarted = () => ({
+  type: "USER_UPDATE_STARTED",
+});
+
+export const updateFailure = (error) => ({
+  type: "USER_UPDATE_FAILURE",
+  error,
+});
+
 export const loginUser = (email, password) => {
   return async (dispatch) => {
     dispatch(loginStarted());
@@ -48,7 +80,7 @@ export const loginUser = (email, password) => {
         password,
         completed: false,
       });
-      console.log(response.data.user);
+
       dispatch(loginSuccess(response.data.user));
       dispatch(addUser(response.data.user));
       localStorage.setItem("authToken", response.data.token);
@@ -85,7 +117,8 @@ export const toFavorites = (userID, bookID) => {
         }
       );
 
-      dispatch(toFavoritesSuccess(response.data));
+      dispatch(addUser(response.data.user));
+      dispatch(toFavoritesSuccess(response.data.user));
     } catch (err) {
       dispatch(toFavoritesFailure(err.message));
     }
@@ -117,8 +150,8 @@ export const toShopList = (userID, bookID) => {
           bookID,
         }
       );
-
-      dispatch(toShopListSuccess(response.data));
+      //dispatch(addUser(response.data.user));
+      dispatch(toShopListSuccess(response.data.user.shoplist));
     } catch (err) {
       dispatch(toShopListFailure(err.message));
     }

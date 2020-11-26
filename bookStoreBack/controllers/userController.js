@@ -58,10 +58,11 @@ exports.toFavorites = async (request, response) => {
     if (user.favorites.includes(bookID)) {
       let { favorites } = user;
 
-      console.log(favorites);
-      await user.update(
+      favorites.splice(favorites.indexOf(bookID), 1);
+
+      await db.User.update(
         {
-          favorites: favorites.splice(favorites.indexOf(bookID), 1),
+          favorites: favorites,
         },
         {
           where: {
@@ -69,11 +70,17 @@ exports.toFavorites = async (request, response) => {
           },
         }
       );
-      response.send(user.favorites);
+      const newUser = await db.User.findOne({
+        where: {
+          id: userID,
+        },
+      });
+      console.log(user);
+      response.send({ user: newUser });
       return;
     }
 
-    await user.update(
+    await db.User.update(
       {
         favorites: [...user.favorites, bookID],
       },
@@ -84,7 +91,13 @@ exports.toFavorites = async (request, response) => {
       }
     );
 
-    response.status(200).send(user.favorites);
+    const newUser = await db.User.findOne({
+      where: {
+        id: userID,
+      },
+    });
+
+    response.status(200).send({ user: newUser });
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }
@@ -100,11 +113,31 @@ exports.toShoplist = async (request, response) => {
     });
 
     if (user.shoplist.includes(bookID)) {
-      response.send(`Book id ${bookID} already in favorites`);
+      let { shoplist } = user;
+
+      shoplist.splice(shoplist.indexOf(bookID), 1);
+
+      await db.User.update(
+        {
+          shoplist: shoplist,
+        },
+        {
+          where: {
+            id: userID,
+          },
+        }
+      );
+      const newUser = await db.User.findOne({
+        where: {
+          id: userID,
+        },
+      });
+
+      response.send({ user: newUser });
       return;
     }
 
-    await user.update(
+    await db.User.update(
       {
         shoplist: [...user.shoplist, bookID],
       },
@@ -115,7 +148,13 @@ exports.toShoplist = async (request, response) => {
       }
     );
 
-    response.status(200).send(`Book id ${bookID} added to shoplist`);
+    const newUser = await db.User.findOne({
+      where: {
+        id: userID,
+      },
+    });
+
+    response.status(200).send({ user: newUser });
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }
@@ -212,25 +251,22 @@ exports.deleteUser = async (request, response) => {
 };
 
 exports.updateUser = async (request, response) => {
-  const {
-    body: { email, newname },
-  } = request;
-  const searchedValue = { email };
+  const { id, email, login, password } = request.body;
+
   try {
-    const user = await db.User.findOne({ where: searchedValue });
+    const user = await db.User.findOne({ where: id });
     if (!user) {
       response.status(404).send(`User not found`);
       return;
     }
+
     await user.update(
-      { name: newname },
+      { email, login, password: utils.cipher(password) },
       {
-        where: find,
+        where: id,
       }
     );
-    response
-      .status(200)
-      .send(`User ${user.id}: name updated. New name: ${newname}`);
+    response.send({ user: user });
   } catch (err) {
     response.status(500).send(`Something went wrong`);
   }

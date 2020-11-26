@@ -39,46 +39,6 @@ const booklist = (
         loading: false,
         error: action.error,
       };
-    case "BOOKS_SORT_FETCH_STARTED":
-      return {
-        ...state,
-        loading: true,
-        isLogged: false,
-      };
-    case "BOOKS_SORT_FETCH_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        books: action.books,
-        isLogged: true,
-      };
-    case "BOOKS_SORT_FETCH_FAILURE":
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      };
-    case "BOOKS_FETCH_BY_GENRE_STARTED":
-      return {
-        ...state,
-        loading: true,
-        isLogged: false,
-      };
-    case "BOOKS_FETCH_BY_GENRE_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        books: action.books,
-        isLogged: true,
-      };
-    case "BOOKS_FETCH_BY_GENRE_FAILURE":
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      };
 
     case "GENRES_FETCH_STARTED":
       return {

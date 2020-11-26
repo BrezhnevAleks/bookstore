@@ -1,5 +1,5 @@
 .create-book-title {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 }
 
 .new-book {
@@ -23,6 +23,7 @@
 }
 
 .new-book-input {
+  display: block;
   line-height: 1.2;
   margin: 10px auto;
   padding: 10px 30px;
@@ -49,4 +50,13 @@
 }
 input[type="file"] {
   display: none;
+}
+.new-book-description {
+  outline: none !important;
+  resize: none;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 2px #719ece !important;
+  font-size: 14px;
 }

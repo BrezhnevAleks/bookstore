@@ -11,7 +11,7 @@ userRouter.delete(
   userController.deleteUser
 );
 userRouter.post("/login", userController.loginUser);
-userRouter.post("/update", middleware.tokenChecking, userController.updateUser);
+userRouter.post("/update", userController.updateUser);
 userRouter.post("/addtofavorites", userController.toFavorites);
 userRouter.post("/addtoshoplist", userController.toShoplist);
 userRouter.post("/shoplist", userController.getShoplist);

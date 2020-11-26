@@ -21,7 +21,7 @@ class LoginPage extends React.Component {
     e.preventDefault();
 
     let { email, password } = this.state;
-    console.log("Request is going: " + email, password);
+
     this.props.loginUser(email, password);
     this.setState({ email: "", password: "" });
   };
