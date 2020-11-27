@@ -1,32 +1,44 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 import connect from "./connect";
 import Header from "../header/header";
 import NewBook from "../createbook/newbook.js";
 import UpdatePage from "../updateUser/updateUser";
+import Message from "../message/message";
 import { Grid } from "@material-ui/core";
 import "./style.css";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { feature: "add" };
+    this.state = { feature: "add", completed: this.props.completed };
   }
   handleOnclickButton = (e) => {
     return this.setState({ feature: e.target.value });
   };
-  handleOption(value) {
+  handleOnClickOk = () => {
+    this.setState({ completed: false });
+  };
+
+  handleOption = (value, complete) => {
+    if (complete) {
+      return (
+        <Message
+          user={this.props.user}
+          handleOnClickOk={this.handleOnClickOk}
+        />
+      );
+    }
     switch (value) {
       case "add":
-        return <NewBook />;
+        return <NewBook handleOnClickOk={this.handleOnClickOk} />;
       case "update":
-        return <UpdatePage />;
+        return <UpdatePage handleOnClickOk={this.handleOnClickOk} />;
     }
-  }
+  };
   render() {
     const { user } = this.props;
-    const { feature } = this.state;
+    const { feature, completed } = this.state;
     return (
       <div>
         <Header />
@@ -62,7 +74,7 @@ class Profile extends React.Component {
             xs={9}
             cellHeight="auto"
             spacing={0}
-            alignItems="center"
+            alignContent="center"
             direction="column"
           >
             <Grid
@@ -103,11 +115,10 @@ class Profile extends React.Component {
               container
               item
               xs={12}
-              cellHeight="auto"
               spacing={0}
               justify="center"
             >
-              {this.handleOption(feature)}
+              {this.handleOption(feature, this.props.completed)}
             </Grid>
           </Grid>
         </Grid>

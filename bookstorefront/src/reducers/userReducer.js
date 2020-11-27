@@ -5,11 +5,16 @@ const user = (
     shoplist: [],
     favorites: [],
     error: null,
-    isLogged: false,
+    completed: false,
   },
   action
 ) => {
   switch (action.type) {
+    case "USER_CONFIRM_COMPLETION":
+      return {
+        ...state,
+        completed: action.completed,
+      };
     case "ADD_USER":
       return {
         ...state,
@@ -46,12 +51,14 @@ const user = (
         loading: false,
         error: null,
         data: action.data,
+        completed: true,
       };
     case "USER_UPDATE_FAILURE":
       return {
         ...state,
         loading: false,
         error: action.error,
+        completed: true,
       };
     case "USER_LOGIN_STARTED":
       return {

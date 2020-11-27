@@ -17,10 +17,7 @@ class Header extends React.Component {
         <Link to="/" onClick={(e) => this.props.getBooks()}>
           <FontAwesomeIcon icon={faHome} className="home-page" />
         </Link>
-        <Link to="/newbook" className="menu-create">
-          <FontAwesomeIcon className="menu-create-icon" icon={faPlus} />
-          Добавить новую книгу
-        </Link>
+
         <div className="menu-icons">
           <Link to="/profile" className="menu-profile">
             <FontAwesomeIcon icon={faUserCircle} />

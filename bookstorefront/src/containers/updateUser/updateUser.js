@@ -28,7 +28,7 @@ class UpdatePage extends React.Component {
     }
   };
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { id } = this.props.user;
     let { login, email, newPassword } = this.state;
@@ -85,6 +85,7 @@ class UpdatePage extends React.Component {
               className="update-submit"
               type="submit"
               value="Подтвердить"
+              onClick={(e) => this.props.handleOnClickOk(e)}
             />
           </div>
         </form>

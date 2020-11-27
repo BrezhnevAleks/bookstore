@@ -2,27 +2,29 @@ const utils = require("../utils.js");
 const db = require("../models/index");
 
 exports.createUser = async (request, response) => {
-  const { login, email, password } = await request.body;
-  console.log(`${login}, ${email}, ${password}`);
+  const { login, email, password } = request.body;
+
   {
     try {
       if (password.length < 6) {
         response.status(400).send("Password is too short");
         return;
       }
+
       if (!utils.isUserExist(email)) {
         response.status(400).send("User already exists");
         return;
       }
-      console.log(request.body);
+
       const user = await db.User.create({
         login,
         email,
         password: utils.cipher(password),
       });
 
-      const createdtoken = utils.createToken(user.id);
-      response.send({ user: user, isLogged: true, token: createdtoken });
+      const createdToken = utils.createToken(user.id);
+
+      response.send({ user: user, isLogged: true, token: createdToken });
     } catch (err) {
       response.status(500).send("Something went wrong");
     }
@@ -75,7 +77,7 @@ exports.toFavorites = async (request, response) => {
           id: userID,
         },
       });
-      console.log(user);
+
       response.send({ user: newUser });
       return;
     }
@@ -169,7 +171,7 @@ exports.getShoplist = async (request, response) => {
         id: user.shoplist,
       },
     });
-    console.log(data);
+
     response.status(200).send(data);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
@@ -199,14 +201,15 @@ exports.addReview = async (request, response) => {
       rated.reduce((acc, item) => acc + item.rating, 0) / rated.length
     ).toFixed(2);
 
-    console.log(rate);
     const book = await db.Book.findOne({ where: { id: bookId } });
-    console.log(book);
+
     if (!book) {
       response.status(404).send(`Book id ${bookId} not found`);
       return;
     }
+
     await db.Book.update({ rating: rate }, { where: { id: bookId } });
+
     response.status(200).send("Success");
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
@@ -222,7 +225,7 @@ exports.getFavorites = async (request, response) => {
         id: user.favorites,
       },
     });
-    console.log(data);
+
     response.status(200).send(data);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
@@ -275,7 +278,7 @@ exports.updateUser = async (request, response) => {
 exports.loginUser = async (request, response) => {
   const { email, password } = request.body;
   const searchedValue = { email };
-  console.log(request.get("host"));
+
   try {
     const user = await db.User.findOne({ where: searchedValue });
 

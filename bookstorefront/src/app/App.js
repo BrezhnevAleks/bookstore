@@ -5,7 +5,6 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import "./App.css";
 import RegisterPage from "../containers/registration/registerpage.js";
 import LoginPage from "../containers/login/loginpage.js";
 import connect from "./connect";

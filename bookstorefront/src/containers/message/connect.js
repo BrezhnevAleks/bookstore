@@ -3,9 +3,8 @@ import * as bookActions from "../../actions/bookActions";
 import * as userActions from "../../actions/userActions";
 const mapStateToProps = ({ user, booklist }) => {
   return {
-    shoplist: user.shoplist,
     user: user.data,
-    completed: user.completed || booklist.completed,
+    error: user.error || booklist.error,
   };
 };
 

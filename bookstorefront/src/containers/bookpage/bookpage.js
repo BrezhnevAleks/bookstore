@@ -84,7 +84,14 @@ class BookPage extends React.Component {
                 }
                 className="book-image"
               />
-
+              <div className="description">
+                <h4 className="description-title">Описание</h4>
+                <p className="description-text">
+                  {book.description
+                    ? book.description
+                    : "У этой книги нет описания"}
+                </p>
+              </div>
               <form
                 className="review-form"
                 onSubmit={(e) => this.handleReviewOnSubmit(e)}
@@ -108,6 +115,7 @@ class BookPage extends React.Component {
             </div>
             <div className="book-buttons">
               <p className="book-price">{book.price} &#8381;</p>
+
               <div className="book-rating">
                 <Rating
                   size="large"
@@ -171,6 +179,7 @@ class BookPage extends React.Component {
             </div>
           </div>
         </div>
+
         {!reviews.length ? (
           <p className="review-plug">
             Будьте первым, кто добавит отзыв к этой книге!

@@ -43,7 +43,7 @@ class ChangeBook extends React.Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log(id);
+
     this.props.getOneBook(id);
     const { name, author, price } = this.props.book;
     this.setState({

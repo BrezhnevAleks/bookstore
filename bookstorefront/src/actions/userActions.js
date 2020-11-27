@@ -5,6 +5,16 @@ export const addUser = (data) => ({
   type: "ADD_USER",
   data: data,
 });
+// export const confirmAction = () => {
+//   return (dispatch) => {
+//     dispatch(confirmation());
+//   };
+// };
+
+export const userConfirmation = () => ({
+  type: "USER_CONFIRM_COMPLETION",
+  completed: false,
+});
 
 export const createUser = (login, email, password) => {
   return async (dispatch) => {
@@ -60,6 +70,7 @@ export const updateUser = (id, login, email, password) => {
 export const updateSuccess = (data) => ({
   type: "USER_UPDATE_SUCCESS",
   data: data,
+  completed: true,
 });
 
 export const updateStarted = () => ({
@@ -150,7 +161,7 @@ export const toShopList = (userID, bookID) => {
           bookID,
         }
       );
-      //dispatch(addUser(response.data.user));
+
       dispatch(toShopListSuccess(response.data.user.shoplist));
     } catch (err) {
       dispatch(toShopListFailure(err.message));
@@ -180,7 +191,7 @@ export const getShoplist = (userID) => {
         "http://localhost:4000/users/shoplist",
         { userID }
       );
-      console.log(response);
+
       dispatch(shoplistFetchSuccess(response.data));
     } catch (err) {
       dispatch(shoplistFetchFailure(err.message));
@@ -210,7 +221,7 @@ export const getFavoritesList = (userID) => {
         "http://localhost:4000/users/favorites",
         { userID }
       );
-      console.log(response);
+
       dispatch(favoritesListFetchSuccess(response.data));
     } catch (err) {
       dispatch(favoritesListFetchFailure(err.message));

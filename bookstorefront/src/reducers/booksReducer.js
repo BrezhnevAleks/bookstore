@@ -10,6 +10,7 @@ const booklist = (
     reviews: [],
     rate: 0,
     review: {},
+    completed: false,
   },
   action
 ) => {
@@ -20,6 +21,11 @@ const booklist = (
         loading: false,
         error: null,
         books: action.data,
+      };
+    case "BOOKS_CONFIRM_COMPLETION":
+      return {
+        ...state,
+        completed: action.completed,
       };
     case "BOOKS_FETCH_STARTED":
       return {
@@ -69,12 +75,14 @@ const booklist = (
         loading: false,
         error: null,
         created: action.data,
+        completed: action.completed,
       };
     case "BOOK_CREATE_FAILURE":
       return {
         ...state,
         loading: false,
         error: action.error,
+        completed: action.completed,
       };
     case "BOOK_CHANGE_STARTED":
       return {

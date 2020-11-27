@@ -33,12 +33,11 @@ module.exports.verifyToken = (token) => {
 
 module.exports.isUserExist = async (email) => {
   const user = await db.User.findOne({ where: { email: email } });
-  console.log(user);
+
   if (user === null) {
-    console.log("false");
     return false;
   }
-  console.log("true");
+
   return true;
 };
 

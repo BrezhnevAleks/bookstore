@@ -17,7 +17,6 @@ class BookList extends React.Component {
     const { value } = this.props.match.params;
 
     this.props.getBooks(e.value, value);
-
     this.setState({
       filter: e.value,
     });
@@ -26,19 +25,21 @@ class BookList extends React.Component {
   componentDidMount() {
     const { value } = this.props.match.params;
     const { filter } = this.state;
+
     this.props.getGenres();
     this.props.getBooks(filter, value);
   }
 
   handleOnClick = (e, value) => {
-    console.log(value);
     const { filter } = this.state;
+
     this.props.getBooks(filter, value);
   };
 
   render() {
     const { genres } = this.props;
     const { books } = this.props;
+    const { filter } = this.state;
     return (
       <div>
         <Header />
@@ -62,6 +63,16 @@ class BookList extends React.Component {
             xs={3}
           >
             <h3 className="categories">Категории</h3>
+            <Link
+              to={{
+                pathname: `/`,
+                state: { fromDashboard: true },
+              }}
+              className="genre-filter"
+              onClick={(e) => this.props.getBooks()}
+            >
+              Все
+            </Link>
             {genres.map((item) => (
               <Link
                 key={item.id}

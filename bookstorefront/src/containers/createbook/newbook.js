@@ -38,7 +38,7 @@ class NewBook extends React.Component {
   handleChangeSelect = (e) => {
     this.setState({ genre: e.value });
   };
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { bookcover, name, author, genre, price, description } = this.state;
     let formData = new FormData();
@@ -158,6 +158,7 @@ class NewBook extends React.Component {
             className="new-book-submit"
             type="submit"
             value="Добавить книгу"
+            onClick={this.props.handleOnClickOk}
           />
         </form>
       </div>

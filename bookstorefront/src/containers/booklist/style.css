@@ -13,7 +13,7 @@
 .genre-filter {
   color: black;
   padding: 0 0.5em;
-  transition: top 1s ease-out 0.5s;
+
   position: relative;
 }
 
@@ -21,10 +21,10 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -200%;
+  left: -300%;
   width: 200%;
   height: 100%;
-
+  opacity: 0;
   background: linear-gradient(
     to right,
     rgb(235, 235, 235) 0%,
@@ -33,18 +33,16 @@
     white 100%
   );
   border-radius: 10px;
-  transition: left 0.3s ease-out;
+  transition: opacity 0.4s ease-out;
+  transition: left 0.4s ease-out;
+
   z-index: -1;
 }
 .genre-filter:hover:before {
+  opacity: 1;
   left: 0;
 }
 
-/* .books {
-  display: flex;
-  justify-content: space-evenly;
-  border: 1px solid rgb(0, 0, 0);
-} */
 .booklist {
   display: flex;
   flex-direction: column;

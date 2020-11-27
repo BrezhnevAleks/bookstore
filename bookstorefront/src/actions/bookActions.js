@@ -6,6 +6,11 @@ export const addBooks = (data) => ({
   data: data,
 });
 
+export const booksConfirmation = () => ({
+  type: "BOOKS_CONFIRM_COMPLETION",
+  completed: false,
+});
+
 export const getBooks = (filter = "default", genre = "all") => {
   return async (dispatch) => {
     dispatch(booksFetchStarted());
@@ -14,7 +19,7 @@ export const getBooks = (filter = "default", genre = "all") => {
         filter,
         genre,
       });
-      console.log(response);
+
       dispatch(booksFetchSuccess(response.data));
       dispatch(addBooks(response.data));
     } catch (err) {
@@ -44,7 +49,6 @@ export const getOneBook = (id) => {
       const response = await axios.post("http://localhost:4000/books/one", {
         id,
       });
-      console.log(response);
 
       dispatch(bookFetchSuccess(response.data));
     } catch (err) {
@@ -71,10 +75,6 @@ export const createBook = (data) => {
   return async (dispatch) => {
     dispatch(createBookStarted());
     try {
-      for (let value of data.values()) {
-        console.log("in action", value);
-      }
-
       const response = await axios({
         method: "post",
         url: "http://localhost:4000/books/newbook",
@@ -92,6 +92,7 @@ export const createBook = (data) => {
 export const createBookSuccess = (data) => ({
   type: "BOOK_CREATE_SUCCESS",
   data: data,
+  completed: true,
 });
 
 export const createBookStarted = () => ({
@@ -101,16 +102,13 @@ export const createBookStarted = () => ({
 export const createBookFailure = (error) => ({
   type: "BOOK_CREATE_FAILURE",
   error,
+  completed: true,
 });
 
 export const changeBook = (data) => {
   return async (dispatch) => {
     dispatch(changeBookStarted());
     try {
-      for (let value of data.values()) {
-        console.log("in action", value);
-      }
-
       const response = await axios({
         method: "post",
         url: "http://localhost:4000/books/changebook",
@@ -175,7 +173,7 @@ export const getReviews = (bookId) => {
       const response = await axios.post("http://localhost:4000/books/reviews", {
         bookId,
       });
-      console.log(response);
+
       dispatch(getReviewsSuccess(response.data));
     } catch (err) {
       dispatch(getReviewsFailure(err.message));
