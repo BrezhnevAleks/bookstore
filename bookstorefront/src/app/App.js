@@ -16,6 +16,7 @@ import FavoritesList from "../containers/favorites/favorites.js";
 import ShopList from "../containers/shoplist/shoplist.js";
 import BookList from "../containers/booklist/booklist";
 import Profile from "../containers/profile/profile.js";
+import { setAuthToken } from "../axios.js";
 
 class App extends React.Component {
   login(data) {
@@ -24,7 +25,10 @@ class App extends React.Component {
   registration(data) {
     return data.hasOwnProperty("id") ? <Redirect to="/" /> : <RegisterPage />;
   }
-
+  componentDidMount() {
+    setAuthToken(localStorage.getItem("authToken"));
+    this.props.getUserByToken();
+  }
   render() {
     const { data } = this.props;
 

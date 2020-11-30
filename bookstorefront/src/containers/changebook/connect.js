@@ -4,6 +4,7 @@ import * as chanhgeBookActions from "../../actions/bookActions";
 const mapStateToProps = ({ booklist }) => {
   return {
     book: booklist.book,
+    genres: booklist.genres,
   };
 };
 

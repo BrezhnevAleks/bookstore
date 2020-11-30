@@ -30,7 +30,9 @@ exports.getOneBook = async (request, response) => {
   try {
     const { id } = request.body;
     const searchedValue = { id };
-    const book = await db.Book.findOne({ where: searchedValue });
+    const book = await db.Book.findOne({
+      where: searchedValue,
+    });
 
     if (!book) {
       response
@@ -150,7 +152,7 @@ exports.getBooksByGenre = async (request, response) => {
 exports.changeBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");
-    const { id, name, author, price } = request.body;
+    const { id, name, author, price, description } = request.body;
     const searchedValue = { id };
     const book = await db.Book.findOne({ where: searchedValue });
 
@@ -164,6 +166,7 @@ exports.changeBook = async (request, response) => {
         name: name,
         author: author,
         price: price,
+        description: description,
         picture: url + "/" + request.file.filename,
       },
       {

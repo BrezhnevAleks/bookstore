@@ -1,26 +1,53 @@
 import axios from "axios";
-//import axiosInstance from "../axios";
+import { axiosInstance } from "../axios.js";
+import { setAuthToken } from "../axios.js";
 
 export const addUser = (data) => ({
   type: "ADD_USER",
   data: data,
 });
-// export const confirmAction = () => {
-//   return (dispatch) => {
-//     dispatch(confirmation());
-//   };
-// };
 
 export const userConfirmation = () => ({
   type: "USER_CONFIRM_COMPLETION",
   completed: false,
 });
 
+export const signOutUser = () => ({
+  type: "SIGN_OUT_USER",
+});
+
+export const getUserByToken = () => {
+  return async (dispatch) => {
+    dispatch(getUserByStarted());
+    try {
+      const response = await axiosInstance.get(`users/bytoken`);
+      dispatch(getUserBySuccess(response.data.user));
+    } catch (err) {
+      dispatch(getUserByFailure(err.message));
+    }
+  };
+};
+
+export const getUserBySuccess = (data) => ({
+  type: "GET_BY_TOKEN_SUCCESS",
+  data: data,
+  isLogged: true,
+});
+
+export const getUserByStarted = () => ({
+  type: "GET_BY_TOKEN_STARTED",
+});
+
+export const getUserByFailure = (error) => ({
+  type: "GET_BY_TOKEN_FAILURE",
+  error,
+});
+
 export const createUser = (login, email, password) => {
   return async (dispatch) => {
     dispatch(createStarted());
     try {
-      const response = await axios.post("http://localhost:4000/users/create", {
+      const response = await axios.post(`http://localhost:4000/users/create`, {
         login,
         email,
         password,
@@ -53,7 +80,7 @@ export const updateUser = (id, login, email, password) => {
   return async (dispatch) => {
     dispatch(updateStarted());
     try {
-      const response = await axios.post("http://localhost:4000/users/update", {
+      const response = await axiosInstance.post(`users/update`, {
         id,
         login,
         email,
@@ -86,15 +113,16 @@ export const loginUser = (email, password) => {
   return async (dispatch) => {
     dispatch(loginStarted());
     try {
-      const response = await axios.post("http://localhost:4000/users/login", {
+      const response = await axios.post(`http://localhost:4000/users/login`, {
         email,
         password,
-        completed: false,
       });
 
       dispatch(loginSuccess(response.data.user));
       dispatch(addUser(response.data.user));
       localStorage.setItem("authToken", response.data.token);
+
+      setAuthToken(response.data.token);
     } catch (err) {
       dispatch(loginFailure(err.message));
     }
@@ -120,13 +148,10 @@ export const toFavorites = (userID, bookID) => {
   return async (dispatch) => {
     dispatch(toFavoritesStarted());
     try {
-      const response = await axios.post(
-        "http://localhost:4000/users/addtofavorites",
-        {
-          userID,
-          bookID,
-        }
-      );
+      const response = await axiosInstance.post(`users/addtofavorites`, {
+        userID,
+        bookID,
+      });
 
       dispatch(addUser(response.data.user));
       dispatch(toFavoritesSuccess(response.data.user));
@@ -154,13 +179,10 @@ export const toShopList = (userID, bookID) => {
   return async (dispatch) => {
     dispatch(toShopListStarted());
     try {
-      const response = await axios.post(
-        "http://localhost:4000/users/addtoshoplist",
-        {
-          userID,
-          bookID,
-        }
-      );
+      const response = await axiosInstance.post("/users/addtoshoplist", {
+        userID,
+        bookID,
+      });
 
       dispatch(toShopListSuccess(response.data.user.shoplist));
     } catch (err) {
@@ -187,10 +209,7 @@ export const getShoplist = (userID) => {
   return async (dispatch) => {
     dispatch(shoplistFetchStarted());
     try {
-      const response = await axios.post(
-        "http://localhost:4000/users/shoplist",
-        { userID }
-      );
+      const response = await axiosInstance.post("/users/shoplist", { userID });
 
       dispatch(shoplistFetchSuccess(response.data));
     } catch (err) {
@@ -217,10 +236,7 @@ export const getFavoritesList = (userID) => {
   return async (dispatch) => {
     dispatch(favoritesListFetchStarted());
     try {
-      const response = await axios.post(
-        "http://localhost:4000/users/favorites",
-        { userID }
-      );
+      const response = await axiosInstance.post("/users/favorites", { userID });
 
       dispatch(favoritesListFetchSuccess(response.data));
     } catch (err) {

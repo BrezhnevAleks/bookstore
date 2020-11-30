@@ -1,15 +1,15 @@
-const user = (
-  state = {
-    loading: false,
-    data: {},
-    shoplist: [],
-    favorites: [],
-    error: null,
-    completed: false,
-  },
-  action
-) => {
+const defaultState = {
+  loading: false,
+  data: {},
+  shoplist: [],
+  favorites: [],
+  error: null,
+  completed: false,
+};
+const user = (state = defaultState, action) => {
   switch (action.type) {
+    case "SIGN_OUT_USER":
+      return defaultState;
     case "USER_CONFIRM_COMPLETION":
       return {
         ...state,
@@ -35,6 +35,24 @@ const user = (
         data: action.data,
       };
     case "USER_CREATE_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case "GET_BY_TOKEN_STARTED":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "GET_BY_TOKEN_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        data: action.data,
+      };
+    case "GET_BY_TOKEN_FAILURE":
       return {
         ...state,
         loading: false,

@@ -1,10 +1,11 @@
 const utils = require("../utils");
 
 module.exports.tokenChecking = (request, response, next) => {
-  const { token } = request.headers;
+  const { authorization } = request.headers;
 
   try {
-    utils.verifyToken(token);
+    utils.verifyToken(authorization);
+    console.log(true);
   } catch (err) {
     return response.status(403).send("Token must be provided");
   }

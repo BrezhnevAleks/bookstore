@@ -11,6 +11,10 @@ import connect from "./connect";
 import "./style.css";
 
 class Header extends React.Component {
+  handleSignOut = () => {
+    localStorage.clear();
+    this.props.signOutUser();
+  };
   render() {
     return (
       <header className="menu">
@@ -31,12 +35,14 @@ class Header extends React.Component {
             <FontAwesomeIcon icon={faShoppingCart} />
           </Link>
 
-          <FontAwesomeIcon
-            className="menu-sign-out"
-            icon={faSignOutAlt}
-            style={({ fontSize: "17px" }, { cursor: "pointer" })}
-            onClick={(e) => this.props.handleSignOut(e)}
-          />
+          <Link to="/login">
+            <FontAwesomeIcon
+              className="menu-sign-out"
+              icon={faSignOutAlt}
+              style={({ fontSize: "17px" }, { cursor: "pointer" })}
+              onClick={this.handleSignOut}
+            />
+          </Link>
         </div>
       </header>
     );

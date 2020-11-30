@@ -1,5 +1,5 @@
 import axios from "axios";
-//import axiosInstance from "../axios";
+import { axiosInstance } from "../axios";
 
 export const addBooks = (data) => ({
   type: "ADD_BOOKS",
@@ -141,7 +141,7 @@ export const addReview = (userId, bookId, text, rating) => {
   return async (dispatch) => {
     dispatch(addReviewStarted());
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:4000/users/addreview",
         { userId, bookId, text, rating }
       );

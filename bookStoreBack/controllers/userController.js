@@ -181,12 +181,27 @@ exports.getShoplist = async (request, response) => {
 exports.addReview = async (request, response) => {
   const { userId, bookId, text, rating } = request.body;
   try {
-    await db.Review.create({
-      text: text,
-      bookId: bookId,
-      userId: userId,
-      rating: rating,
+    const existingReview = await db.Review.findOne({
+      where: { bookId, userId },
     });
+
+    if (existingReview) {
+      await existingReview.update(
+        {
+          text: text || existingReview.text,
+          rating: rating || existingReview.rating,
+        },
+        { where: { bookId, userId } }
+      );
+    } else {
+      await db.Review.create({
+        text: text,
+        bookId: bookId,
+        userId: userId,
+        rating: rating,
+      });
+    }
+
     const reviews = await db.Review.findAll({
       where: { bookId },
       include: {
@@ -294,6 +309,25 @@ exports.loginUser = async (request, response) => {
 
     const createdtoken = utils.createToken(user.id);
     response.send({ user: user, isLogged: true, token: createdtoken });
+  } catch (err) {
+    response.status(500).send("Something went wrong");
+  }
+};
+
+exports.getByToken = async (request, response) => {
+  try {
+    const { authorization } = request.headers;
+    const id = utils.verifyToken(authorization).data;
+
+    const user = await db.User.findOne({ where: { id: id } });
+    console.log(user);
+    if (!user) {
+      response.status(404).send("User not found");
+      return;
+    }
+
+    const createdtoken = utils.createToken(user.id);
+    response.send({ user: user, isLogged: true });
   } catch (err) {
     response.status(500).send("Something went wrong");
   }
