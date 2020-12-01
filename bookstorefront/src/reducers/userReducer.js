@@ -82,7 +82,6 @@ const user = (state = defaultState, action) => {
       return {
         ...state,
         loading: true,
-        isLogged: false,
       };
     case "USER_LOGIN_SUCCESS":
       return {
@@ -90,14 +89,12 @@ const user = (state = defaultState, action) => {
         loading: false,
         error: null,
         data: action.data,
-        isLogged: true,
       };
     case "USER_LOGIN_FAILURE":
       return {
         ...state,
         loading: false,
         error: action.error,
-        isLogged: false,
       };
     case "FAVORITES_FETCH_STARTED":
       return {
@@ -152,7 +149,7 @@ const user = (state = defaultState, action) => {
         ...state,
         loading: false,
         error: null,
-        data: action.data,
+        data: { ...state.data, favorites: action.data },
       };
     case "ADD_SHOPLIST_STARTED":
       return {

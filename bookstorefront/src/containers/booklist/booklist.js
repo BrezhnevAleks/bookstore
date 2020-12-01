@@ -2,6 +2,7 @@ import React from "react";
 import BookItem from "../bookitem/bookitem";
 import BooksFilter from "../../components/booksfilter/booksfilter";
 import Header from "../header/header.js";
+import Loading from "../../components/loadplug/loading.js";
 import connect from "./connect";
 import "./style.css";
 import { Link } from "react-router-dom";
@@ -14,99 +15,114 @@ class BookList extends React.Component {
   }
 
   handleOnChangeFilter = (e) => {
-    const { value } = this.props.match.params;
+    const {
+      match: {
+        params: { value },
+      },
+      getBooks,
+    } = this.props;
 
-    this.props.getBooks(e.value, value);
+    getBooks(e.value, value);
     this.setState({
       filter: e.value,
     });
   };
 
   componentDidMount() {
-    const { value } = this.props.match.params;
+    const {
+      match: {
+        params: { value },
+      },
+      getGenres,
+      getBooks,
+    } = this.props;
     const { filter } = this.state;
 
-    this.props.getGenres();
-    this.props.getBooks(filter, value);
+    getGenres();
+    getBooks(filter, value);
   }
 
   handleOnClick = (e, value) => {
     const { filter } = this.state;
+    const { getBooks } = this.props;
 
-    this.props.getBooks(filter, value);
+    getBooks(filter, value);
   };
 
   render() {
-    const { genres } = this.props;
-    const { books } = this.props;
-    const { filter } = this.state;
+    const { genres, books, loading, getBooks } = this.props;
+
     return (
       <div>
         <Header />
-        <Grid
-          container
-          item
-          spacing={4}
-          xs={12}
-          direction="row"
-          justify="space-between"
-          alignItems="flex-start"
-          style={{ padding: "0 5%" }}
-        >
+        {loading ? (
+          <Loading />
+        ) : (
           <Grid
             container
             item
-            justify="flex-start"
-            className="genres"
-            direction="column"
+            spacing={4}
+            xs={12}
+            direction="row"
+            justify="space-between"
             alignItems="flex-start"
-            xs={3}
+            style={{ padding: "0 5%" }}
           >
-            <h3 className="categories">Категории</h3>
-            <Link
-              to={{
-                pathname: `/`,
-                state: { fromDashboard: true },
-              }}
-              className="genre-filter"
-              onClick={(e) => this.props.getBooks()}
+            <Grid
+              container
+              item
+              justify="flex-start"
+              className="genres"
+              direction="column"
+              alignItems="flex-start"
+              xs={3}
             >
-              Все
-            </Link>
-            {genres.map((item) => (
+              <h3 className="categories">Категории</h3>
               <Link
-                key={item.id}
-                onClick={(e) => this.handleOnClick(e, item.value)}
-                value={item.value}
                 to={{
-                  pathname: `/genre/${item.value}`,
+                  pathname: `/`,
                   state: { fromDashboard: true },
                 }}
                 className="genre-filter"
+                onClick={this.handleOnClick}
               >
-                {item.label}
+                Все
               </Link>
-            ))}
-          </Grid>
-
-          <Grid container item xs={9} cellHeight="auto" spacing={3}>
-            <Grid item xs={12} className="booklist-header">
-              <span className="booklist-count">
-                {"Книг доступно: " + books.length}
-              </span>
-              <BooksFilter
-                books={books}
-                handleOnChangeFilter={this.handleOnChangeFilter}
-              />
+              {genres.map((item) => (
+                <Link
+                  key={item.id}
+                  onClick={(e) => this.handleOnClick(e, item.value)}
+                  value={item.value}
+                  to={{
+                    pathname: `/genre/${item.value}`,
+                    state: { fromDashboard: true },
+                  }}
+                  className="genre-filter"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </Grid>
 
-            {books.map((item) => (
-              <Grid cellHeight="auto" key={item.id} item lg={3} sm={4}>
-                <BookItem item={item} key={item.id} />
+            <Grid container item xs={9} cellHeight="auto" spacing={3}>
+              <Grid item xs={12} className="booklist-header">
+                <span className="booklist-count">
+                  {"Книг доступно: " + books.length}
+                </span>
+                <BooksFilter
+                  books={books}
+                  handleOnChangeFilter={this.handleOnChangeFilter}
+                />
               </Grid>
-            ))}
+
+              {books.map((item) => (
+                <Grid cellHeight="auto" key={item.id} item lg={3} sm={4}>
+                  <BookItem item={item} key={item.id} />
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </div>
     );
   }

@@ -11,16 +11,20 @@ import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 
 class BookItem extends React.Component {
   handleOnClickLike = (e) => {
-    const { item, user } = this.props;
-    this.props.toFavorites(user.id, item.id);
+    const { item, user, toFavorites } = this.props;
+
+    toFavorites(user.id, item.id);
   };
   handleOnClickToShoplist = (e) => {
-    const { item, user } = this.props;
-    this.props.toShopList(user.id, item.id);
+    const { item, user, toShopList } = this.props;
+
+    toShopList(user.id, item.id);
   };
   render() {
-    const { item } = this.props;
-    const { favorites, shoplist } = this.props.user;
+    const {
+      item: { id, name, author, price, rating, picture },
+      user: { favorites, shoplist },
+    } = this.props;
 
     return (
       <div className="item">
@@ -28,37 +32,36 @@ class BookItem extends React.Component {
           <FontAwesomeIcon
             className="toShop-button"
             onClick={this.handleOnClickToShoplist}
-            icon={shoplist.includes(item.id) ? faShoppingBasket : faPlus}
+            icon={shoplist.includes(id) ? faShoppingBasket : faPlus}
           />
-
-          <h3 className="item-name">{item.name}</h3>
-
+          <h3 className="item-name">{name}</h3>
           <FontAwesomeIcon
             className="like-button"
             onClick={this.handleOnClickLike}
-            icon={favorites.includes(item.id) ? solidHeart : regHeart}
+            icon={favorites.includes(id) ? solidHeart : regHeart}
           />
         </div>
+
         <Link
-          key={item.id}
+          key={id}
           to={{
-            pathname: `/books/${item.id}`,
+            pathname: `/books/${id}`,
             state: { fromDashboard: true },
           }}
           className="item-body"
         >
           <img
             src={
-              item.picture === "picture"
+              picture === "picture"
                 ? "http://localhost:4000/default.png"
-                : item.picture
+                : picture
             }
             className="item-image"
           />
-          <Rating name="read-only" value={Number(item.rating)} readOnly />
+          <Rating name="read-only" value={Number(rating)} readOnly />
 
-          <span className="item-author">{item.author}</span>
-          <span className="item-price">{item.price} &#8381;</span>
+          <span className="item-author">{author}</span>
+          <span className="item-price">{price} &#8381;</span>
         </Link>
       </div>
     );

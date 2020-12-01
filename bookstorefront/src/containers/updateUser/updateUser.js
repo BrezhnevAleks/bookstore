@@ -1,94 +1,168 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import connect from "./connect";
 import "./style.css";
 
 class UpdatePage extends React.Component {
   constructor(props) {
     super(props);
-    const { login, email } = this.props.user;
+    const {
+      user: { login, email, password },
+    } = this.props;
     this.state = {
-      login: login,
-      email: email,
-
+      newLogin: login,
+      newEmail: email,
       newPassword: "",
+      flag: "none",
     };
   }
 
   handleChange = (e) => {
     switch (e.target.name) {
       case "login":
-        return this.setState({ login: e.target.value });
+        return this.setState({ newLogin: e.target.value });
       case "email":
-        return this.setState({ email: e.target.value });
-
-      case "newPassword":
+        return this.setState({ newEmail: e.target.value });
+      case "password":
         return this.setState({ newPassword: e.target.value });
       default:
         return;
     }
   };
-
+  handleOnClickChange = (e) => {
+    this.setState({ flag: e.target.id });
+  };
+  handleOnClickCancel = (e) => {
+    const {
+      user: { login, email, password },
+    } = this.props;
+    this.setState({
+      newLogin: login,
+      newEmail: email,
+      newPassword: "",
+      flag: "none",
+    });
+  };
+  handleOnBlur = () => {
+    this.setState({
+      flag: "none",
+    });
+  };
   handleSubmit = (e) => {
     e.preventDefault();
-    const { id } = this.props.user;
-    let { login, email, newPassword } = this.state;
-    console.log("Request is going: " + id, login, email, newPassword);
-    this.props.updateUser(id, login, email, newPassword);
-    this.setState({ login: "", email: "", newPassword: "" });
+
+    const {
+      user: { id },
+      updateUser,
+    } = this.props;
+    const { newLogin, newEmail, newPassword } = this.state;
+
+    updateUser(id, newLogin, newEmail, newPassword);
+    this.setState({ newLogin: "", newEmail: "", newPassword: "" });
   };
 
   render() {
-    const { login, email, newPassword } = this.state;
+    const { newLogin, newEmail, newPassword, flag } = this.state;
+    const { handleOnClickOk } = this.props;
+
     return (
       <div className="update">
-        <h1>Изменить даные</h1>
+        <h1>Изменить данные</h1>
         <p className="update-text">
           Введите данные, которые необходмо обновить и нажмите кнопку
           "Подтвердить"
         </p>
-        <form
-          className="update-main"
-          onSubmit={(e) => this.handleSubmit(e)}
-          method="post"
-        >
-          <label>Новый логин</label>
-          <input
-            value={login}
-            required
-            className="update-input"
-            onChange={this.handleChange}
-            type="text"
-            name="login"
-          />
+        <div className="update-body">
+          <form
+            className="update-main"
+            onSubmit={this.handleSubmit}
+            method="post"
+          >
+            <label>Логин</label>
+            {flag === "login" ? (
+              <input
+                onBlur={this.handleOnBlur}
+                autoFocus={true}
+                value={newLogin}
+                required
+                className="update-input"
+                onChange={this.handleChange}
+                type="text"
+                name="login"
+              />
+            ) : (
+              <span
+                className="update-values"
+                onClick={this.handleOnClickChange}
+                id={"login"}
+              >
+                {newLogin}
+                <FontAwesomeIcon style={{ marginLeft: "5px" }} icon={faPen} />
+              </span>
+            )}
+            <label>Пароль:</label>
+            {flag === "password" ? (
+              <input
+                onBlur={this.handleOnBlur}
+                autoFocus={true}
+                value={newPassword}
+                required
+                className="update-input"
+                onChange={this.handleChange}
+                type="text"
+                name="password"
+              />
+            ) : (
+              <span
+                className="update-values"
+                onClick={this.handleOnClickChange}
+                id={"password"}
+              >
+                Изменить пароль
+                <FontAwesomeIcon style={{ marginLeft: "5px" }} icon={faPen} />
+              </span>
+            )}
+            <label>Email</label>
+            {flag === "email" ? (
+              <input
+                onBlur={this.handleOnBlur}
+                autoFocus={true}
+                value={newEmail}
+                required
+                className="update-input"
+                onChange={this.handleChange}
+                type="email"
+                name="email"
+              />
+            ) : (
+              <span
+                className="update-values"
+                onClick={this.handleOnClickChange}
+                id={"email"}
+              >
+                {newEmail}
+                <FontAwesomeIcon style={{ marginLeft: "5px" }} icon={faPen} />
+              </span>
+            )}
 
-          <label>Новый пароль:</label>
-          <input
-            value={newPassword}
-            required
-            className="update-input"
-            onChange={this.handleChange}
-            type="text"
-            name="newPassword"
-          />
-          <label>Новый Email</label>
-          <input
-            value={email}
-            required
-            className="update-input"
-            onChange={this.handleChange}
-            type="email"
-            name="email"
-          />
-
-          <div className="buttons">
-            <input
-              className="update-submit"
-              type="submit"
-              value="Подтвердить"
-              onClick={(e) => this.props.handleOnClickOk(e)}
-            />
-          </div>
-        </form>
+            <div className="buttons">
+              <input
+                className="update-submit"
+                type="submit"
+                value="Подтвердить"
+                onClick={handleOnClickOk}
+              />
+            </div>
+          </form>
+          <button
+            className="update-cancel"
+            value="Сбросить изменения"
+            onClick={this.handleOnClickCancel}
+          >
+            Сбросить изменения
+          </button>
+        </div>
       </div>
     );
   }

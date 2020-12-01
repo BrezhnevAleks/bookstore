@@ -1,17 +1,18 @@
 import React from "react";
 import connect from "./connect";
-import { Link } from "react-router-dom";
 import BookItem from "../bookitem/bookitem";
 import Header from "../header/header";
 import { Grid } from "@material-ui/core";
 import "./style.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 class FavoritesList extends React.Component {
   componentDidMount() {
-    const { user } = this.props;
-    this.props.getFavoritesList(user.id);
+    const {
+      user: { id },
+      getFavoritesList,
+    } = this.props;
+
+    getFavoritesList(id);
   }
 
   render() {

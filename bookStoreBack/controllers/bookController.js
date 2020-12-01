@@ -4,7 +4,9 @@ const utils = require("../utils.js");
 exports.getBooks = async (request, response) => {
   try {
     let books;
-    const { filter, genre } = await request.body;
+    const {
+      body: { filter, genre },
+    } = request;
 
     if (genre === "all") {
       books = await db.Book.findAll({ raw: true });
@@ -12,14 +14,15 @@ exports.getBooks = async (request, response) => {
       let genres = await db.Genre.findOne({ where: { value: genre } });
       books = await db.Book.findAll({ where: { id: genres.booksId } });
     }
+
     if (!books) {
       response
         .status(404)
         .send("No data in the database. Books should be added first");
       return;
     }
-    utils.sortingType(books, filter);
 
+    utils.sortingType(books, filter);
     response.status(200).send(books);
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
@@ -28,7 +31,9 @@ exports.getBooks = async (request, response) => {
 
 exports.getOneBook = async (request, response) => {
   try {
-    const { id } = request.body;
+    const {
+      body: { id },
+    } = request;
     const searchedValue = { id };
     const book = await db.Book.findOne({
       where: searchedValue,
@@ -50,21 +55,29 @@ exports.getOneBook = async (request, response) => {
 exports.createBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");
-    const { name, author, price, description } = request.body;
+    const {
+      body: { name, author, price, description },
+      file: { filename },
+    } = request;
+
     const book = await db.Book.create({
-      name: name,
-      author: author,
-      price: price,
-      picture: url + "/" + request.file.filename,
-      description: description,
+      name,
+      author,
+      price,
+      description,
+      picture: url + "/" + filename,
     });
 
     if (!book) {
-      response.send("Ошибка при загрузке файла");
+      response.srtatus(400).send("Ошибка при загрузке файла");
       return;
     }
-    const { genre } = request.body;
+    const {
+      body: { genre },
+    } = request;
+
     const newGenre = await db.Genre.findOne({ where: { value: genre } });
+
     if (newGenre) {
       await newGenre.update(
         {
@@ -78,7 +91,7 @@ exports.createBook = async (request, response) => {
       );
     } else {
       await db.Genre.create({
-        name: genre,
+        genre,
         booksId: [book.id],
       });
     }
@@ -90,7 +103,9 @@ exports.createBook = async (request, response) => {
 
 exports.getReviews = async (request, response) => {
   try {
-    const { bookId } = request.body;
+    const {
+      body: { bookId },
+    } = request;
     let allReviews = await db.Review.findAll({
       where: { bookId },
       include: {
@@ -116,43 +131,12 @@ exports.getReviews = async (request, response) => {
   }
 };
 
-exports.getSortBooks = async (request, response) => {
-  try {
-    let books = await db.Book.findAll({ raw: true });
-    const { filter } = await request.body;
-
-    if (!books) {
-      response
-        .status(404)
-        .send("No data in the database. Books should be added first");
-      return;
-    }
-    utils.sortingType(books, filter);
-    response.status(200).send(books);
-  } catch (err) {
-    response.status(400).send("Something went terribly wrong");
-  }
-};
-
-exports.getBooksByGenre = async (request, response) => {
-  try {
-    const { genre } = await request.body;
-    let genres = await db.Genre.findOne({ where: { value: genre } });
-    let books = await db.Book.findAll({ where: { id: genres.booksId } });
-
-    if (!books) {
-      response.status(404).send("No books with this genre");
-      return;
-    }
-    response.status(200).send(books);
-  } catch (err) {
-    response.status(400).send("Something went very very terribly wrong");
-  }
-};
 exports.changeBook = async (request, response) => {
   try {
     const url = request.protocol + "://" + request.get("host");
-    const { id, name, author, price, description } = request.body;
+    const {
+      body: { id, name, author, price, description },
+    } = request;
     const searchedValue = { id };
     const book = await db.Book.findOne({ where: searchedValue });
 
@@ -163,14 +147,14 @@ exports.changeBook = async (request, response) => {
 
     await db.Book.update(
       {
-        name: name,
-        author: author,
-        price: price,
-        description: description,
+        name,
+        author,
+        price,
+        description,
         picture: url + "/" + request.file.filename,
       },
       {
-        where: { id: id },
+        where: { id },
       }
     );
 

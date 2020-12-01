@@ -8,7 +8,12 @@ import "./style.css";
 
 class ShopList extends React.Component {
   componentDidMount() {
-    this.props.getShoplist(this.props.user.id);
+    const {
+      user: { id },
+      getShoplist,
+    } = this.props;
+
+    getShoplist(id);
   }
 
   render() {

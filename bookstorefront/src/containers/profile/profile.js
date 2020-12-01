@@ -11,9 +11,10 @@ import "./style.css";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { feature: "add", completed: this.props.completed };
+    const { completed } = this.props;
+    this.state = { feature: "add", completed };
   }
-  handleOnclickButton = (e) => {
+  handleOnClickFeatureButton = (e) => {
     return this.setState({ feature: e.target.value });
   };
   handleOnClickOk = () => {
@@ -22,12 +23,7 @@ class Profile extends React.Component {
 
   handleOption = (value, complete) => {
     if (complete) {
-      return (
-        <Message
-          user={this.props.user}
-          handleOnClickOk={this.handleOnClickOk}
-        />
-      );
+      return <Message />;
     }
     switch (value) {
       case "add":
@@ -37,8 +33,12 @@ class Profile extends React.Component {
     }
   };
   render() {
-    const { user } = this.props;
-    const { feature, completed } = this.state;
+    const {
+      user: { login, email, shoplist, favorites },
+      completed,
+    } = this.props;
+    const { feature } = this.state;
+
     return (
       <div>
         <Header />
@@ -62,10 +62,10 @@ class Profile extends React.Component {
             xs={3}
           >
             <h3 className="categories">Личный кабинет</h3>
-            <p>Имя: {user.login}</p>
-            <p>Email: {user.email}</p>
-            <Link to="/shoplist">Корзина: [{user.shoplist.length}]</Link>
-            <Link to="/favorites">Избранное: [{user.favorites.length}]</Link>
+            <p>Имя: {login}</p>
+            <p>Email: {email}</p>
+            <Link to="/shoplist">Корзина: [{shoplist.length}]</Link>
+            <Link to="/favorites">Избранное: [{favorites.length}]</Link>
           </Grid>
 
           <Grid
@@ -93,7 +93,7 @@ class Profile extends React.Component {
                       ? "profile-functions-button-active"
                       : "profile-functions-button"
                   }
-                  onClick={this.handleOnclickButton}
+                  onClick={this.handleOnClickFeatureButton}
                 >
                   Добавить книгу
                 </button>
@@ -104,7 +104,7 @@ class Profile extends React.Component {
                       ? "profile-functions-button-active"
                       : "profile-functions-button"
                   }
-                  onClick={this.handleOnclickButton}
+                  onClick={this.handleOnClickFeatureButton}
                 >
                   Изменить данные
                 </button>
@@ -118,7 +118,7 @@ class Profile extends React.Component {
               spacing={0}
               justify="center"
             >
-              {this.handleOption(feature, this.props.completed)}
+              {this.handleOption(feature, completed)}
             </Grid>
           </Grid>
         </Grid>

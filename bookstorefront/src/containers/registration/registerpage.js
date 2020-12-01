@@ -24,24 +24,21 @@ class RegisterPage extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    const { createUser } = this.props;
+    const { login, email, password } = this.state;
 
-    let { login, email, password } = this.state;
-
-    this.props.createUser(login, email, password);
+    createUser(login, email, password);
     this.setState({ login: "", email: "", password: "" });
   };
 
   render() {
     const { login, email, password } = this.state;
+
     return (
       <div className="login">
         <h1>Sign up</h1>
         <p className="sign-text">This is the register page</p>
-        <form
-          className="login-main"
-          onSubmit={(e) => this.handleSubmit(e)}
-          method="post"
-        >
+        <form className="login-main" onSubmit={this.handleSubmit} method="post">
           <label>Login</label>
           <input
             value={login}

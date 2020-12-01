@@ -4,7 +4,23 @@
   align-items: center;
   justify-content: center;
 }
-
+.update-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.update-cancel {
+  margin: 10px;
+  padding: 8px 20px;
+  line-height: 26px;
+  text-align: center;
+  color: white;
+  letter-spacing: 0.1em;
+  background: #af4734;
+  border-radius: 5px;
+  font-size: 14px;
+  border: none;
+}
 .update-main {
   display: flex;
   flex-direction: column;
@@ -12,10 +28,16 @@
   justify-content: space-between;
   text-align: center;
 }
-
+.update-values {
+  line-height: 1.2;
+  margin: 10px auto;
+  padding: 10px 30px;
+  color: black;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}
 .update-input {
   line-height: 1.2;
-  padding: 4px 4px 4px 4px;
   margin: 10px auto;
   padding: 10px 30px;
   color: black;

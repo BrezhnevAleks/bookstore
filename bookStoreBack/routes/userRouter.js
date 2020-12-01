@@ -4,11 +4,7 @@ const userRouter = express.Router();
 const middleware = require("../middleware/tokenChecking.js");
 
 userRouter.post("/create", userController.createUser);
-userRouter.delete(
-  "/delete",
-  middleware.tokenChecking,
-  userController.deleteUser
-);
+
 userRouter.post("/login", userController.loginUser);
 userRouter.post("/update", middleware.tokenChecking, userController.updateUser);
 userRouter.post(
@@ -37,6 +33,5 @@ userRouter.post(
   userController.addReview
 );
 userRouter.get("/bytoken", middleware.tokenChecking, userController.getByToken);
-userRouter.post("/", middleware.tokenChecking, userController.getUsers);
 
 module.exports = userRouter;

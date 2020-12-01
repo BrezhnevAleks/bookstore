@@ -6,12 +6,12 @@ import "./style.css";
 
 class Message extends React.Component {
   handleOnClickOk = () => {
-    this.props.userConfirmation();
-    this.props.booksConfirmation();
+    const { userConfirmation, booksConfirmation } = this.props;
+    userConfirmation();
+    booksConfirmation();
   };
   render() {
     const { error } = this.props;
-    console.log(error);
     return (
       <div className="message-body">
         <p className="message-text">{error ? error : "Сделано"}</p>

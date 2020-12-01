@@ -95,12 +95,14 @@ const booklist = (
         loading: false,
         error: null,
         changed: action.data,
+        completed: action.completed,
       };
     case "BOOK_CHANGE_FAILURE":
       return {
         ...state,
         loading: false,
         error: action.error,
+        completed: action.completed,
       };
     case "BOOK_FETCH_STARTED":
       return {

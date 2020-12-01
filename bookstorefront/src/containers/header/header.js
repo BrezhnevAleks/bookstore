@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import connect from "./connect";
@@ -12,13 +11,16 @@ import "./style.css";
 
 class Header extends React.Component {
   handleSignOut = () => {
+    const { signOutUser } = this.props;
+
     localStorage.clear();
-    this.props.signOutUser();
+    signOutUser();
   };
   render() {
+    const { getBooks } = this.props;
     return (
       <header className="menu">
-        <Link to="/" onClick={(e) => this.props.getBooks()}>
+        <Link to="/" onClick={getBooks}>
           <FontAwesomeIcon icon={faHome} className="home-page" />
         </Link>
 

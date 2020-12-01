@@ -9,13 +9,15 @@ class BooksFilter extends React.Component {
       { value: "name", label: "По названию" },
       { value: "rating", label: "По рейтингу" },
     ];
+    const { handleOnChangeFilter } = this.props;
+
     return (
       <div style={{ minWidth: "300px" }}>
         <Select
           className="react-select-container"
           defaultValue={options[0]}
           options={options}
-          onChange={this.props.handleOnChangeFilter}
+          onChange={handleOnChangeFilter}
           closeMenuOnSelect={true}
           theme={(theme) => ({
             ...theme,

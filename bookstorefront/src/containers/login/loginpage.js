@@ -17,12 +17,12 @@ class LoginPage extends React.Component {
     }
   };
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
+    const { loginUser } = this.props;
+    const { email, password } = this.state;
 
-    let { email, password } = this.state;
-
-    this.props.loginUser(email, password);
+    loginUser(email, password);
     this.setState({ email: "", password: "" });
   };
 
@@ -33,16 +33,12 @@ class LoginPage extends React.Component {
         <h1>Sign in</h1>
         <p className="sign-text">This is the login page</p>
 
-        <form
-          onSubmit={(e) => this.handleSubmit(e)}
-          method="get"
-          className="login-main"
-        >
+        <form onSubmit={this.handleSubmit} method="get" className="login-main">
           <label>Email</label>
           <input
             value={email}
             className="sign-input"
-            onChange={(e) => this.handleChange(e)}
+            onChange={this.handleChange}
             type="email"
             name="userEmail"
           />
@@ -51,7 +47,7 @@ class LoginPage extends React.Component {
           <input
             value={password}
             className="sign-input"
-            onChange={(e) => this.handleChange(e)}
+            onChange={this.handleChange}
             type="text"
             name="userPassword"
           />

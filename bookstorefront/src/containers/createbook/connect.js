@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import * as bookActions from "../../actions/bookActions";
 
-const mapStateToProps = ({ booklist }) => {
+const mapStateToProps = ({ booklist: { genres, created } }) => {
   return {
-    created: booklist.created,
-    genres: booklist.genres,
+    created,
+    genres,
   };
 };
 

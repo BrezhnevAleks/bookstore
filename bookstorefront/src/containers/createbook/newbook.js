@@ -19,6 +19,7 @@ class NewBook extends React.Component {
       description: "",
     };
   }
+
   handleChange = (e) => {
     switch (e.target.name) {
       case "image":
@@ -35,24 +36,29 @@ class NewBook extends React.Component {
         return this.setState({ description: e.target.value });
     }
   };
+
   handleChangeSelect = (e) => {
     this.setState({ genre: e.value });
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { bookcover, name, author, genre, price, description } = this.state;
+    const { createBook } = this.props;
     let formData = new FormData();
+
     formData.append("bookcover", bookcover);
     formData.append("name", name);
     formData.append("author", author);
     formData.append("genre", genre);
     formData.append("price", price);
     formData.append("description", description);
-    this.props.createBook(formData);
+
+    createBook(formData);
   };
 
   render() {
-    const { genres } = this.props;
+    const { genres, handleOnClickOk } = this.props;
     const options = [
       {
         value: "default",
@@ -61,7 +67,6 @@ class NewBook extends React.Component {
       },
       ...genres,
     ];
-
     const customStyles = {
       control: (base, state) => ({
         ...base,
@@ -88,6 +93,7 @@ class NewBook extends React.Component {
       }),
     };
     const { bookcover } = this.state;
+
     return (
       <div className="new-book-container">
         <h1 className="create-book-title">Добавить книгу</h1>
@@ -158,7 +164,7 @@ class NewBook extends React.Component {
             className="new-book-submit"
             type="submit"
             value="Добавить книгу"
-            onClick={this.props.handleOnClickOk}
+            onClick={handleOnClickOk}
           />
         </form>
       </div>

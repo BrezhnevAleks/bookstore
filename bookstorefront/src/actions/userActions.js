@@ -21,7 +21,10 @@ export const getUserByToken = () => {
     dispatch(getUserByStarted());
     try {
       const response = await axiosInstance.get(`users/bytoken`);
-      dispatch(getUserBySuccess(response.data.user));
+      const {
+        data: { user },
+      } = response;
+      dispatch(getUserBySuccess(user));
     } catch (err) {
       dispatch(getUserByFailure(err.message));
     }
@@ -31,7 +34,6 @@ export const getUserByToken = () => {
 export const getUserBySuccess = (data) => ({
   type: "GET_BY_TOKEN_SUCCESS",
   data: data,
-  isLogged: true,
 });
 
 export const getUserByStarted = () => ({
@@ -53,8 +55,13 @@ export const createUser = (login, email, password) => {
         password,
         completed: false,
       });
-      dispatch(createSuccess(response.data.user));
-      dispatch(addUser(response.data.user));
+      const {
+        data: { user, token },
+      } = response;
+      dispatch(createSuccess(user));
+
+      localStorage.setItem("authToken", token);
+      setAuthToken(token);
     } catch (err) {
       dispatch(createFailure(err.message));
     }
@@ -64,7 +71,6 @@ export const createUser = (login, email, password) => {
 export const createSuccess = (data) => ({
   type: "USER_CREATE_SUCCESS",
   data: data,
-  isLogged: true,
 });
 
 export const createStarted = () => ({
@@ -86,8 +92,11 @@ export const updateUser = (id, login, email, password) => {
         email,
         password,
       });
-      dispatch(updateSuccess(response.data.user));
-      dispatch(addUser(response.data.user));
+      const {
+        data: { user },
+      } = response;
+      dispatch(updateSuccess(user));
+      dispatch(addUser(user));
     } catch (err) {
       dispatch(updateFailure(err.message));
     }
@@ -117,12 +126,12 @@ export const loginUser = (email, password) => {
         email,
         password,
       });
-
-      dispatch(loginSuccess(response.data.user));
-      dispatch(addUser(response.data.user));
-      localStorage.setItem("authToken", response.data.token);
-
-      setAuthToken(response.data.token);
+      const {
+        data: { user, token },
+      } = response;
+      dispatch(loginSuccess(user));
+      localStorage.setItem("authToken", token);
+      setAuthToken(token);
     } catch (err) {
       dispatch(loginFailure(err.message));
     }
@@ -132,7 +141,6 @@ export const loginUser = (email, password) => {
 export const loginSuccess = (data) => ({
   type: "USER_LOGIN_SUCCESS",
   data: data,
-  isLogged: true,
 });
 
 export const loginStarted = () => ({
@@ -152,9 +160,13 @@ export const toFavorites = (userID, bookID) => {
         userID,
         bookID,
       });
+      const {
+        data: {
+          user: { favorites },
+        },
+      } = response;
 
-      dispatch(addUser(response.data.user));
-      dispatch(toFavoritesSuccess(response.data.user));
+      dispatch(toFavoritesSuccess(favorites));
     } catch (err) {
       dispatch(toFavoritesFailure(err.message));
     }
@@ -183,8 +195,12 @@ export const toShopList = (userID, bookID) => {
         userID,
         bookID,
       });
-
-      dispatch(toShopListSuccess(response.data.user.shoplist));
+      const {
+        data: {
+          user: { shoplist },
+        },
+      } = response;
+      dispatch(toShopListSuccess(shoplist));
     } catch (err) {
       dispatch(toShopListFailure(err.message));
     }
@@ -210,8 +226,8 @@ export const getShoplist = (userID) => {
     dispatch(shoplistFetchStarted());
     try {
       const response = await axiosInstance.post("/users/shoplist", { userID });
-
-      dispatch(shoplistFetchSuccess(response.data));
+      const { data } = response;
+      dispatch(shoplistFetchSuccess(data));
     } catch (err) {
       dispatch(shoplistFetchFailure(err.message));
     }
@@ -237,8 +253,8 @@ export const getFavoritesList = (userID) => {
     dispatch(favoritesListFetchStarted());
     try {
       const response = await axiosInstance.post("/users/favorites", { userID });
-
-      dispatch(favoritesListFetchSuccess(response.data));
+      const { data } = response;
+      dispatch(favoritesListFetchSuccess(data));
     } catch (err) {
       dispatch(favoritesListFetchFailure(err.message));
     }

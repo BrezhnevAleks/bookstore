@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosInstance } from "../axios";
 
 export const addBooks = (data) => ({
@@ -15,7 +14,7 @@ export const getBooks = (filter = "default", genre = "all") => {
   return async (dispatch) => {
     dispatch(booksFetchStarted());
     try {
-      const response = await axios.post("http://localhost:4000/books", {
+      const response = await axiosInstance.post("books", {
         filter,
         genre,
       });
@@ -46,11 +45,11 @@ export const getOneBook = (id) => {
   return async (dispatch) => {
     dispatch(bookFetchStarted());
     try {
-      const response = await axios.post("http://localhost:4000/books/one", {
+      const response = await axiosInstance.post("books/one", {
         id,
       });
-
-      dispatch(bookFetchSuccess(response.data));
+      const { data } = response;
+      dispatch(bookFetchSuccess(data));
     } catch (err) {
       dispatch(bookFetchFailure(err.message));
     }
@@ -71,18 +70,18 @@ export const bookFetchFailure = (error) => ({
   error,
 });
 
-export const createBook = (data) => {
+export const createBook = (payload) => {
   return async (dispatch) => {
     dispatch(createBookStarted());
     try {
-      const response = await axios({
+      const response = await axiosInstance({
         method: "post",
-        url: "http://localhost:4000/books/newbook",
-        data: data,
+        url: "books/newbook",
+        data: payload,
         headers: { "Content-Type": "multipart/form-data" },
       });
-
-      dispatch(createBookSuccess(response.data));
+      const { data } = response;
+      dispatch(createBookSuccess(data));
     } catch (err) {
       dispatch(createBookFailure(err.message));
     }
@@ -109,9 +108,9 @@ export const changeBook = (data) => {
   return async (dispatch) => {
     dispatch(changeBookStarted());
     try {
-      const response = await axios({
+      const response = await axiosInstance({
         method: "post",
-        url: "http://localhost:4000/books/changebook",
+        url: "books/changebook",
         data: data,
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -126,6 +125,7 @@ export const changeBook = (data) => {
 export const changeBookSuccess = (data) => ({
   type: "BOOK_CHANGE_SUCCESS",
   data: data,
+  completed: true,
 });
 
 export const changeBookStarted = () => ({
@@ -135,17 +135,21 @@ export const changeBookStarted = () => ({
 export const changeBookFailure = (error) => ({
   type: "BOOK_CHANGE_FAILURE",
   error,
+  completed: true,
 });
 
 export const addReview = (userId, bookId, text, rating) => {
   return async (dispatch) => {
     dispatch(addReviewStarted());
     try {
-      const response = await axiosInstance.post(
-        "http://localhost:4000/users/addreview",
-        { userId, bookId, text, rating }
-      );
-      dispatch(addReviewSuccess(response.data));
+      const response = await axiosInstance.post("users/addreview", {
+        userId,
+        bookId,
+        text,
+        rating,
+      });
+      const { data } = response;
+      dispatch(addReviewSuccess(data));
     } catch (err) {
       dispatch(addReviewFailure(err.message));
     }
@@ -170,11 +174,11 @@ export const getReviews = (bookId) => {
   return async (dispatch) => {
     dispatch(getReviewsStarted());
     try {
-      const response = await axios.post("http://localhost:4000/books/reviews", {
+      const response = await axiosInstance.post("books/reviews", {
         bookId,
       });
-
-      dispatch(getReviewsSuccess(response.data));
+      const { data } = response;
+      dispatch(getReviewsSuccess(data));
     } catch (err) {
       dispatch(getReviewsFailure(err.message));
     }
@@ -200,9 +204,9 @@ export const getGenres = () => {
   return async (dispatch) => {
     dispatch(genresFetchStarted());
     try {
-      const response = await axios.get("http://localhost:4000/books/getgenres");
-
-      dispatch(genresFetchSuccess(response.data));
+      const response = await axiosInstance.get("books/getgenres");
+      const { data } = response;
+      dispatch(genresFetchSuccess(data));
     } catch (err) {
       dispatch(genresFetchFailure(err.message));
     }

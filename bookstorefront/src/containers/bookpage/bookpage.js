@@ -14,36 +14,49 @@ import "./style.css";
 class BookPage extends React.Component {
   constructor(props) {
     super(props);
-    const { user, book, reviews } = this.props;
+    const {
+      user: { shoplist, favorites },
+      book: { rating },
+      reviews,
+    } = this.props;
+
     this.state = {
       text: "",
-      favorites: user.favorites,
-      shoplist: user.shoplist,
+      favorites,
+      shoplist,
       rating: null,
       reviews: reviews,
-      rate: Number(book.rating),
+      rate: Number(rating),
     };
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-    const { reviews } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+      reviews,
+      getOneBook,
+      getReviews,
+    } = this.props;
 
-    this.props.getOneBook(id);
-    this.props.getReviews(id);
+    getOneBook(id);
+    getReviews(id);
     this.setState({ reviews });
   }
   handleOnClickFavorites = (e) => {
-    const { id } = this.props.book;
+    const { book, user, toFavorites } = this.props;
     let { favorites } = this.state;
-    this.props.toFavorites(this.props.user.id, id);
-    favorites.push(Number(id));
+
+    toFavorites(user.id, book.id);
+    favorites.push(Number(book.id));
     this.setState({ favorites });
   };
   handleOnClickBasket = (e) => {
-    const { book, user } = this.props;
+    const { book, user, toShopList } = this.props;
     let { shoplist } = this.state;
-    this.props.toShopList(user.id, book.id);
+
+    toShopList(user.id, book.id);
     shoplist.push(Number(book.id));
     this.setState({ shoplist });
   };
@@ -54,19 +67,37 @@ class BookPage extends React.Component {
 
   handleReviewOnSubmit = async (e) => {
     e.preventDefault();
-    const { user } = this.props;
     const { text, rating } = this.state;
-    const { id } = this.props.match.params;
-    await this.props.addReview(user.id, id, text, rating);
+    const {
+      addReview,
+      getReviews,
+      user,
+      match: {
+        params: { id },
+      },
+    } = this.props;
+
+    await addReview(user.id, id, text, rating);
+
     this.setState({ text: "" });
 
-    await this.props.getReviews(id);
+    await getReviews(id);
   };
   render() {
-    let { id } = this.props.match.params;
+    let {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    const {
+      book: { name, author, description, picture, price },
+      reviews,
+      rate,
+    } = this.props;
+
     id = Number(id);
-    const { book, reviews, rate } = this.props;
-    const { favorites, shoplist, text } = this.state;
+
+    const { favorites, shoplist, text, rating } = this.state;
 
     return (
       <div>
@@ -74,22 +105,20 @@ class BookPage extends React.Component {
         <div className="book-page">
           <div className="book">
             <div className="book-content">
-              <p className="book-author">{book.author}</p>
-              <h3 className="book-name">{book.name}</h3>
+              <p className="book-author">{author}</p>
+              <h3 className="book-name">{name}</h3>
               <img
                 src={
-                  book.picture === "picture"
+                  picture === "picture"
                     ? "http://localhost:4000/default.png"
-                    : book.picture
+                    : picture
                 }
                 className="book-image"
               />
               <div className="description">
                 <h4 className="description-title">Описание</h4>
                 <p className="description-text">
-                  {book.description
-                    ? book.description
-                    : "У этой книги нет описания"}
+                  {description ? description : "У этой книги нет описания"}
                 </p>
               </div>
               <form
@@ -114,13 +143,13 @@ class BookPage extends React.Component {
               </form>
             </div>
             <div className="book-buttons">
-              <p className="book-price">{book.price} &#8381;</p>
+              <p className="book-price">{price} &#8381;</p>
 
               <div className="book-rating">
                 <Rating
                   size="large"
                   name="simple-controlled"
-                  value={this.state.rating}
+                  value={rating}
                   onChange={(event, newValue) => {
                     this.setState({ rating: newValue });
                   }}
@@ -167,8 +196,8 @@ class BookPage extends React.Component {
               )}
               <Link
                 className="book-buttons-edit"
-                to={{ pathname: `/books/change/${book.id}` }}
-                id={book}
+                to={{ pathname: `/books/change/${id}` }}
+                id={id}
               >
                 <FontAwesomeIcon
                   className="book-buttons-edit-icon"

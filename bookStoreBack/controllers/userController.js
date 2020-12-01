@@ -2,7 +2,9 @@ const utils = require("../utils.js");
 const db = require("../models/index");
 
 exports.createUser = async (request, response) => {
-  const { login, email, password } = request.body;
+  const {
+    body: { login, email, password },
+  } = request;
 
   {
     try {
@@ -24,33 +26,63 @@ exports.createUser = async (request, response) => {
 
       const createdToken = utils.createToken(user.id);
 
-      response.send({ user: user, isLogged: true, token: createdToken });
+      response.send({ user: user, token: createdToken });
     } catch (err) {
       response.status(500).send("Something went wrong");
     }
   }
 };
 
-exports.getUsers = async (request, response) => {
-  try {
-    const users = await db.User.findAll({ raw: true });
+exports.loginUser = async (request, response) => {
+  const {
+    body: { email, password },
+  } = request;
+  const searchedValue = { email };
 
-    if (!users) {
-      response
-        .status(404)
-        .send("No data in the database. Users should be added first");
+  try {
+    const user = await db.User.findOne({ where: searchedValue });
+
+    if (!user) {
+      response.status(404).send("User not found");
       return;
     }
 
-    response.status(200).send(users);
+    if (user.password !== utils.cipher(password)) {
+      response.status(404).send("Invalid password");
+      return;
+    }
+
+    const createdtoken = utils.createToken(user.id);
+    response.send({ user: user, token: createdtoken });
   } catch (err) {
-    response.status(400).send("Something went terribly wrong");
+    response.status(500).send("Something went wrong");
+  }
+};
+
+exports.getByToken = async (request, response) => {
+  try {
+    const { authorization } = request.headers;
+    const id = utils.verifyToken(authorization).data;
+
+    const user = await db.User.findOne({ where: { id: id } });
+
+    if (!user) {
+      response.status(404).send("User not found");
+      return;
+    }
+
+    const createdtoken = utils.createToken(user.id);
+    response.send({ user: user });
+  } catch (err) {
+    response.status(500).send("Something went wrong");
   }
 };
 
 exports.toFavorites = async (request, response) => {
   try {
-    const { userID, bookID } = request.body;
+    const {
+      body: { userID, bookID },
+    } = request;
     const user = await db.User.findOne({
       where: {
         id: userID,
@@ -64,7 +96,7 @@ exports.toFavorites = async (request, response) => {
 
       await db.User.update(
         {
-          favorites: favorites,
+          favorites,
         },
         {
           where: {
@@ -107,7 +139,9 @@ exports.toFavorites = async (request, response) => {
 
 exports.toShoplist = async (request, response) => {
   try {
-    const { userID, bookID } = request.body;
+    const {
+      body: { userID, bookID },
+    } = request;
     const user = await db.User.findOne({
       where: {
         id: userID,
@@ -121,7 +155,7 @@ exports.toShoplist = async (request, response) => {
 
       await db.User.update(
         {
-          shoplist: shoplist,
+          shoplist,
         },
         {
           where: {
@@ -164,7 +198,9 @@ exports.toShoplist = async (request, response) => {
 
 exports.getShoplist = async (request, response) => {
   try {
-    const { userID } = request.body;
+    const {
+      body: { userID },
+    } = request;
     const user = await db.User.findOne({ where: { id: userID } });
     const data = await db.Book.findAll({
       where: {
@@ -179,7 +215,9 @@ exports.getShoplist = async (request, response) => {
 };
 
 exports.addReview = async (request, response) => {
-  const { userId, bookId, text, rating } = request.body;
+  const {
+    body: { userId, bookId, text, rating },
+  } = request;
   try {
     const existingReview = await db.Review.findOne({
       where: { bookId, userId },
@@ -195,10 +233,10 @@ exports.addReview = async (request, response) => {
       );
     } else {
       await db.Review.create({
-        text: text,
-        bookId: bookId,
-        userId: userId,
-        rating: rating,
+        text,
+        bookId,
+        userId,
+        rating,
       });
     }
 
@@ -233,7 +271,9 @@ exports.addReview = async (request, response) => {
 
 exports.getFavorites = async (request, response) => {
   try {
-    const { userID } = request.body;
+    const {
+      body: { userID },
+    } = request;
     const user = await db.User.findOne({ where: { id: userID } });
     const data = await db.Book.findAll({
       where: {
@@ -247,29 +287,10 @@ exports.getFavorites = async (request, response) => {
   }
 };
 
-exports.deleteUser = async (request, response) => {
-  const {
-    body: { id },
-  } = request;
-  const searchedValue = { id };
-
-  try {
-    const user = await db.User.findOne({ where: searchedValue });
-
-    if (!user) {
-      response.status(404).send(`User id ${id} not found`);
-      return;
-    }
-
-    await user.destroy({ where: searchedValue });
-    response.status(200).send(`User id ${id} was successfully deleted`);
-  } catch (err) {
-    response.status(500).send("Something went wrong");
-  }
-};
-
 exports.updateUser = async (request, response) => {
-  const { id, email, login, password } = request.body;
+  const {
+    body: { id, email, login, password },
+  } = request;
 
   try {
     const user = await db.User.findOne({ where: id });
@@ -279,7 +300,11 @@ exports.updateUser = async (request, response) => {
     }
 
     await user.update(
-      { email, login, password: utils.cipher(password) },
+      {
+        email,
+        login,
+        password: password ? utils.cipher(password) : user.password,
+      },
       {
         where: id,
       }
@@ -287,48 +312,5 @@ exports.updateUser = async (request, response) => {
     response.send({ user: user });
   } catch (err) {
     response.status(500).send(`Something went wrong`);
-  }
-};
-
-exports.loginUser = async (request, response) => {
-  const { email, password } = request.body;
-  const searchedValue = { email };
-
-  try {
-    const user = await db.User.findOne({ where: searchedValue });
-
-    if (!user) {
-      response.status(404).send("User not found");
-      return;
-    }
-
-    if (user.password !== utils.cipher(password)) {
-      response.status(404).send("Invalid password");
-      return;
-    }
-
-    const createdtoken = utils.createToken(user.id);
-    response.send({ user: user, isLogged: true, token: createdtoken });
-  } catch (err) {
-    response.status(500).send("Something went wrong");
-  }
-};
-
-exports.getByToken = async (request, response) => {
-  try {
-    const { authorization } = request.headers;
-    const id = utils.verifyToken(authorization).data;
-
-    const user = await db.User.findOne({ where: { id: id } });
-    console.log(user);
-    if (!user) {
-      response.status(404).send("User not found");
-      return;
-    }
-
-    const createdtoken = utils.createToken(user.id);
-    response.send({ user: user, isLogged: true });
-  } catch (err) {
-    response.status(500).send("Something went wrong");
   }
 };
