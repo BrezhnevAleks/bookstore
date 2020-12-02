@@ -13,7 +13,7 @@ exports.createUser = async (request, response) => {
         return;
       }
 
-      if (!utils.isUserExist(email)) {
+      if (utils.isUserExist(email)) {
         response.status(400).send("User already exists");
         return;
       }
