@@ -1,9 +1,9 @@
 .review {
   display: flex;
   flex-direction: column;
+  margin: 10px 0;
   padding: 15px 150px 15px 30px;
   background-color: #ebebeb;
-  margin: 10px 0;
 }
 .user-name {
   margin-bottom: 8px;
@@ -12,6 +12,6 @@
 }
 .review-text {
   margin-bottom: 20px;
-  font-size: 15px;
   padding-left: 20px;
+  font-size: 15px;
 }

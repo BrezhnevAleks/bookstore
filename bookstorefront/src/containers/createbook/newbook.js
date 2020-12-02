@@ -2,9 +2,7 @@ import React from "react";
 import connect from "./connect";
 import { withRouter } from "react-router";
 import { compose } from "redux";
-import { Link } from "react-router-dom";
 import Select from "react-select";
-import Header from "../header/header";
 import "./style.css";
 
 class NewBook extends React.Component {

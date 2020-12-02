@@ -8,16 +8,17 @@
 .menu {
   display: flex;
   justify-content: space-around;
-  padding: 20px 0px;
-  background-color: #5dc8e9;
   margin-bottom: 50px;
+  padding: 20px 0px;
+  width: 100%;
+  background-color: #5dc8e9;
+
   font-size: 20px;
   font-weight: 500;
-  width: 100%;
 }
 .menu-icons {
-  justify-self: end;
   display: flex;
+  justify-self: end;
   align-items: center;
   font-size: 24px;
 }
@@ -37,9 +38,9 @@
   transition-property: transform;
 }
 .menu-profile {
-  color: white;
   margin: 0 25px;
   font-size: 30px;
+  color: white;
 }
 .menu-profile:hover {
   color: #5c99e9;
@@ -53,15 +54,15 @@
 }
 
 .menu-shoplist {
-  color: #7618f1;
   margin: 0 25px;
+  color: #7618f1;
 }
 .menu-shoplist:hover {
   color: #5c99e9;
 }
 .menu-sign-out {
-  color: #ffb160;
   margin-left: 25px;
+  color: #ffb160;
 }
 .menu-sign-out:hover {
   color: #5c99e9;

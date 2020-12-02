@@ -1,8 +1,6 @@
 import React from "react";
 import connect from "./connect";
 import defaultCover from "../../images/defaultCover.png";
-import { withRouter } from "react-router";
-import { compose } from "redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -222,4 +220,4 @@ class BookPage extends React.Component {
     );
   }
 }
-export default compose(withRouter, connect)(BookPage);
+export default connect(BookPage);

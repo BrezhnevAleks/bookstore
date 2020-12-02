@@ -21,6 +21,7 @@ class FavoritesList extends React.Component {
     return (
       <div>
         <Header />
+
         {favorites.length ? (
           <div className="favorites">
             <Grid container item xs={9} spacing={6} cellHeight="auto">
@@ -35,7 +36,7 @@ class FavoritesList extends React.Component {
                     item={shopItem}
                     key={shopItem.id}
                     favorites={user.favorites}
-                  ></BookItem>
+                  />
                 </Grid>
               ))}
             </Grid>

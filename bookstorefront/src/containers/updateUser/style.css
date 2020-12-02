@@ -17,9 +17,9 @@
   color: white;
   letter-spacing: 0.1em;
   background: #af4734;
+  border: none;
   border-radius: 5px;
   font-size: 14px;
-  border: none;
 }
 .update-main {
   display: flex;

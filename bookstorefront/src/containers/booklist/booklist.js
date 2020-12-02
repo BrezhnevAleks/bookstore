@@ -11,7 +11,7 @@ import { Grid } from "@material-ui/core";
 class BookList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { books: [], filter: "default", genre: "all" };
+    this.state = { filter: "default" };
   }
 
   handleOnChangeFilter = (e) => {
@@ -35,6 +35,7 @@ class BookList extends React.Component {
       },
       getGenres,
       getBooks,
+      getPage,
     } = this.props;
     const { filter } = this.state;
 

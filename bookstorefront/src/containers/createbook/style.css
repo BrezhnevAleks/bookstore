@@ -13,41 +13,41 @@
   display: block;
   margin: 10px auto;
   padding: 10px 30px;
+  background: #5c6be9;
+  border-radius: 5px;
   line-height: 26px;
+  border: none;
   text-align: center;
   color: white;
   letter-spacing: 0.1em;
-  background: #5c6be9;
-  border-radius: 5px;
   font-size: inherit;
-  border: none;
 }
 
 .new-book-input {
   display: block;
-  line-height: 1.2;
   margin: 10px auto;
   padding: 10px 30px;
+  background: #eceff1;
+  border: 2px solid #5c99e9;
+  border-radius: 5px;
   color: black;
   letter-spacing: 0.1em;
-  background: #eceff1;
-  border-radius: 5px;
   font-size: 16px;
-  border: 2px solid #5c99e9;
+  line-height: 1.2;
 }
 
 .new-book-image {
   display: block;
   margin: 10px auto;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
   padding: 10px 30px;
-  color: black;
-  letter-spacing: 0.1em;
+  font-size: 14px;
   background: #eceff1;
   border-radius: 5px;
   border: 2px solid #5c99e9;
+  text-align: center;
+  color: black;
+  letter-spacing: 0.1em;
+  cursor: pointer;
 }
 input[type="file"] {
   display: none;

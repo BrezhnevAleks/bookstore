@@ -12,7 +12,7 @@ class BooksFilter extends React.Component {
     const { handleOnChangeFilter } = this.props;
 
     return (
-      <div style={{ minWidth: "300px" }}>
+      <div>
         <Select
           className="react-select-container"
           defaultValue={options[0]}

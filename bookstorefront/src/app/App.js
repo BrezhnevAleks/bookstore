@@ -27,8 +27,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    const { getUserByToken } = this.props;
     setAuthToken(localStorage.getItem("authToken"));
-    this.props.getUserByToken();
+    getUserByToken();
   }
   render() {
     const { data } = this.props;

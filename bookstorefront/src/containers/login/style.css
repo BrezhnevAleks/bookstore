@@ -15,29 +15,28 @@
 }
 
 .sign-input {
-  line-height: 1.2;
-  padding: 4px 4px 4px 4px;
   margin: 10px auto;
   padding: 10px 30px;
-  color: black;
-  letter-spacing: 0.1em;
   background: #eceff1;
-  border-radius: 5px;
-  font-size: 16px;
   border: 2px solid #5c99e9;
+  border-radius: 5px;
+  color: black;
+  line-height: 1.2;
+  font-size: 16px;
+  letter-spacing: 0.1em;
 }
 
 .sign-submit {
   padding: 10px 30px;
   margin-left: 40px;
+  background: #5c6be9;
+  border: none;
+  border-radius: 5px;
   line-height: 26px;
   text-align: center;
   color: white;
   letter-spacing: 0.1em;
-  background: #5c6be9;
-  border-radius: 5px;
   font-size: inherit;
-  border: none;
 }
 
 input[type="submit"]:hover {
@@ -45,13 +44,13 @@ input[type="submit"]:hover {
 }
 .sign-link {
   padding: 10px 30px;
-  line-height: 26px;
+  background: #e9ad5c;
+  border: none;
+  border-radius: 5px;
   text-align: center;
   color: white;
   letter-spacing: 0.1em;
-  background: #e9ad5c;
-  border-radius: 5px;
-  border: none;
+  line-height: 26px;
 }
 
 h1 {

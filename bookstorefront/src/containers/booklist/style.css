@@ -1,7 +1,7 @@
 .categories {
-  font-size: 22px;
   margin-bottom: 1.5em;
   font-weight: 500;
+  font-size: 22px;
 }
 .genres {
   display: "flex";
@@ -11,10 +11,9 @@
 }
 
 .genre-filter {
-  color: black;
-  padding: 0 0.5em;
-
   position: relative;
+  padding: 0 0.5em;
+  color: black;
 }
 
 .genre-filter:before {
@@ -24,6 +23,7 @@
   left: -300%;
   width: 200%;
   height: 100%;
+  z-index: -1;
   opacity: 0;
   background: linear-gradient(
     to right,
@@ -35,12 +35,10 @@
   border-radius: 10px;
   transition: opacity 0.4s ease-out;
   transition: left 0.4s ease-out;
-
-  z-index: -1;
 }
 .genre-filter:hover:before {
-  opacity: 1;
   left: 0;
+  opacity: 1;
 }
 
 .booklist {
@@ -52,9 +50,9 @@
 
 .booklist-header {
   display: flex;
-  width: 100%;
   justify-content: space-between;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .booklist-count {

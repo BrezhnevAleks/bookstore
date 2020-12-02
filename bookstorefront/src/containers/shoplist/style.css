@@ -6,21 +6,21 @@
 .shoplist-buy {
   display: block;
   margin: 50px auto;
-  font-size: 24px;
-  background-color: rgb(33, 189, 33);
   padding: 15px 25px;
+  background-color: rgb(33, 189, 33);
   border-radius: 8px;
+  font-size: 24px;
 }
 .shoplist-buy:hover {
   opacity: 0.8;
 }
 
 .shoplist-plug {
-  height: 80vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  height: 80vh;
   font-size: 42px;
   font-weight: 700;
   color: rgb(204, 204, 204);

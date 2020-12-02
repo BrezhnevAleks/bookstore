@@ -1,34 +1,33 @@
 .profile-functions {
   display: flex;
   justify-content: flex-start;
-  width: 100%;
   padding-top: 10px;
+  width: 100%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 .profile-functions-button {
   margin: 0 15px;
   padding: 10px 15px;
   background-color: white;
-  font-size: 18px;
   border-radius: 8px 8px 0 0;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
   border-right: 1px solid rgba(0, 0, 0, 0.125);
   border-left: 1px solid rgba(0, 0, 0, 0.125);
+  font-size: 18px;
 }
 .profile-functions-button-active {
   margin: 0 15px;
   padding: 10px 15px;
   background-color: rgba(0, 0, 0, 0.05);
-  font-size: 18px;
   border-radius: 8px 8px 0 0;
   border-top: 1px solid #5c99e9;
   border-right: 1px solid #5c99e9;
   border-left: 1px solid #5c99e9;
+  font-size: 18px;
 }
 .profile-body {
+  padding-top: 40px;
   width: 100%;
-
   border-right: 1px solid rgba(0, 0, 0, 0.125);
   border-left: 1px solid rgba(0, 0, 0, 0.125);
-  padding-top: 40px;
 }
