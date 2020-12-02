@@ -1,5 +1,6 @@
 import React from "react";
 import connect from "./connect";
+import defaultCover from "../../images/defaultCover.png";
 import { withRouter } from "react-router";
 import { compose } from "redux";
 import { Link } from "react-router-dom";
@@ -108,11 +109,7 @@ class BookPage extends React.Component {
               <p className="book-author">{author}</p>
               <h3 className="book-name">{name}</h3>
               <img
-                src={
-                  picture === "picture"
-                    ? "http://localhost:4000/default.png"
-                    : picture
-                }
+                src={picture === "picture" ? defaultCover : picture}
                 className="book-image"
               />
               <div className="description">

@@ -19,12 +19,13 @@ import Profile from "../containers/profile/profile.js";
 import { setAuthToken } from "../axios.js";
 
 class App extends React.Component {
-  login(data) {
-    return data.hasOwnProperty("id") ? <Redirect to="/" /> : <LoginPage />;
+  login(data, routeProps) {
+    const { pathname } = routeProps.location;
+
+    const page = pathname === "/login" ? <LoginPage /> : <RegisterPage />;
+    return data.hasOwnProperty("id") ? <Redirect to="/" /> : page;
   }
-  registration(data) {
-    return data.hasOwnProperty("id") ? <Redirect to="/" /> : <RegisterPage />;
-  }
+
   componentDidMount() {
     setAuthToken(localStorage.getItem("authToken"));
     this.props.getUserByToken();
@@ -37,12 +38,12 @@ class App extends React.Component {
         <Switch>
           <Route
             path="/login"
-            render={() => this.login(data, this.path)}
+            render={(routeProps) => this.login(data, routeProps)}
             exact
           />
           <Route
             path="/register"
-            render={() => this.registration(data)}
+            render={(routeProps) => this.login(data, routeProps)}
             exact
           />
           <PrivateRoute

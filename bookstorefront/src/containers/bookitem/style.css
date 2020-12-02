@@ -40,10 +40,11 @@
 .item-name {
   display: block;
   padding: 1em 0;
-  line-height: 0.875rem;
+  line-height: 0.9em;
   font-weight: 700;
   font-size: 18px;
   text-align: center;
+  max-width: 180px;
 }
 .like-button {
   display: block;

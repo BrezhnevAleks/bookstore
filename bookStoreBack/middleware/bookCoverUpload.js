@@ -2,13 +2,19 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const error =
-      file.mimetype === "image/png" ? null : new Error("wrong file");
-    cb(error, "./uploads");
+    if (file) {
+      const error = file.mimetype.includes("image")
+        ? null
+        : new Error("wrong file");
+      cb(error, "./uploads");
+    } else {
+      return;
+    }
   },
   filename: (req, file, cb) => {
-    const fileName =
-      Date.now() + file.originalname.toLowerCase().split(" ").join("-");
+    const fileName = file
+      ? Date.now() + file.originalname.toLowerCase().split(" ").join("-")
+      : "picture";
     cb(null, fileName);
   },
 });

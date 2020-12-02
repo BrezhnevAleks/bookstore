@@ -4,7 +4,7 @@ import { setAuthToken } from "../axios.js";
 
 export const addUser = (data) => ({
   type: "ADD_USER",
-  data: data,
+  data,
 });
 
 export const userConfirmation = () => ({
@@ -33,7 +33,7 @@ export const getUserByToken = () => {
 
 export const getUserBySuccess = (data) => ({
   type: "GET_BY_TOKEN_SUCCESS",
-  data: data,
+  data,
 });
 
 export const getUserByStarted = () => ({
@@ -70,7 +70,7 @@ export const createUser = (login, email, password) => {
 
 export const createSuccess = (data) => ({
   type: "USER_CREATE_SUCCESS",
-  data: data,
+  data,
 });
 
 export const createStarted = () => ({
@@ -105,7 +105,7 @@ export const updateUser = (id, login, email, password) => {
 
 export const updateSuccess = (data) => ({
   type: "USER_UPDATE_SUCCESS",
-  data: data,
+  data,
   completed: true,
 });
 
@@ -140,7 +140,7 @@ export const loginUser = (email, password) => {
 
 export const loginSuccess = (data) => ({
   type: "USER_LOGIN_SUCCESS",
-  data: data,
+  data,
 });
 
 export const loginStarted = () => ({
@@ -175,7 +175,7 @@ export const toFavorites = (userID, bookID) => {
 
 export const toFavoritesSuccess = (data) => ({
   type: "ADD_FAVORITES_SUCCESS",
-  data: data,
+  data,
 });
 
 export const toFavoritesStarted = () => ({
@@ -209,7 +209,7 @@ export const toShopList = (userID, bookID) => {
 
 export const toShopListSuccess = (data) => ({
   type: "ADD_SHOPLIST_SUCCESS",
-  data: data,
+  data,
 });
 
 export const toShopListStarted = () => ({
@@ -236,7 +236,7 @@ export const getShoplist = (userID) => {
 
 export const shoplistFetchSuccess = (data) => ({
   type: "SHOPLIST_FETCH_SUCCESS",
-  data: data,
+  data,
 });
 
 export const shoplistFetchStarted = () => ({
@@ -263,7 +263,7 @@ export const getFavoritesList = (userID) => {
 
 export const favoritesListFetchSuccess = (data) => ({
   type: "FAVORITES_FETCH_SUCCESS",
-  data: data,
+  data,
 });
 
 export const favoritesListFetchStarted = () => ({

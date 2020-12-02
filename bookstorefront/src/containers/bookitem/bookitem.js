@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import defaultCover from "../../images/defaultCover.png";
 import connect from "./connect";
 import Rating from "@material-ui/lab/Rating";
 import { Link } from "react-router-dom";
@@ -51,11 +52,7 @@ class BookItem extends React.Component {
           className="item-body"
         >
           <img
-            src={
-              picture === "picture"
-                ? "http://localhost:4000/default.png"
-                : picture
-            }
+            src={picture === "picture" ? defaultCover : picture}
             className="item-image"
           />
           <Rating name="read-only" value={Number(rating)} readOnly />

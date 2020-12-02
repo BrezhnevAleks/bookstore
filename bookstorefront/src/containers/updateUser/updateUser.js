@@ -8,7 +8,7 @@ class UpdatePage extends React.Component {
   constructor(props) {
     super(props);
     const {
-      user: { login, email, password },
+      user: { login, email },
     } = this.props;
     this.state = {
       newLogin: login,
@@ -35,7 +35,7 @@ class UpdatePage extends React.Component {
   };
   handleOnClickCancel = (e) => {
     const {
-      user: { login, email, password },
+      user: { login, email },
     } = this.props;
     this.setState({
       newLogin: login,

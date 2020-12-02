@@ -22,7 +22,7 @@ module.exports.cipher = (pass) => {
 
 module.exports.createToken = (information) => {
   return jwt.sign(
-    { exp: Math.floor(Date.now() / 1000) + 60, data: information },
+    { exp: Math.floor(Date.now() / 1000) + 320, data: information },
     config.token.secret
   );
 };

@@ -16,12 +16,5 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("uploads"));
 
-app.use(
-  "/users",
-  // function (response, request, next) {
-  //   console.log(request);
-  //   return next();
-  // },
-  userRouter
-);
+app.use("/users", userRouter);
 app.use("/books", bookRouter);

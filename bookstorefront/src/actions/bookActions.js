@@ -2,7 +2,7 @@ import { axiosInstance } from "../axios";
 
 export const addBooks = (data) => ({
   type: "ADD_BOOKS",
-  data: data,
+  data,
 });
 
 export const booksConfirmation = () => ({
@@ -18,9 +18,9 @@ export const getBooks = (filter = "default", genre = "all") => {
         filter,
         genre,
       });
-
-      dispatch(booksFetchSuccess(response.data));
-      dispatch(addBooks(response.data));
+      const { data } = response;
+      dispatch(booksFetchSuccess(data));
+      dispatch(addBooks(data));
     } catch (err) {
       dispatch(booksFetchFailure(err.message));
     }
@@ -29,7 +29,7 @@ export const getBooks = (filter = "default", genre = "all") => {
 
 export const booksFetchSuccess = (books) => ({
   type: "BOOKS_FETCH_SUCCESS",
-  books: books,
+  books,
 });
 
 export const booksFetchStarted = () => ({
@@ -58,7 +58,7 @@ export const getOneBook = (id) => {
 
 export const bookFetchSuccess = (book) => ({
   type: "BOOK_FETCH_SUCCESS",
-  book: book,
+  book,
 });
 
 export const bookFetchStarted = () => ({
@@ -90,7 +90,7 @@ export const createBook = (payload) => {
 
 export const createBookSuccess = (data) => ({
   type: "BOOK_CREATE_SUCCESS",
-  data: data,
+  data,
   completed: true,
 });
 
@@ -104,18 +104,18 @@ export const createBookFailure = (error) => ({
   completed: true,
 });
 
-export const changeBook = (data) => {
+export const changeBook = (payload) => {
   return async (dispatch) => {
     dispatch(changeBookStarted());
     try {
       const response = await axiosInstance({
         method: "post",
         url: "books/changebook",
-        data: data,
+        data: payload,
         headers: { "Content-Type": "multipart/form-data" },
       });
-
-      dispatch(changeBookSuccess(response.data));
+      const { data } = response;
+      dispatch(changeBookSuccess(data));
     } catch (err) {
       dispatch(changeBookFailure(err.message));
     }
@@ -124,7 +124,7 @@ export const changeBook = (data) => {
 
 export const changeBookSuccess = (data) => ({
   type: "BOOK_CHANGE_SUCCESS",
-  data: data,
+  data,
   completed: true,
 });
 
@@ -158,7 +158,7 @@ export const addReview = (userId, bookId, text, rating) => {
 
 export const addReviewSuccess = (data) => ({
   type: "ADD_REVIEW_SUCCESS",
-  data: data,
+  data,
 });
 
 export const addReviewStarted = () => ({
@@ -177,18 +177,20 @@ export const getReviews = (bookId) => {
       const response = await axiosInstance.post("books/reviews", {
         bookId,
       });
-      const { data } = response;
-      dispatch(getReviewsSuccess(data));
+      const {
+        data: { reviews, rate },
+      } = response;
+      dispatch(getReviewsSuccess(reviews, rate));
     } catch (err) {
       dispatch(getReviewsFailure(err.message));
     }
   };
 };
 
-export const getReviewsSuccess = (data) => ({
+export const getReviewsSuccess = (reviews, rate) => ({
   type: "GET_REVIEWS_SUCCESS",
-  data: data.reviews,
-  rate: data.rate,
+  data: reviews,
+  rate,
 });
 
 export const getReviewsStarted = () => ({

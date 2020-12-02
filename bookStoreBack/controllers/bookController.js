@@ -57,15 +57,17 @@ exports.createBook = async (request, response) => {
     const url = request.protocol + "://" + request.get("host");
     const {
       body: { name, author, price, description },
-      file: { filename },
     } = request;
+    const picture = request.hasOwnProperty("file")
+      ? url + "/" + request.file.filename
+      : "picture";
 
     const book = await db.Book.create({
       name,
       author,
       price,
       description,
-      picture: url + "/" + filename,
+      picture,
     });
 
     if (!book) {
@@ -133,10 +135,11 @@ exports.getReviews = async (request, response) => {
 
 exports.changeBook = async (request, response) => {
   try {
-    const url = request.protocol + "://" + request.get("host");
     const {
+      protocol,
       body: { id, name, author, price, description },
     } = request;
+    const url = protocol + "://" + request.get("host");
     const searchedValue = { id };
     const book = await db.Book.findOne({ where: searchedValue });
 
@@ -144,6 +147,9 @@ exports.changeBook = async (request, response) => {
       response.status(404).send(`Book not found`);
       return;
     }
+    const picture = request.hasOwnProperty("file")
+      ? url + "/" + request.file.filename
+      : book.picture;
 
     await db.Book.update(
       {
@@ -151,7 +157,7 @@ exports.changeBook = async (request, response) => {
         author,
         price,
         description,
-        picture: url + "/" + request.file.filename,
+        picture,
       },
       {
         where: { id },
