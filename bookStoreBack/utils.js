@@ -31,16 +31,6 @@ module.exports.verifyToken = (token) => {
   return jwt.verify(token, config.token.secret);
 };
 
-module.exports.isUserExist = async (email) => {
-  const user = await db.User.findOne({ where: { email: email } });
-
-  if (user === null) {
-    return false;
-  }
-
-  return true;
-};
-
 module.exports.sortingType = (books, filter) => {
   switch (filter) {
     case "default":
