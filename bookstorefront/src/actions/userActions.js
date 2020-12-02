@@ -26,6 +26,7 @@ export const getUserByToken = () => {
       } = response;
       dispatch(getUserBySuccess(user));
     } catch (err) {
+      console.log(err.message);
       dispatch(getUserByFailure(err.message));
     }
   };

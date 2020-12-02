@@ -6,10 +6,11 @@ import "../login/style.css";
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { login: "", email: "", password: "" };
+    this.state = { login: "", email: "", password: "", error: "" };
   }
 
   handleChange = (e) => {
+    this.setState({ error: "" });
     switch (e.target.name) {
       case "login":
         return this.setState({ login: e.target.value });
@@ -24,15 +25,15 @@ class RegisterPage extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { createUser } = this.props;
+    const { createUser, error } = this.props;
     const { login, email, password } = this.state;
 
     createUser(login, email, password);
-    this.setState({ login: "", email: "", password: "" });
+    this.setState({ login: "", email: "", password: "", error });
   };
 
   render() {
-    const { login, email, password } = this.state;
+    const { login, email, password, error } = this.state;
 
     return (
       <div className="login">
@@ -43,7 +44,7 @@ class RegisterPage extends React.Component {
           <input
             value={login}
             required
-            className="sign-input"
+            className={error ? "sign-input-denied" : "sign-input"}
             onChange={this.handleChange}
             type="text"
             name="login"
@@ -53,7 +54,7 @@ class RegisterPage extends React.Component {
           <input
             value={password}
             required
-            className="sign-input"
+            className={error ? "sign-input-denied" : "sign-input"}
             onChange={this.handleChange}
             type="text"
             name="password"
@@ -63,7 +64,7 @@ class RegisterPage extends React.Component {
           <input
             value={email}
             required
-            className="sign-input"
+            className={error ? "sign-input-denied" : "sign-input"}
             onChange={this.handleChange}
             type="email"
             name="email"

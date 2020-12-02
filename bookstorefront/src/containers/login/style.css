@@ -26,6 +26,18 @@
   letter-spacing: 0.1em;
 }
 
+.sign-input-denied {
+  margin: 10px auto;
+  padding: 10px 30px;
+  background: #eceff1;
+  border: 2px solid rgb(194, 91, 91);
+  border-radius: 5px;
+  color: black;
+  line-height: 1.2;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+
 .sign-submit {
   padding: 10px 30px;
   margin-left: 40px;

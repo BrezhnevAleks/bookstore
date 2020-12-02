@@ -14,7 +14,6 @@
 .favorites-button:hover {
   opacity: 0.8;
 }
-
 .favorites-plug {
   display: flex;
   justify-content: center;

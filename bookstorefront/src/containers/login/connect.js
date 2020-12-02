@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import * as loginActions from "../../actions/userActions";
 
-const mapStateToProps = ({ user: { data } }) => {
+const mapStateToProps = ({ user: { data, error } }) => {
   return {
     data,
+    error,
   };
 };
 
