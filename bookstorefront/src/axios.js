@@ -4,7 +4,6 @@ import { signOutUser } from "./actions/userActions";
 
 const axiosInstance = axios.create({
   baseURL: `http://localhost:4000/`,
-
   Host: "localhost:4000",
   Origin: "http://localhost:3000",
 });

@@ -19,12 +19,5 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  },
-  "hash": {
-    "type" : "sha256", 
-    "key" : "secretword"
-  },
-  "token": {
-    "secret": "secretword"
-  }
+  }    
 }

@@ -1,19 +1,20 @@
 import axios from "axios";
 import { axiosInstance } from "../axios.js";
 import { setAuthToken } from "../axios.js";
+import * as type from "../constants";
 
 export const addUser = (data) => ({
-  type: "ADD_USER",
+  type: type.ADD_USER,
   data,
 });
 
 export const userConfirmation = () => ({
-  type: "USER_CONFIRM_COMPLETION",
+  type: type.USER_CONFIRM_COMPLETION,
   completed: false,
 });
 
 export const signOutUser = () => ({
-  type: "SIGN_OUT_USER",
+  type: type.SIGN_OUT_USER,
 });
 
 export const getUserByToken = () => {
@@ -33,16 +34,16 @@ export const getUserByToken = () => {
 };
 
 export const getUserBySuccess = (data) => ({
-  type: "GET_BY_TOKEN_SUCCESS",
+  type: type.GET_BY_TOKEN_SUCCESS,
   data,
 });
 
 export const getUserByStarted = () => ({
-  type: "GET_BY_TOKEN_STARTED",
+  type: type.GET_BY_TOKEN_STARTED,
 });
 
 export const getUserByFailure = (error) => ({
-  type: "GET_BY_TOKEN_FAILURE",
+  type: type.GET_BY_TOKEN_FAILURE,
   error,
 });
 
@@ -70,16 +71,16 @@ export const createUser = (login, email, password) => {
 };
 
 export const createSuccess = (data) => ({
-  type: "USER_CREATE_SUCCESS",
+  type: type.USER_CREATE_SUCCESS,
   data,
 });
 
 export const createStarted = () => ({
-  type: "USER_CREATE_STARTED",
+  type: type.USER_CREATE_STARTED,
 });
 
 export const createFailure = (error) => ({
-  type: "USER_CREATE_FAILURE",
+  type: type.USER_CREATE_FAILURE,
   error,
 });
 
@@ -105,17 +106,17 @@ export const updateUser = (id, login, email, password) => {
 };
 
 export const updateSuccess = (data) => ({
-  type: "USER_UPDATE_SUCCESS",
+  type: type.USER_UPDATE_SUCCESS,
   data,
   completed: true,
 });
 
 export const updateStarted = () => ({
-  type: "USER_UPDATE_STARTED",
+  type: type.USER_UPDATE_STARTED,
 });
 
 export const updateFailure = (error) => ({
-  type: "USER_UPDATE_FAILURE",
+  type: type.USER_UPDATE_FAILURE,
   error,
 });
 
@@ -140,16 +141,16 @@ export const loginUser = (email, password) => {
 };
 
 export const loginSuccess = (data) => ({
-  type: "USER_LOGIN_SUCCESS",
+  type: type.USER_LOGIN_SUCCESS,
   data,
 });
 
 export const loginStarted = () => ({
-  type: "USER_LOGIN_STARTED",
+  type: type.USER_LOGIN_STARTED,
 });
 
 export const loginFailure = (error) => ({
-  type: "USER_LOGIN_FAILURE",
+  type: type.USER_LOGIN_FAILURE,
   error,
 });
 
@@ -175,16 +176,16 @@ export const toFavorites = (userID, bookID) => {
 };
 
 export const toFavoritesSuccess = (data) => ({
-  type: "ADD_FAVORITES_SUCCESS",
+  type: type.ADD_FAVORITES_SUCCESS,
   data,
 });
 
 export const toFavoritesStarted = () => ({
-  type: "ADD_FAVORITES_STARTED",
+  type: type.ADD_FAVORITES_STARTED,
 });
 
 export const toFavoritesFailure = (error) => ({
-  type: "ADD_FAVORITES_FAILURE",
+  type: type.ADD_FAVORITES_FAILURE,
   error,
 });
 
@@ -192,7 +193,7 @@ export const toShopList = (userID, bookID) => {
   return async (dispatch) => {
     dispatch(toShopListStarted());
     try {
-      const response = await axiosInstance.post("/users/addtoshoplist", {
+      const response = await axiosInstance.post(`/users/addtoshoplist`, {
         userID,
         bookID,
       });
@@ -209,16 +210,16 @@ export const toShopList = (userID, bookID) => {
 };
 
 export const toShopListSuccess = (data) => ({
-  type: "ADD_SHOPLIST_SUCCESS",
+  type: type.ADD_SHOPLIST_SUCCESS,
   data,
 });
 
 export const toShopListStarted = () => ({
-  type: "ADD_SHOPLIST_STARTED",
+  type: type.ADD_SHOPLIST_STARTED,
 });
 
 export const toShopListFailure = (error) => ({
-  type: "ADD_SHOPLIST_FAILURE",
+  type: type.ADD_SHOPLIST_FAILURE,
   error,
 });
 
@@ -226,7 +227,7 @@ export const getShoplist = (userID) => {
   return async (dispatch) => {
     dispatch(shoplistFetchStarted());
     try {
-      const response = await axiosInstance.post("/users/shoplist", { userID });
+      const response = await axiosInstance.post(`/users/shoplist`, { userID });
       const { data } = response;
       dispatch(shoplistFetchSuccess(data));
     } catch (err) {
@@ -236,16 +237,16 @@ export const getShoplist = (userID) => {
 };
 
 export const shoplistFetchSuccess = (data) => ({
-  type: "SHOPLIST_FETCH_SUCCESS",
+  type: type.SHOPLIST_FETCH_SUCCESS,
   data,
 });
 
 export const shoplistFetchStarted = () => ({
-  type: "SHOPLIST_FETCH_STARTED",
+  type: type.SHOPLIST_FETCH_STARTED,
 });
 
 export const shoplistFetchFailure = (error) => ({
-  type: "SHOPLIST_FETCH_FAILURE",
+  type: type.SHOPLIST_FETCH_FAILURE,
   error,
 });
 
@@ -253,7 +254,7 @@ export const getFavoritesList = (userID) => {
   return async (dispatch) => {
     dispatch(favoritesListFetchStarted());
     try {
-      const response = await axiosInstance.post("/users/favorites", { userID });
+      const response = await axiosInstance.post(`/users/favorites`, { userID });
       const { data } = response;
       dispatch(favoritesListFetchSuccess(data));
     } catch (err) {
@@ -263,15 +264,15 @@ export const getFavoritesList = (userID) => {
 };
 
 export const favoritesListFetchSuccess = (data) => ({
-  type: "FAVORITES_FETCH_SUCCESS",
+  type: type.FAVORITES_FETCH_SUCCESS,
   data,
 });
 
 export const favoritesListFetchStarted = () => ({
-  type: "FAVORITES_FETCH_STARTED",
+  type: type.FAVORITES_FETCH_STARTED,
 });
 
 export const favoritesListFetchFailure = (error) => ({
-  type: "FAVORITES_FETCH_FAILURE",
+  type: type.FAVORITES_FETCH_FAILURE,
   error,
 });

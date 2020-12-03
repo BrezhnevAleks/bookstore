@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         as: "reviews",
         onDelete: "CASCADE",
       });
+
+      User.belongsToMany(models.Book, {
+        through: "Favorites",
+        foreignKey: "userId",
+        as: "users",
+      });
     }
   }
   User.init(

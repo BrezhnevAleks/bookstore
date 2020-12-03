@@ -1,20 +1,21 @@
 import { axiosInstance } from "../axios";
+import * as type from "../constants";
 
 export const addBooks = (data) => ({
-  type: "ADD_BOOKS",
+  type: type.ADD_BOOKS,
   data,
 });
 
 export const booksConfirmation = () => ({
-  type: "BOOKS_CONFIRM_COMPLETION",
+  type: type.BOOKS_CONFIRM_COMPLETION,
   completed: false,
 });
 
-export const getBooks = (filter = "default", genre = "all") => {
+export const getBooks = (filter = `default`, genre = `all`) => {
   return async (dispatch) => {
     dispatch(booksFetchStarted());
     try {
-      const response = await axiosInstance.post("books", {
+      const response = await axiosInstance.post(`books`, {
         filter,
         genre,
       });
@@ -28,16 +29,16 @@ export const getBooks = (filter = "default", genre = "all") => {
 };
 
 export const booksFetchSuccess = (books) => ({
-  type: "BOOKS_FETCH_SUCCESS",
+  type: type.BOOKS_FETCH_SUCCESS,
   books,
 });
 
 export const booksFetchStarted = () => ({
-  type: "BOOKS_FETCH_STARTED",
+  type: type.BOOKS_FETCH_STARTED,
 });
 
 export const booksFetchFailure = (error) => ({
-  type: "BOOKS_FETCH_FAILURE",
+  type: type.BOOKS_FETCH_FAILURE,
   error,
 });
 
@@ -45,7 +46,7 @@ export const getOneBook = (id) => {
   return async (dispatch) => {
     dispatch(bookFetchStarted());
     try {
-      const response = await axiosInstance.post("books/one", {
+      const response = await axiosInstance.post(`books/one`, {
         id,
       });
       const { data } = response;
@@ -57,16 +58,16 @@ export const getOneBook = (id) => {
 };
 
 export const bookFetchSuccess = (book) => ({
-  type: "BOOK_FETCH_SUCCESS",
+  type: type.BOOK_FETCH_SUCCESS,
   book,
 });
 
 export const bookFetchStarted = () => ({
-  type: "BOOK_FETCH_STARTED",
+  type: type.BOOK_FETCH_STARTED,
 });
 
 export const bookFetchFailure = (error) => ({
-  type: "BOOK_FETCH_FAILURE",
+  type: type.BOOK_FETCH_FAILURE,
   error,
 });
 
@@ -89,17 +90,17 @@ export const createBook = (payload) => {
 };
 
 export const createBookSuccess = (data) => ({
-  type: "BOOK_CREATE_SUCCESS",
+  type: type.BOOK_CREATE_SUCCESS,
   data,
   completed: true,
 });
 
 export const createBookStarted = () => ({
-  type: "BOOK_CREATE_STARTED",
+  type: type.BOOK_CREATE_STARTED,
 });
 
 export const createBookFailure = (error) => ({
-  type: "BOOK_CREATE_FAILURE",
+  type: type.BOOK_CREATE_FAILURE,
   error,
   completed: true,
 });
@@ -123,17 +124,17 @@ export const changeBook = (payload) => {
 };
 
 export const changeBookSuccess = (data) => ({
-  type: "BOOK_CHANGE_SUCCESS",
+  type: type.BOOK_CHANGE_SUCCESS,
   data,
   completed: true,
 });
 
 export const changeBookStarted = () => ({
-  type: "BOOK_CHANGE_STARTED",
+  type: type.BOOK_CHANGE_STARTED,
 });
 
 export const changeBookFailure = (error) => ({
-  type: "BOOK_CHANGE_FAILURE",
+  type: type.BOOK_CHANGE_FAILURE,
   error,
   completed: true,
 });
@@ -142,7 +143,7 @@ export const addReview = (userId, bookId, text, rating) => {
   return async (dispatch) => {
     dispatch(addReviewStarted());
     try {
-      const response = await axiosInstance.post("users/addreview", {
+      const response = await axiosInstance.post(`users/addreview`, {
         userId,
         bookId,
         text,
@@ -157,16 +158,16 @@ export const addReview = (userId, bookId, text, rating) => {
 };
 
 export const addReviewSuccess = (data) => ({
-  type: "ADD_REVIEW_SUCCESS",
+  type: type.ADD_REVIEW_SUCCESS,
   data,
 });
 
 export const addReviewStarted = () => ({
-  type: "ADD_REVIEW_STARTED",
+  type: type.ADD_REVIEW_STARTED,
 });
 
 export const addReviewFailure = (error) => ({
-  type: "ADD_REVIEW_FAILURE",
+  type: type.ADD_REVIEW_FAILURE,
   error,
 });
 
@@ -174,7 +175,7 @@ export const getReviews = (bookId) => {
   return async (dispatch) => {
     dispatch(getReviewsStarted());
     try {
-      const response = await axiosInstance.post("books/reviews", {
+      const response = await axiosInstance.post(`books/reviews`, {
         bookId,
       });
       const {
@@ -188,17 +189,17 @@ export const getReviews = (bookId) => {
 };
 
 export const getReviewsSuccess = (reviews, rate) => ({
-  type: "GET_REVIEWS_SUCCESS",
+  type: type.GET_REVIEWS_SUCCESS,
   data: reviews,
   rate,
 });
 
 export const getReviewsStarted = () => ({
-  type: "GET_REVIEWS_STARTED",
+  type: type.GET_REVIEWS_STARTED,
 });
 
 export const getReviewsFailure = (error) => ({
-  type: "GET_REVIEWS_FAILURE",
+  type: type.GET_REVIEWS_FAILURE,
   error,
 });
 
@@ -206,7 +207,7 @@ export const getGenres = () => {
   return async (dispatch) => {
     dispatch(genresFetchStarted());
     try {
-      const response = await axiosInstance.get("books/getgenres");
+      const response = await axiosInstance.get(`books/getgenres`);
       const { data } = response;
       dispatch(genresFetchSuccess(data));
     } catch (err) {
@@ -216,15 +217,15 @@ export const getGenres = () => {
 };
 
 export const genresFetchSuccess = (genres) => ({
-  type: "GENRES_FETCH_SUCCESS",
+  type: type.GENRES_FETCH_SUCCESS,
   genres: genres,
 });
 
 export const genresFetchStarted = () => ({
-  type: "GENRES_FETCH_STARTED",
+  type: type.GENRES_FETCH_STARTED,
 });
 
 export const genresFetchFailure = (error) => ({
-  type: "GENRES_FETCH_FAILURE",
+  type: type.GENRES_FETCH_FAILURE,
   error,
 });

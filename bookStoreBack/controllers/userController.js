@@ -85,55 +85,28 @@ exports.toFavorites = async (request, response) => {
     const {
       body: { userID, bookID },
     } = request;
-    const user = await db.User.findOne({
+    const favorite = await db.Favorite.findOne({
       where: {
-        id: userID,
+        userId: userID,
+        bookId: bookID,
       },
     });
+    console.log(favorite);
+    if (favorite !== null) {
+      await favorite.destroy();
+      const favorites = await db.Book.findAll({ where: { userId: userID } });
 
-    if (user.favorites.includes(bookID)) {
-      let { favorites } = user;
-
-      favorites.splice(favorites.indexOf(bookID), 1);
-
-      await db.User.update(
-        {
-          favorites,
-        },
-        {
-          where: {
-            id: userID,
-          },
-        }
-      );
-      const newUser = await db.User.findOne({
-        where: {
-          id: userID,
-        },
-      });
-
-      response.send({ user: newUser });
+      response.send({ favorites });
       return;
     }
+    const user = await db.User.findOne({ where: { id: userID } });
+    const book = await db.Book.findOne({ where: { id: bookID } });
+    user.addBook(book, { through: { bookId: bookID, userId: userID } });
+    //await db.Favorite.create({ userId: userID, bookId: bookID });
 
-    await db.User.update(
-      {
-        favorites: [...user.favorites, bookID],
-      },
-      {
-        where: {
-          id: userID,
-        },
-      }
-    );
-
-    const newUser = await db.User.findOne({
-      where: {
-        id: userID,
-      },
-    });
-
-    response.status(200).send({ user: newUser });
+    //const favorites = await db.Book.findAll({ where: { userId: userID } });
+    //console.log(favorites);
+    //response.status(200).send({ favorites });
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

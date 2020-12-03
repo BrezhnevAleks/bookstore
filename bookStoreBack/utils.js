@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const config = require("./config/config.json");
+const config = require("./config/index");
 const jwt = require("jsonwebtoken");
 const db = require("./models");
 
