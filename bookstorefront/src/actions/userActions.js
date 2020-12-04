@@ -163,11 +163,9 @@ export const toFavorites = (userID, bookID) => {
         bookID,
       });
       const {
-        data: {
-          user: { favorites },
-        },
+        data: { favorites },
       } = response;
-
+      console.log(favorites);
       dispatch(toFavoritesSuccess(favorites));
     } catch (err) {
       dispatch(toFavoritesFailure(err.message));
@@ -255,8 +253,10 @@ export const getFavoritesList = (userID) => {
     dispatch(favoritesListFetchStarted());
     try {
       const response = await axiosInstance.post(`/users/favorites`, { userID });
-      const { data } = response;
-      dispatch(favoritesListFetchSuccess(data));
+      const {
+        data: { favorites },
+      } = response;
+      dispatch(favoritesListFetchSuccess(favorites));
     } catch (err) {
       dispatch(favoritesListFetchFailure(err.message));
     }

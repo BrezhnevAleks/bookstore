@@ -12,7 +12,7 @@ import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
 
 class BookItem extends React.Component {
   handleOnClickLike = (e) => {
-    const { item, user, toFavorites } = this.props;
+    const { item, user, toFavorites, getFavoritesList } = this.props;
 
     toFavorites(user.id, item.id);
   };
@@ -23,6 +23,7 @@ class BookItem extends React.Component {
   };
   render() {
     const {
+      item,
       item: { id, name, author, price, rating, picture },
       user: { favorites, shoplist },
     } = this.props;
@@ -33,13 +34,13 @@ class BookItem extends React.Component {
           <FontAwesomeIcon
             className="toShop-button"
             onClick={this.handleOnClickToShoplist}
-            icon={shoplist.includes(id) ? faShoppingBasket : faPlus}
+            icon={shoplist.includes(item) ? faShoppingBasket : faPlus}
           />
           <h3 className="item-name">{name}</h3>
           <FontAwesomeIcon
             className="like-button"
             onClick={this.handleOnClickLike}
-            icon={favorites.includes(id) ? solidHeart : regHeart}
+            icon={favorites.includes(item) ? solidHeart : regHeart}
           />
         </div>
 

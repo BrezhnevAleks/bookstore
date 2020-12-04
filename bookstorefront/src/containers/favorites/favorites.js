@@ -7,16 +7,15 @@ import "./style.css";
 
 class FavoritesList extends React.Component {
   componentDidMount() {
-    const {
-      user: { id },
-      getFavoritesList,
-    } = this.props;
-
-    getFavoritesList(id);
+    // const {
+    //   user: { id },
+    //   getFavoritesList,
+    // } = this.props;
+    // //getFavoritesList(id);
   }
 
   render() {
-    const { favorites, user } = this.props;
+    const { favorites } = this.props;
 
     return (
       <div>
@@ -35,7 +34,7 @@ class FavoritesList extends React.Component {
                   <BookItem
                     item={shopItem}
                     key={shopItem.id}
-                    favorites={user.favorites}
+                    favorites={favorites}
                   />
                 </Grid>
               ))}

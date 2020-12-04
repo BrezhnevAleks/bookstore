@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import * as userActions from "../../actions/userActions";
 
-const mapStateToProps = ({ user: { favorites, data } }) => {
+const mapStateToProps = ({ user: { data } }) => {
   return {
-    favorites,
+    favorites: data.favorites,
     user: data,
   };
 };
