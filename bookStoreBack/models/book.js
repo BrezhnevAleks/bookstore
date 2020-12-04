@@ -14,9 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
       Book.belongsToMany(models.User, {
-        through: "Favorites",
-        foreignKey: "bookId",
-        as: "favoriteBooks",
+        through: models.BookUser,
+        foreignKey: "userId",
+        as: "users",
+        onDelete: "CASCADE",
       });
     }
   }

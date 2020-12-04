@@ -24,6 +24,12 @@ exports.createUser = async (request, response) => {
         login,
         email,
         password: utils.cipher(password),
+        include: [
+          {
+            model: db.Book,
+            as: "favorites",
+          },
+        ],
       });
 
       const createdToken = utils.createToken(user.id);
@@ -42,7 +48,15 @@ exports.loginUser = async (request, response) => {
   const searchedValue = { email };
 
   try {
-    const user = await db.User.findOne({ where: searchedValue });
+    const user = await db.User.findOne({
+      where: searchedValue,
+      include: [
+        {
+          model: db.Book,
+          as: "favorites",
+        },
+      ],
+    });
 
     if (!user) {
       response.status(404).send("User not found");
@@ -85,29 +99,68 @@ exports.toFavorites = async (request, response) => {
     const {
       body: { userID, bookID },
     } = request;
-    const favorite = await db.Favorite.findOne({
+    const favorite = await db.BookUser.findOne({
       where: {
         userId: userID,
         bookId: bookID,
       },
     });
-    console.log(favorite);
-    if (favorite !== null) {
-      await favorite.destroy();
-      const favorites = await db.Book.findAll({ where: { userId: userID } });
 
-      response.send({ favorites });
+    if (favorite !== null) {
+      await db.BookUser.destroy({
+        where: {
+          userId: userID,
+          bookId: bookID,
+        },
+      });
+      const newUser = await db.User.findOne({
+        where: { id: userID },
+        include: [
+          {
+            model: db.Book,
+            as: "favorites",
+          },
+        ],
+      });
+      response.status(200).send({ favorites: newUser.favorites });
       return;
     }
-    const user = await db.User.findOne({ where: { id: userID } });
+    const user = await db.User.findOne({
+      where: { id: userID },
+    });
+
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+    console.log("user >>>", user);
     const book = await db.Book.findOne({ where: { id: bookID } });
-    user.addBook(book, { through: { bookId: bookID, userId: userID } });
-    //await db.Favorite.create({ userId: userID, bookId: bookID });
+    console.log("book >>>>", book);
+    await db.BookUser.create({ bookId: bookID, userId: userID });
+    console.log("after noname await >>>>");
+    await user.addFavorite(book);
+    // await db.BookUser.create({ userId: userID, bookId: bookID });
+    // console.log("BBBBBBBBBB");
+    // console.log(user);
 
     //const favorites = await db.Book.findAll({ where: { userId: userID } });
     //console.log(favorites);
     //response.status(200).send({ favorites });
+    // const bookuser = await db.BookUser.findAll({});
+    // console.log('bookuser >>>>', bookuser);
+    const newUser = await db.User.findOne({
+      where: { id: userID },
+      include: [
+        {
+          model: db.Book,
+          as: "favorites",
+        },
+      ],
+    });
+    console.log(
+      ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    );
+    console.log("newUser", newUser);
+    response.status(200).send({ favorites: newUser.favorites });
   } catch (err) {
+    console.error("ERROR >>>>", err);
     response.status(400).send("Something went terribly wrong");
   }
 };
@@ -249,14 +302,17 @@ exports.getFavorites = async (request, response) => {
     const {
       body: { userID },
     } = request;
-    const user = await db.User.findOne({ where: { id: userID } });
-    const data = await db.Book.findAll({
-      where: {
-        id: user.favorites,
-      },
+    const user = await db.User.findOne({
+      where: { id: userID },
+      include: [
+        {
+          model: db.Book,
+          as: "favorites",
+        },
+      ],
     });
 
-    response.status(200).send(data);
+    response.status(200).send({ favorites: User.favorites });
   } catch (err) {
     response.status(400).send("Something went terribly wrong");
   }

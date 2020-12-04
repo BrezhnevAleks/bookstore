@@ -17,10 +17,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      favorites: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER),
-        defaultValue: [],
-      },
+
       shoplist: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
         defaultValue: [],

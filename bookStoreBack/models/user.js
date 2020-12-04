@@ -15,9 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       User.belongsToMany(models.Book, {
-        through: "Favorites",
-        foreignKey: "userId",
-        as: "users",
+        through: models.BookUser,
+        foreignKey: "bookId",
+        as: "favorites",
+        onDelete: "CASCADE",
       });
     }
   }
@@ -26,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
       login: DataTypes.STRING,
       password: DataTypes.STRING,
       email: DataTypes.STRING,
-      favorites: { type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: [] },
       shoplist: { type: DataTypes.ARRAY(DataTypes.INTEGER), defaultValue: [] },
     },
     {

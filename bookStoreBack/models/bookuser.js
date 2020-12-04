@@ -1,32 +1,37 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Favorite extends Model {
+  class BookUser extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Favorite.belongsToMany(models.User, {
+      BookUser.belongsTo(models.User, {
         foreignKey: "userId",
         onDelete: "CASCADE",
       });
-      Favorite.belongsToMany(models.Book, {
+      BookUser.belongsTo(models.Book, {
         foreignKey: "bookId",
+        as: "favorites",
         onDelete: "CASCADE",
       });
     }
   }
-  Favorite.init(
+  BookUser.init(
     {
-      bookId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
+      bookId: {
+        type: DataTypes.INTEGER,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       sequelize,
-      modelName: "Favorite",
+      modelName: "BookUser",
     }
   );
-  return Favorite;
+  return BookUser;
 };
